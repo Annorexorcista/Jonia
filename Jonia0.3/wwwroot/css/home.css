@@ -1,0 +1,1571 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+}
+
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color:white;
+    
+}
+
+.logo-container {
+    margin-top: -55px;
+    margin-left: -40px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    width: 140px;
+    height: 140px;
+    background-color: transparent;
+}
+
+.logo img {
+    position: relative;
+    width: 111px; 
+    margin-top: 8%;
+    left: 0%;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.nav {
+    width: 100%;
+    height: 196px;
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    padding: 80px;
+    color: #D9D9D9;
+    z-index: 1;
+    background-color: #13142a;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content:center;
+}
+
+nav li {
+    margin-right: 30px;
+}
+
+ul li a {
+    text-decoration: none;
+    color: #D9D9D9; 
+    cursor: pointer; 
+    font-size: 22px; 
+}
+
+ul li a:hover {
+    color: #737373; 
+}
+
+.sombreado {
+    text-shadow: 4px 4px 8px #000;
+    text-shadow: 
+        -1px -1px 0 #000,  
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
+}
+
+.login_button {
+    background-color: #3EB2FD;
+    background-image: linear-gradient(1deg, #5b1f00, #66280a 99%);
+    border-radius: 100px;
+    border-width: 0;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-family: CircularStd,sans-serif;
+    font-size: 1.2rem;
+    height: 50px;
+    width: 150px;
+    float:right;
+    margin-top: -2.4%;
+}
+
+#video-section {
+    background-position: 100%;
+    width: 100%;
+    height: 920px;
+}
+
+#video-container {
+    position: relative;
+    top: 0;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+video {
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.descripcion {
+    position: absolute;
+    max-width: 60%;
+    display: grid;
+    place-items: center;
+    right: 21%;
+    top: 58%;
+}
+
+.descripcion h2 {
+    font-size: 44px;
+    color: #D9D9D9;
+    right: 20%;
+    text-shadow: 
+    -1px -1px 0 #000,  
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
+.descripcion p {
+    font-size: 20px;
+    color: #D9D9D9;
+    text-align: center;
+    text-shadow: 
+    -1px -1px 0 #000,  
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
+.reservation-form {
+    position: absolute;
+    max-width: 80%;
+    margin: 0 auto;
+    margin-top: -40px;
+    padding: 15px;
+    background-color: #161b33;
+    border: 2px solid black;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    right: 15%;
+}
+
+form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: left;
+}
+
+label {
+    width: 10px;
+    display: block;
+    margin-bottom: 5px;
+    margin-right: 100px;
+    margin-top: 8px;
+    color: #D9D9D9;
+}
+
+label[for="departure"] {
+    width: 1px;
+    display: block;
+    margin-bottom: 5px;
+    margin-left: 20px;
+    color: #D9D9D9;
+}
+
+#rooms{
+    width: 40px;
+    padding: 5px;
+    margin-top: -5px;
+    margin-left:-50px;
+    margin-bottom: 0px;
+    border: 0px solid black;
+    border-radius: 0px;
+    font-size: 15px;
+    background-color: transparent;
+    color: #D9D9D9;
+}
+
+label[for="adults"] {
+    width: 1px;
+    display: block;
+    margin-bottom: 8px;
+    margin-left: 20px;
+    color: #D9D9D9;
+}
+
+label[for="children"] {
+    width: 1px;
+    display: block;
+    margin-bottom: 5px;
+    margin-left: 25px;
+    color: #D9D9D9;
+}
+
+#children{
+    width: 40px;
+    padding: 5px;
+    margin-top: -5px;
+    margin-left:-45px;
+    margin-bottom: 0px;
+    border: 0px solid black;
+    border-radius: 0px;
+    font-size: 15px;
+    background-color: transparent;
+    color: #D9D9D9;
+}
+
+#adults{
+    width: 40px;
+    padding: 5px;
+    margin-top: -5px;
+    margin-left:-35px;
+    margin-bottom: 0px;
+    border: 0px solid black;
+    border-radius: 0px;
+    font-size: 15px;
+    background-color: transparent;
+    color: #D9D9D9;
+}
+
+#arrival{
+    width: 120px;
+    padding: 5px;
+    margin-top: -5px;
+    margin-left:-50px;
+    margin-bottom: 0px;
+    border: 0px solid black;
+    border-radius: 0px;
+    font-size: 15px;
+    background-color: transparent;
+    color: #D9D9D9;
+}
+
+#departure{
+    width: 120px;
+    padding: 5px;
+    margin-top: -5px;
+    margin-left:-50px;
+    margin-bottom: 0px;
+    border: 0px solid black;
+    border-radius: 0px;
+    font-size: 15px;
+    background-color: transparent;
+    color: #D9D9D9;
+}
+
+
+label[for="rooms"] {
+    width: 5%;
+    display: block;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    color: #D9D9D9;
+}
+
+input[type="number"] {
+    width: 3%;
+    display: block;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    background-color:transparent;
+    margin-right: -10px;
+    border: none; 
+    border-bottom: 1px solid black; 
+}
+
+select {
+    width: 4%;
+    padding: 5px;
+    border: none;
+    font-size: 14px;
+    background-color: transparent;
+}
+
+input[type="submit"] {
+    width: 18%;
+    padding: 10px;
+    background-color: #D9D9D9;
+    color: black;
+    border-radius: 3px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 50px;
+}
+
+.paquetes_container1 {
+    position: relative;
+    top: 10%;
+    left: 10%;
+    width: 34%;
+    height: 500px;
+    background-color: #13142a;
+    overflow: hidden;
+    border-radius: 2%;
+}
+
+.paquetes_container1 h3{
+    font-size: 33px;
+    position: absolute;
+    top: 48%;
+    right: 37%;
+    color: #D9D9D9;
+}
+
+.paquetes_container1 p{
+    position: absolute;
+    top: 64%;
+    padding: 28px;
+    width: auto;
+    max-width: 100%;
+    text-align:justify;
+    color: #D9D9D9;
+}
+
+.paquetes_container1 img{
+    width: 510px;
+    height: 268px;
+}
+
+.paquetes_container2 {
+    position: relative;
+    top: 10%;
+    right: 10%;
+    width: 34%;
+    height: 500px;
+    background-color: #13142a;
+    overflow: hidden;
+    border-radius: 2%;
+}
+
+.paquetes_container2 h3{
+    font-size: 33px;
+    position: absolute;
+    top: 48%;
+    right: 42%;
+    color: #D9D9D9;
+}
+
+.paquetes_container2 p{
+    position: absolute;
+    top: 64%;
+    padding: 28px;
+    width: auto;
+    max-width: 100%;
+    text-align:justify;
+    color: #D9D9D9;
+}
+
+.paquetes_container2 img{
+    width: 510px;
+    height: 268px;
+}
+
+.hr_paquetes{
+    color: #161b33;
+    width: 3px;
+    height: 444px;
+    margin-top: 88px;
+    background-color: #13142a;
+    border-radius: 30%;
+}
+
+.paquetes_button {
+  align-items: center;
+  appearance: none;
+  background-color: #3EB2FD;
+  background-image: linear-gradient(1deg, #5b1f00, #66280a 99%);
+  background-size: calc(100% + 20px) calc(100% + 20px);
+  border-radius: 100px;
+  border-width: 0;
+  box-shadow: none;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: CircularStd,sans-serif;
+  font-size: 1rem;
+  height: 50px;
+  width: 300px;
+  justify-content: center;
+  line-height: 1.5;
+  padding: 6px 20px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color .2s,background-position .2s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: top;
+  white-space: nowrap;
+  left: 40%;
+  top: -40px;
+}
+
+.paquetes_button:active,
+.paquetes_button:focus {
+  outline: none;
+}
+
+.paquetes_button:hover {
+  background-position: -20px -20px;
+}
+
+.paquetes_button:focus:not(:active) {
+  box-shadow: rgba(40, 170, 255, 0.25) 0 0 0 .125em;
+}
+
+.paquetes_slogan{
+    position: absolute;
+    right: 34%;
+    font-size: 22px; 
+}
+
+#paquetes {
+    background-color: transparent;
+    width: 100%;
+    height: 670px;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.h2_p {
+    text-align: center;
+    font-size: 33px;
+}
+
+#servicios {
+    background-color: transparent;
+    width: 100%;
+    height: 777px;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.servicios_container1 {
+    position: relative;
+    top: 10%;
+    left: 10%;
+    width: 34%;
+    height: 580px;
+    background-color: #13142a;
+    overflow: hidden;
+    border-radius: 2%;
+}
+
+.servicios_container1 h3 {
+    font-size: 33px;
+    position: absolute;
+    top: 44%;
+    right: 32%;
+    color: #D9D9D9;
+}
+
+.servicios_container1 p {
+    position: absolute;
+    top: 58%;
+    padding: 28px;
+    width: auto;
+    max-width: 100%;
+    text-align: justify;
+    color: #D9D9D9;
+}
+
+.servicios_container1 img {
+    width: 510px;
+    height: 268px;
+}
+
+.servicios_container2 {
+    position: relative;
+    top: 10%;
+    right: 10%;
+    width: 34%;
+    height: 580px;
+    background-color: #13142a;
+    overflow: hidden;
+    border-radius: 2%;
+}
+
+.servicios_container2 h3 {
+    font-size: 33px;
+    position: absolute;
+    top: 44%;
+    right: 47%;
+    color: #D9D9D9;
+}
+
+.servicios_container2 p {
+    position: absolute;
+    top: 58%;
+    padding: 28px;
+    width: auto;
+    max-width: 100%;
+    text-align: justify;
+    color: #D9D9D9;
+}
+
+.servicios_container2 img {
+    width: 510px;
+    height: 268px;
+}
+
+.hr_servicios {
+    color: #161b33;
+    width: 3px;
+    height: 500px;
+    margin-top: 115px;
+    background-color: #13142a;
+    border-radius: 30%;
+}
+
+.servicios_slogan {
+    position: absolute;
+    right: 41%;
+    font-size: 22px;
+}
+
+.servicios_button {
+    align-items: center;
+    appearance: none;
+    background-color: #3EB2FD;
+    background-image: linear-gradient(1deg, #5b1f00, #66280a 99%);
+    background-size: calc(100% + 20px) calc(100% + 20px);
+    border-radius: 100px;
+    border-width: 0;
+    box-shadow: none;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: CircularStd,sans-serif;
+    font-size: 1rem;
+    height: 50px;
+    width: 300px;
+    justify-content: center;
+    line-height: 1.5;
+    padding: 6px 20px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color .2s,background-position .2s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: top;
+    white-space: nowrap;
+    left: 40%;
+    top: -48px;
+}
+
+    .servicios_button:active,
+    .servicios_button:focus {
+        outline: none;
+    }
+
+    .servicios_button:hover {
+        background-position: -20px -20px;
+    }
+
+    .servicios_button:focus:not(:active) {
+        box-shadow: rgba(40, 170, 255, 0.25) 0 0 0 .125em;
+    }
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    height: 380px;
+    overflow: hidden;
+}
+
+.footer-content {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+}
+
+.contacto-section {
+    text-align: center;
+    background-color: #333;
+    padding: 10px;
+}
+
+.contact-form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.contact-form label,
+.contact-form input,
+.contact-form textarea {
+    display: block;
+    margin: 3px 0;
+    width: 70%;
+    font-size: 14px;
+}
+
+.contact-form label {
+    font-weight: bold;
+}
+
+.contact-form input,
+.contact-form textarea {
+    padding: 1px;
+    border: 1px solid black;
+    border-radius: 8px;
+}
+
+.contact-form textarea {
+    resize: vertical;
+}
+
+.contact-form input[type="submit"] {
+    background-color: #737373;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.contact-form input[type="submit"]:hover {
+    background-color: #13142a;
+}
+
+.contact-form input[required],
+.contact-form textarea[required] {
+    border-color: #13142a;
+    background-color: white;
+}
+
+h3{
+    font-size: 20px;
+    color: white;
+    margin-top: 50px;
+    margin-left: -130px;
+}
+
+footer p{
+    padding: 0px;
+    margin-top: 0px;
+    margin-left: -80px;
+    height: 1px;
+}
+
+.social-links img{
+    width: 50px;
+    position: relative;
+    top: 280px;
+    left: -330px;
+    padding: 10px;
+}
+
+.logo_container {
+    position: relative; 
+}
+
+.logo_fooder {
+    position: absolute; 
+    right: 60px; 
+    top: 80px; 
+}
+
+.logo_fooder img {
+    width: 200px; 
+    height: auto; 
+}
+
+.map{
+    position: relative;
+    width: 333px;
+    height: 317px;
+    top: 40px;
+    right: 20px;
+    font-size: 18px;
+    overflow: hidden;
+}
+
+.contact-info p{
+    position: relative;
+    padding: 20px;
+    top: -30px;
+    left: -20px;
+}
+
+#quienes_somos_container {
+    background-color: transparent;
+    width: 100%;
+    height: 1500px;
+    margin-top: 12%;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.quienes {
+    background-color: #13142a;
+    position: relative;
+    width: 333px;
+    height: 555px;
+    top: 5%;
+    left: 10%;
+    border-radius: 2%;
+}
+
+.quienes p {
+    position: absolute;
+    font-size: 15px;
+    top: 69%;
+    padding: 28px;
+    width: auto;
+    max-width: 100%;
+    text-align:justify;
+    color: #D9D9D9;
+}
+
+.quienes h3{
+    font-size: 20px;
+    position: absolute;
+    top: 53%;
+    right: 41%;
+    color: #D9D9D9;
+}
+
+.quienes img {
+    width: 333px;
+    height: 316px;
+    border-radius: 2%;
+}
+
+.que_es {
+    background-color: #13142a;
+    position: relative;
+    width: 333px;
+    height: 555px;
+    top: 10%;
+    left: 13%;
+    border-radius: 2%;
+}
+
+.que_es p {
+    position: absolute;
+    font-size: 15px;
+    top: 30%;
+    padding: 28px;
+    width: auto;
+    max-width: 100%;
+    text-align:justify;
+    color: #D9D9D9;
+}
+
+.que_es h3{
+    font-size: 20px;
+    position: absolute;
+    top: 10%;
+    right: 25%;
+    color: #D9D9D9;
+}
+
+.historia {
+    background-color: #13142a;
+    position: relative;
+    width: 333px;
+    height: 555px;
+    top: 5%;
+    left: 16%;
+    border-radius: 2%;
+}
+
+.historia p {
+    position: absolute;
+    font-size: 15px;
+    top: 63%;
+    padding: 28px;
+    width: auto;
+    max-width: 100%;
+    text-align:justify;
+    color: #D9D9D9;
+}
+
+.historia h3{
+    font-size: 20px;
+    position: absolute;
+    top: 46%;
+    right: 41%;
+    color: #D9D9D9;
+}
+
+.historia img {
+    width: 333px;
+    height: 280px;
+    border-radius: 2%;
+}
+
+.mision {
+    background-color: #13142a;
+    position: relative;
+    width: 333px;
+    height: 555px;
+    top: 52%;
+    right: 1000px;
+    border-radius: 2%;
+}
+
+.mision p {
+    position: absolute;
+    font-size: 15px;
+    top: 63%;
+    padding: 28px;
+    width: auto;
+    max-width: 100%;
+    text-align:justify;
+    color: #D9D9D9;
+}
+
+.mision h3{
+    font-size: 20px;
+    position: absolute;
+    top: 46%;
+    right: 47%;
+    color: #D9D9D9;
+}
+
+.mision img {
+    width: 333px;
+    height: 280px;
+    border-radius: 2%;
+}
+
+.compromiso {
+    background-color: #13142a;
+    position: relative;
+    width: 333px;
+    height: 555px;
+    top: 9%;
+    left: 39%;
+    border-radius: 2%;
+}
+
+.compromiso p {
+    position: absolute;
+    font-size: 15px;
+    top: 60%;
+    padding: 28px;
+    width: auto;
+    max-width: 100%;
+    text-align:justify;
+    color: #D9D9D9;
+}
+
+.compromiso h3{
+    font-size: 20px;
+    position: absolute;
+    top: 43%;
+    right: 28%;
+    color: #D9D9D9;
+}
+
+.compromiso img {
+    width: 333px;
+    height: 260px;
+    border-radius: 2%;
+}
+
+.equipo {
+    background-color: #13142a;
+    position: relative;
+    width: 333px;
+    height: 555px;
+    top: 2%;
+    left: -140px;
+    border-radius: 2%;
+}
+
+.equipo p {
+    position: absolute;
+    font-size: 15px;
+    top: 63%;
+    padding: 28px;
+    width: auto;
+    max-width: 100%;
+    text-align:justify;
+    color: #D9D9D9;
+}
+
+.equipo h3{
+    font-size: 20px;
+    position: absolute;
+    top: 46%;
+    right: 44%;
+    color: #D9D9D9;
+}
+
+.equipo img {
+    width: 333px;
+    height: 275px;
+    border-radius: 2%;
+}
+
+@media (max-width: 1200px) {
+
+    .descripcion {
+        top: 80%;
+    }
+
+    label {
+        width: 10px;
+        margin-right: 89px;
+    }
+
+    #arrival{
+        margin-left:-40px;
+    }
+
+    .reservation-form {
+        max-width: 88%;
+        right: 7%;
+    }
+    
+    label[for="departure"] {
+        width: 8px;
+    }
+
+    .logo img {
+        width: 100px; 
+        top: 10px;
+    }
+
+    input[type="submit"] {
+        width: 19%;
+        padding: 8px;
+        margin-left: 40px;
+    }
+
+    .paquetes_slogan{
+        right: 30%;
+    }
+
+    .paquetes_container1 h3{
+        font-size: 30px;
+        right: 26%;
+    }
+
+    .paquetes_container1 p{
+        font-size: 15px;
+    }
+
+    .paquetes_container2 h3{
+        font-size: 30px;
+        right: 33%;
+    }
+
+    .paquetes_container2 p{
+        font-size: 15px;
+    }
+
+    .paquetes_button {
+        height: 50px;
+        width: 240px;
+        left: 40%;
+        top: -40px;
+    }
+
+    .contact-form {
+        max-width: 300px;
+    }
+
+    .contact-form input[type="submit"] {
+        position: relative;
+        right: 7%;
+        width: 210px;
+    }
+
+    .logo_fooder img {
+        position: relative;
+        width: 160px; 
+        height: auto;
+        right: -30%; 
+        top: 25px;
+    }
+
+    .contact-info p{
+        font-size: 16px;
+        left: 20px;
+    }
+
+    .contact-info h3{
+        position: relative;
+        left: 38px;
+    }
+
+    .social-links img{
+        left: -255px;
+    }
+
+    .map{
+        position: relative;
+        width: 333px;
+        height: 317px;
+        top: 40px;
+        right: 5px;
+        font-size: 18px;
+        overflow: hidden;
+    }
+    
+    .quienes {
+        width: 300px;
+        height: 555px;
+        left: 5%;
+    }
+    
+    .quienes p {
+        top: 66%;
+    }
+    
+    .quienes h3{
+        right: 37%;
+    }
+    
+    .quienes img {
+        width: 300px;
+        height: 316px;
+    }
+    
+    .que_es {
+        width: 300px;
+        height: 555px;
+        top: 8%;
+        left: 0%;
+    }
+    
+    .que_es h3{
+        right: 21%;
+    }
+    
+    .historia {
+        width: 300px;
+        height: 555px;
+        top: 5%;
+        left: -5%;
+    }
+    
+    .historia p {
+        top: 58%;
+    }
+    
+    .historia h3{
+        right: 38%;
+    }
+    
+    .historia img {
+        width: 300px;
+    }
+    
+    .mision {
+        width: 300px;
+        top: 4%;
+        left: 5%;
+    }
+    
+    .mision p {
+        top: 60%;
+    }
+    
+    .mision h3{
+        right: 43%;
+    }
+    
+    .mision img {
+        width: 300px;
+        height: 280px;
+        border-radius: 2%;
+    }
+    
+    .compromiso {
+        width: 300px;
+        top: 0%;
+        left: 0%;
+    }
+    
+    .compromiso p {
+        top: 57%;
+    }
+    
+    .compromiso h3{
+        right: 22%;
+    }
+    
+    .compromiso img {
+        width: 300px;
+    }
+    
+    .equipo {
+        width: 300px;
+        top: 4%;
+        left: -5%;
+    }
+    
+    .equipo p {
+        top: 60%;
+    }
+    
+    .equipo img {
+        width: 300px;
+    }
+}
+
+@media (max-width: 1000px) {
+
+    nav ul {
+        position: relative;
+        width: 80%;
+        left: 11%;
+    }
+
+    .logo img {
+        width: 90px;
+    }
+
+    ul li a {
+        font-size: 20px; 
+    }
+
+    .descripcion {
+        top: 70%;
+        right: 19%;
+    }
+
+    label {
+        width: 10px;
+        margin-right: 89px;
+    }
+
+    .reservation-form {
+        position: absolute;
+        max-width: 90%;
+        margin-top: -50px;
+        padding: 15px;
+        right: 4.8%;
+    }
+  
+    #arrival{
+        position: relative;
+        margin-left:-40px;
+        top: 2.5px;
+    }
+
+    #departure{
+        margin-top: 0px;
+    }
+
+    #rooms{
+        position: relative;
+        margin-top: 0px;
+        right: -1%;
+    }
+
+    #adults{
+        position: relative;
+        margin-top: 0px;
+        right: -1%;
+    }
+    
+    #children{
+        position: relative;
+        margin-top: 0px;
+        right: -1%;
+    }
+
+    input[type="submit"] {
+        position: relative;
+        width: 21.5%;
+        padding: 8px;
+        margin-left: 30px;
+        top: 5px;
+    }
+
+    .paquetes_slogan{
+        right: 27%;
+    }
+ 
+    .paquetes_container1 h3{
+        font-size: 25px;
+        right: 24%;
+    }
+
+    .paquetes_container1 p{
+        font-size: 14px;
+    }
+
+    .paquetes_container2 h3{
+        font-size: 25px;
+        right: 31%;
+    }
+
+    .paquetes_container2 p{
+        font-size: 14px;
+    }
+
+    .paquetes_button {
+        width: 222px;
+        left: 39%;
+    }
+
+    .contact-form {
+        max-width: 280px;
+    }
+    
+    .contact-form input[type="submit"] {
+        position: relative;
+        right: 6%;
+        width: 192px;
+    }
+
+    .contact-info h3{
+        position: relative;
+        left: 88px;
+    }
+
+    .logo_fooder img {
+        position: none;
+        width: 0px;
+    }
+
+    .contact-info p{
+        font-size: 14px;
+        left: 70px;
+        padding: 18px;
+    }
+
+    .social-links img{
+        width: 41px;
+        left: -140px;
+        top: 250px;
+    }
+
+    .map{
+        position: relative;
+        width: 333px;
+        height: 317px;
+        top: 28px;
+        right: -5px;
+        font-size: 18px;
+        overflow: hidden;
+    }
+    
+    #quienes_somos_container {
+        margin-top: 19%;
+    }
+
+    .quienes {
+        width: 270px;
+        height: 555px;
+        left: 2%;
+    }
+    
+    .quienes p {
+        top: 64%;
+    }
+    
+    .quienes h3{
+        right: 30%;
+    }
+    
+    .quienes img {
+        width: 270px;
+        height: 316px;
+    }
+
+    .que_es {
+        position: relative;
+        width: 270px;
+        height: 555px;
+        top: 8%;
+        left: -1.3%;
+    }
+    
+    .que_es h3{
+        position: relative;
+        right: -23%;
+        top: 5%;
+    }
+    
+    .que_es p {
+        top: 20%;
+    }
+
+    .historia {
+        width: 270px;
+        height: 555px;
+        top: 5%;
+        left: -5%;
+    }
+    
+    .historia p {
+        top: 55%;
+    }
+    
+    .historia h3{
+        right: 33%;
+        top: 44%;
+    }
+    
+    .historia img {
+        width: 270px;
+    }
+    
+    .mision {
+        width: 270px;
+        top: 4%;
+        left: 2%;
+    }
+    
+    .mision p {
+        top: 55%;
+    }
+    
+    .mision h3{
+        right: 38%;
+        top: 44%;
+    }
+    
+    .mision img {
+        width: 270px;
+        height: 280px;
+        border-radius: 2%;
+    }
+    
+    .compromiso {
+        width: 270px;
+        top: 0%;
+        left: -1%;
+    }
+    
+    .compromiso p {
+        top: 53%;
+    }
+    
+    .compromiso h3{
+        right: 15%;
+        top: 42%;
+    }
+    
+    .compromiso img {
+        width: 270px;
+    }
+    
+    .equipo {
+        width: 270px;
+        top: 4%;
+        left: -5%;
+    }
+    
+    .equipo h3 {
+        right: 36%;
+        top: 44%;
+    }
+
+    .equipo p {
+        top: 55%;
+    }
+    
+    .equipo img {
+        width: 270px;
+    }
+}
+
+@media (max-width: 770px) {
+
+    nav ul {
+        position: relative;
+        width: 80%;
+        left: 11%;
+        top: -10px;
+    }
+    
+    .logo img {
+        position: absolute;
+        width: 70px;
+        top: 10px;
+    }
+
+    ul li a {
+        font-size: 15px; 
+    }
+
+    .nav {
+        height: 144px;
+    }
+    
+    #video-container {
+        top: -135px;
+        height: 1040px;
+    }
+    
+    .descripcion {
+        top: 70%;
+        right: 19%;
+    }
+
+    .descripcion h2{
+        position: relative;
+        font-size: 40px;
+        right: 10px;
+    }
+
+    .descripcion p{
+        position: relative;
+        font-size: 20px;
+        right: 10px;
+    }
+
+    label {
+        width: 20px;
+        margin-right: 93px;
+    }
+
+    .reservation-form {
+        position: absolute;
+        max-width: 85%;
+        margin-top: -70px;
+        padding: 10px;
+        right: 8%;
+    }
+
+    #rooms{
+        position: relative;
+        margin-top: 0px;
+        right: -2%;
+    }
+
+    input[type="submit"] {
+        position: relative;
+        width: 29%;
+        top: 5px;
+    }
+
+    .h2_p {
+        font-size: 30px;
+    }
+
+    .paquetes_slogan{
+        right: 22%;
+        font-size: 20px;
+    }
+
+    .paquetes_container1 h3{
+        font-size: 20px;
+        right: 20%;
+    }
+
+    .paquetes_container1 img {
+        max-width: 150%;
+    }
+    
+    .paquetes_container1 p{
+        font-size: 12px;
+    }
+
+    .paquetes_container2 h3{
+        font-size: 20px;
+        right: 25%;
+    }
+
+    .paquetes_container2 img {
+        max-width: 120%;
+    }
+ 
+    .paquetes_container2 p{
+        font-size: 12px;
+    }
+
+    .paquetes_button {
+        width: 150px;
+        height: 40px;
+        left: 40%;
+        font-size: 12px;
+    }
+
+    .contact-form {
+        max-width: 280px;
+    }
+
+    .h2_1 {
+        font-size: 20px;
+    }
+
+    .contact-form input[type="submit"] {
+        width: 148px;
+    }
+
+    .contact-info h3{
+        font-size: 20px;
+    }
+
+    .social-links img{
+        width: 40px;
+        left: -104px;
+        top: 250px;
+    }
+
+    #quienes_somos_container {
+        height: 2000px;
+    }
+
+    .quienes {
+        left: 50px;
+    }
+
+    .que_es {
+        top: 5%;
+        left: -8%;
+    }
+
+    .historia {
+        left: 7%;
+    }
+        
+    .mision {
+        top: 5%;
+        left: -7%;
+    }
+    
+    .compromiso {
+        top: 5%;
+        left: 7%;
+    }
+    
+    .equipo {
+        top: 5%;
+        left: -6.5%;
+    }
+
+}

@@ -1,0 +1,63 @@
+﻿@model Jonia0._3.Models.Abono
+
+
+<h1>Detalles</h1>
+
+<div>
+    <h4>Abono</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Cliente
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IdReservaNavigation.NroDocumentoCliente)
+        </dd>
+        <dt class = "col-sm-2">
+            Fecha de Registro
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FechaRegistro)
+        </dd>
+        <dt class = "col-sm-2">
+            Deuda
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ValorDeuda)
+        </dd>
+        <dt class = "col-sm-2">
+            Subtotal Abonado
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SubtotalAbonado)
+        </dd>
+        <dt class = "col-sm-2">
+            Total Pendiente
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TotalPendiente)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Iva)
+        </dt>
+        <dd class = "col-sm-10">
+            @(Model.Iva * 100) %
+        </dd>
+        <dt class = "col-sm-2">
+            Total Abonado
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TotalAbonado)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Porcentaje)
+        </dt>
+        <dd class = "col-sm-10">
+            @(Model.Porcentaje * 100) %
+        </dd>
+
+    </dl>
+</div>
+<div>
+    <a asp-action="Index">Regresar</a>
+</div>

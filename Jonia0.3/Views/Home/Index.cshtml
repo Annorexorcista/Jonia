@@ -1,0 +1,225 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jonia</title>
+    <link href="~/css/home.css" rel="stylesheet" />
+    <script src="~/js/home.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="icon" href="/img/Green_Leaf_Nature_Logo_Design-removebg-preview.ico"
+</head>
+<body>
+    <header>
+        <nav class="nav">
+            <div class="logo-container">
+                <div class="logo">
+                    <img src="/img/Green_Leaf_Nature_Logo_Design-removebg-preview.png" alt="Logo del Hotel">
+                </div>
+            </div>
+            <ul class="sombreado">
+                <li><a asp-controller="Home" asp-action="Index">Bienvenido</a></li>
+                <li><a asp-controller="Home" asp-action="QS">Quienes Somos</a></li>
+                <li><a href="#paquetes">Paquetes</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+
+            <a class="login_button" asp-controller="Inicio" asp-action="Login"><button class="login_button">Log In</button></a>
+        </nav>
+
+        <section id="video-section">
+            <div id="video-container">
+                <video autoplay loop muted>
+                    <source src="/video/este si.mp4" type="video/mp4">
+                </video>
+            </div>
+        </section>
+    </header>
+
+    <section id="descripcion-hotel">
+        <div class="descripcion">
+            <h2>Jonia</h2>
+            <br>
+            <p>
+                Glamping Jonia es el lugar perfecto para tu reconectarte con la naturaleza.
+                Nuestras habitaciones y comodidades de primera te brindarán una experiencia inolvidable.
+            </p>
+        </div>
+    </section>
+
+    <section id="reserva">
+        <div class="reservation-form">
+            <form action="" method="post">
+
+                <label for="arrival">Llegada:</label>
+                <input type="date" id="arrival" name="arrival" required>
+                <label for="departure">Salida:</label>
+                <input type="date" id="departure" name="departure" required>
+
+                <label for="rooms">Habitaciones:</label>
+                <select type="int" id="rooms" name="rooms">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+
+                <label for="adults">Adultos:</label>
+                <select id="adults" name="adults">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+
+                <label for="children">Niños:</label>
+                <select id="children" name="children">
+                    <option value="1">0</option>
+                    <option value="2">1</option>
+                    <option value="3">2</option>
+                    <option value="4">3</option>
+                </select>
+
+                <input type="submit" value="CHECK AVAILABILITY">
+
+            </form>
+        </div>
+    </section>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <h2 class="h2_p">Paquetes</h2>
+    <br>
+    <br>
+    <p class="paquetes_slogan">Descubre la naturaleza sin dejar de sentirte comodo</p>
+
+    <section id="paquetes">
+        <div class="paquetes_container1">
+            <div>
+                <img src="/img/paquete_1.jpg" alt="">
+            </div>
+            <h3>Paquete primavera</h3>
+            <p>
+                Habitación doble tipo Domo en estructura de madera y cúpula panorámica, sobre plataforma voladiza con vista completa al embalse,
+                rodeado de naturaleza cerca al lago. Un espacio total de 60 mts² con Jacuzzi, malla catamarán, cama Queen, lencería de alta calidad, minibar,
+                muebles de exterior, terraza y servicio de baño en la parte inferior del deck.
+            </p>
+        </div>
+
+        <hr class="hr_paquetes">
+
+        <div class="paquetes_container2">
+            <div>
+                <img src="/img/paquete_2.jpg" alt="">
+            </div>
+            <h3>Paquete Invierno</h3>
+            <p>
+                Habitación doble tipo Domo en estructura de madera y cúpula panorámica, sobre plataforma voladiza con vista completa al embalse,
+                rodeado de naturaleza cerca al lago. Un espacio total de 60 mts² con Jacuzzi, malla catamarán, cama Queen, lencería de alta calidad, minibar,
+                muebles de exterior, terraza y servicio de baño en la parte inferior del deck.
+            </p>
+        </div>
+    </section>
+
+    <button class="paquetes_button">Ver todos los paquetes</button>
+    <br>
+    <br>
+    <hr>
+    <br>
+    <br>
+    <br>
+    <h2 class="h2_p">Servicios</h2>
+    <br>
+    <br>
+    <p class="servicios_slogan">Permitete un tiempo de calidad</p>
+
+    <section id="servicios">
+        <div class="servicios_container1">
+            <div>
+                <img src="/img/servicios_1.jpg" alt="">
+            </div>
+            <h3>Excursiones Guiadas</h3>
+            <p>
+                Disfruta de una experiencia inolvidable en la hermosa Guatapé. Nuestro servicio de excursión guiada combina la belleza natural de la región con el lujo del glamping. ¿Qué puedes esperar? <br />
+                Recorrido Guiado: Explora los encantos de Guatapé, incluyendo la famosa Piedra del Peñol y sus alrededores. <br />
+                Glamping The Mountain: Descansa en tiendas de campaña de lujo con vistas panorámicas a la ciudad. Disfruta de un jacuzzi y servicio de habitaciones.<br />
+                Actividades Acuáticas: Sumérgete en emocionantes actividades acuáticas en el lago.
+        </div>
+
+        <hr class="hr_servicios">
+
+        <div class="servicios_container2">
+            <div>
+                <img src="/img/servicios_5.png" alt="">
+            </div>
+            <h3>Spa al aire libre</h3>
+            <p>
+                En Jonia somos tu oasis de tranquilidad en medio de la rutina diaria. Nuestro enfoque único en masajes relajantes y limpiezas faciales profundas te transportará a un estado de bienestar absoluto. Ven y disfruta de: <br />
+                Ambiente Natural: Relájate al aire libre mientras te sumerges en tratamientos rejuvenecedores.<br />
+                Masajes con Piedras Volcánicas: Experimenta la increíble sensación de las piedras volcánicas en un masaje relajante.<br />
+                Limpiezas Faciales Profundas: Cuida tu piel con tratamientos faciales personalizados.
+            </p>
+        </div>
+    </section>
+
+    <button class="servicios_button">Ver todos los servicios</button>
+    <hr>
+    <footer class="footer">
+        <div class="footer-content">
+            <section id="contacto" class="contacto-section">
+
+                <h2 class="h2_1">Contacto</h2><br>
+                <form class="contact-form">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                    <label for="email">Correo:</label>
+                    <input type="email" id="email" name="email" required>
+                    <label for="phone">Celular:</label>
+                    <input type="number" id="phone" name="phone" required>
+                    <label for="comentarios">Comentarios:</label>
+                    <textarea id="comentarios" name="comentarios" rows="4" required></textarea>
+                    <input type="submit" value="Enviar">
+                </form>
+            </section>
+
+            <div class="contact-info">
+                <h3>Ubicación</h3><br><br><br>
+                <p>Dirección: Calle Principal New Ruck, Medallo</p>
+                <p>Teléfono: 301 456 7894</p>
+                <p>Correo: info@fourhakkahotels.com</p>
+            </div>
+
+            <div class="social-links">
+                <a href="https://www.facebook.com/groups/lagrasa2.1/" class="social-link"><img src="/img/logo_fc.png" alt=""></a>
+                <a href="https://twitter.com/Goku" class="social-link"><img src="/img/logo_x.png" alt=""></a>
+                <a href="https://www.instagram.com/sheet.post/" class="social-link"><img src="/img/ig_logo.png" alt=""></a>
+            </div><br>
+
+            <div class="logo_container">
+                <div class="logo_fooder">
+                    <img src="/img/Green_Leaf_Nature_Logo_Design-removebg-preview.png" alt="Logo del Hotel">
+                </div>
+            </div>
+            <hr>
+
+            <div class="map">
+                <h4>Encuentranos en el mapa</h4><br><br>
+                <iframe src="https://www.google.com/maps/embed?pb=!4v1709358811725!6m8!1m7!1sgT28ssf0BB2LxZ63JNcL1w!2m2!1d35.70407437075822!2d139.5577317304603!3f
+            290.66!4f-15.75!5f0.7820865974627469" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when
+            -downgrade"></iframe>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+

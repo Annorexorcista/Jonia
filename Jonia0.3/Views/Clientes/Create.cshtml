@@ -1,0 +1,84 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Registro</title>
+        <link rel="icon" href="/img/Green_Leaf_Nature_Logo_Design-removebg-preview.ico"
+    </head>
+
+    <body>
+         @if(ViewBag.Creado == null)
+         {
+             <form action="@Url.Action("Create","Clientes")" method="post">
+                 <div class="">
+                     <label>Nro de documento</label>
+                     <input type="number" placeholder="Nro de documento" name="NroDocumento" value="@(ViewBag.NroDocumento != null ? ViewBag.NroDocumento: "")" required>
+                 </div>
+                 <div class="">
+                     <label>Tipo de documento</label>
+                     <select name="TipoDocumento" required>
+                         <option disabled selected>Tipo de documento</option>
+                    <option value="1">Tarjeta de identidad</option>
+                    <option value="2">Cédula de ciudadanía</option>
+                    <option value="3">Tarjeta de extranjería</option>
+                    <option value="4">Cédula de extranjería</option>
+                    <option value="5">Pasaporte</option>
+                    <option value="6">Tipo de documento extranjero</option>
+                     </select>
+
+                 </div>
+                 <div class="">
+                     <label>Nombre</label>
+                     <input type="text" placeholder="Nombres" name="Nombre" value="@(ViewBag.Nombre != null ? ViewBag.Nombre: "")" required>
+                 </div>
+                 <div class="">
+                     <label>Apellido</label>
+                     <input type="text" placeholder="Apellidos" name="Apellido" value="@(ViewBag.Apellido != null ? ViewBag.Apellido: "")" required>
+                 </div>
+                 <div class="">
+                     <label>Correo</label>
+                     <input type="email" placeholder="Correo" name="Correo" value="@(ViewBag.Correo != null ? ViewBag.Correo: "")" required>
+                 </div>
+                 <div class="">
+                     <label>Contraseña</label>
+                     <input type="password" placeholder="Contraseña" name="Contrasena" value="@(ViewBag.Contrasena != null ? ViewBag.Contrasena: "")" required>
+                 </div>
+                 <div class="">
+                     <label>Confirme su contraseña</label>
+                     <input type="password" placeholder="Confirme contraseña" name="ConfirmarClave" required>
+                 </div>
+                 <div class="">
+                     <label>Celular</label>
+                     <input type="number" placeholder="Numero de telefono" name="Celular" value="@(ViewBag.Celular != null ? ViewBag.Celular: "")" required>
+                 </div>
+                 <div class="">
+                     <label>Direccion</label>
+                     <input type="text" placeholder="Direccion" name="Direccion" value="@(ViewBag.Direccion != null ? ViewBag.Direccion: "")" required>
+                 </div>
+                 <div class="">
+                     <label>Fecha de nacimiento</label>
+                     <input type="date" placeholder="Fehca de nacimiento" name="FechaNacimiento" value="@(ViewBag.FechaNacimiento != null ? ViewBag.FechaNacimiento: "")" required>
+                  </div>
+
+                 @if (ViewBag.Mensaje!=null)
+                 {
+                     <div class="alert alert-danger">
+                         @ViewBag.Mensaje
+                     </div>
+                 }
+
+                <div>
+                    <button class="#">
+                        <span class="#">Registrarse</span>
+                    </button>
+                </div>
+
+             </form>
+
+         }
+
+    </body>
+</html>

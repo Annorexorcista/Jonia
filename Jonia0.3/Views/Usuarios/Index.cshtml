@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Jonia0._3.Models.Usuario>
+
+
+
+@section Scripts {
+    <script src="~/js/CambioEstado.js"></script>
+}
+
+<h1>Usuarios</h1>
+
+<p>
+    <a asp-action="Create">Crear</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NroDocumento)
+            </th>
+            <th>
+                Tipo de Documento
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Apellido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Correo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Celular)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th>
+                Rol
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NroDocumento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoDocumentoNavigation.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Correo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Celular)
+            </td>
+            <td>
+                    <div class="form-check form-switch fs-4" data-url="@Url.Action("ActualizarEstado", "Usuarios")" data-idusuario="@item.NroDocumento">
+                        <input @(item.Estado == true ? "checked" : "") type="checkbox" class="form-check-input usuario-estado" id="estado" data-idusuario="@item.NroDocumento" />
+                    </div>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdRolNavigation.Nombre)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.NroDocumento">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.NroDocumento">Detalles</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

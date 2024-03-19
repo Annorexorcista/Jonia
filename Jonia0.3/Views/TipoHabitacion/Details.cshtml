@@ -1,0 +1,27 @@
+﻿@model Jonia0._3.Models.TipoHabitacion
+
+
+<h1>Detalles</h1>
+
+<div>
+    <h4>Tipo de Habitación</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NroPersonas)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NroPersonas)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.IdTipo">Editar</a> |
+    <a asp-action="Index">Regresar</a>
+</div>

@@ -1,0 +1,80 @@
+﻿@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Log In</title>
+	<link href="/css/login.css" rel="stylesheet">
+	<link rel="icon" href="/img/Green_Leaf_Nature_Logo_Design-removebg-preview.ico"
+
+</head>
+<body>
+
+	<div class="container" id="container">
+		<div class="form-container sign-up-container">
+			@if (ViewBag.Restablecido == null)
+			{
+				<form action="@Url.Action("Restablecer","Admin")">
+					<h1>Recuperar contraseña</h1>
+					<span>Ingrese su email</span>
+					<input type="email" placeholder="Email" name="correo" value="@(ViewBag.Correo !=null? ViewBag.Correo:"")" />
+					<button type="submit">Enviar</button>
+
+					@if (ViewBag.Mensaje != null)
+					{
+						<div>
+							@ViewBag.Mensaje
+						</div>
+					}
+
+
+				</form>
+			}
+
+			else
+			{
+				<div>
+					<p>Su contraseña fue restabeclida</p>
+					<a class="" href="@Url.Action("Login","Admin")">Ingresar</a>
+				</div>
+			}
+
+		</div>
+		<div class="form-container sign-in-container">
+			<form action="@Url.Action("Login","Admin")" method="post">
+				<h1>Ingresar</h1>
+				<br>
+				<input type="email" placeholder="Email" name="correo" required />
+				<input type="password" placeholder="Contraseña" name="contrasena" required />
+				@if (ViewBag.Mensaje != null)
+				{
+					<div class="alert alert-danger">
+						@ViewBag.Mensaje
+					</div>
+				}
+				<a asp-controller="Admin" asp-action="Registrar">Regístrate</a>
+				<button type="submit">Acceder</button>
+			</form>
+		</div>
+		<div class="overlay-container">
+			<div class="overlay">
+				<div class="overlay-panel overlay-left">
+					<h1>¡Bienvenido!</h1>
+					<p>¡Ingrese su correo y contraseña para entrar al aplicativo!</p>
+					<button class="ghost" id="signIn">Ingresar</button>
+				</div>
+				<div class="overlay-panel overlay-right">
+					<div> <img src="/img/Green_Leaf_Nature_Logo_Design-removebg-preview.png" style="width:140px; height:auto" alt=""></div>
+					<p>¡Sumérgete en la naturaleza con glamour!</p>
+					<a asp-controller="Admin" asp-action="Restablecer" style="color:white;">¿Olvido su contraseña?</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="/js/login.js"></script>
+</body>
+</html>

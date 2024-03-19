@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Jonia0._3.Models.TipoServicio>
+
+
+<h1>Tipo de Servicio</h1>
+
+<p>
+    <a asp-action="Create">Crear</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdTs">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.IdTs">Detaller</a> |
+                @* <a asp-action="Delete" asp-route-id="@item.IdTs">Eliminar</a> *@
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,64 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Actualizar</title>
+    <link rel="icon" href="/img/Green_Leaf_Nature_Logo_Design-removebg-preview.ico"
+</head>
+<body>
+    <div class="">
+        <div class="">
+            <div class="">
+                <div class=""><h3 class="">Restablecer Contraseña</h3></div>
+                <div class="">
+                    @if (ViewBag.Restablecido == null)
+                    {
+                        <form action="@Url.Action("Actualizar","Admin")" method="post">
+                            <input type="hidden" name="token" value="@ViewBag.Token" />
+
+                            <div class="">
+                                <label>Ingrese su correo</label>
+                                <input type="email" class="" name="correo" required />
+                            </div>
+                            <div class="">
+                                <label>Ingrese una nueva contraseña</label>
+                                <input type="password" class="" name="clave" required />
+                            </div>
+                            <div class="">
+                                <label>Confirmar contraseña</label>
+                                <input type="password" class="" name="confirmarClave" required />
+                            </div>
+
+                            @if (ViewBag.Mensaje != null)
+                            {
+                                <div class="">
+                                    @ViewBag.Mensaje
+                                </div>
+                            }
+
+                            <div class="">
+                                <div class="">
+                                    <button class="" type="submit">Cambiar contraseña</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    }
+                    else
+                    {
+                        <div class="">
+                            <p>Su contraseña fue restablecida.</p>
+                            <a class="" href="@Url.Action("Login","Admin")">Ingresar</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

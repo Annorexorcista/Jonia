@@ -1,0 +1,33 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Confirmar</title>
+    <link rel="icon" href="/img/Green_Leaf_Nature_Logo_Design-removebg-preview.ico"
+</head>
+<body>
+    <div>
+        @if ((bool)ViewBag.Respuesta)
+        {
+            <div class="">
+                <p>Su cuenta direccion de correo electronico fue confirmada</p>
+                <a class="" href="@Url.Action("Login","Inicio")">Ingresar</a>
+            </div>
+
+        }
+
+        else
+        {
+            <div class="">
+                <p>No se pudo confirmar su direccion de correo electronico</p>
+            </div>
+        }
+    </div>
+</body>
+</html>

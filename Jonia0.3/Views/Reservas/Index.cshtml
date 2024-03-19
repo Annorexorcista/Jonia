@@ -1,0 +1,86 @@
+﻿@model IEnumerable<Jonia0._3.Models.Reserva>
+
+<h1>Reservas</h1>
+
+<p>
+    <a asp-action="Create">Crear</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Cliente
+            </th>
+            <th>
+                Encargado
+            </th>
+            <th>
+                Fecha de Registro
+            </th>
+            <th>
+                Fecha de Entrada
+            </th>
+            <th>
+                Fecha de Salida
+            </th>
+            <th>
+                Adultos
+            </th>
+            <th>
+                Niños
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Total)
+            </th>
+            <th>
+                Método de pago
+            </th>
+            <th>
+                Estado
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NroDocumentoCliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modeItem => item.NroDocumentoTrabajador)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaRegistro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaEntrada)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaSalida)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroAdultos)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroNinos)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MetodoPagoNavigation.Nombre)
+                </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.EstadoNavigation.Nombre)
+            </td>
+
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdReserva">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.IdReserva">Detalles</a> |
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
