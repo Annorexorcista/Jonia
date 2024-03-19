@@ -1,5 +1,7 @@
 ﻿@model Jonia0._3.Models.Rol
-
+@{
+    var permisos = ViewBag.Permisos as List<Jonia0._3.Models.Permiso>;
+}
 
 <h1>Crear</h1>
 
@@ -7,7 +9,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-controller="Rol" method="post" asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Nombre" class="control-label"></label>
@@ -15,6 +17,16 @@
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
             <br />
+
+            <!-- Aquí se muestran los permisos con checkboxes -->
+            @foreach (var permiso in permisos)
+            {
+                <div>
+                    <input type="checkbox" name="permisosSeleccionados" value="@permiso.IdPermiso" />
+                    <label>@permiso.Nombre</label>
+                </div>
+            }
+
             <div class="form-group">
                 <input type="submit" value="Crear" class="btn btn-primary" />
             </div>
@@ -26,8 +38,8 @@
     </div>
 </div>
 
-
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

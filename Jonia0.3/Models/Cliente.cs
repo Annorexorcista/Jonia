@@ -17,13 +17,13 @@ public partial class Cliente
 
     public string? Contrasena { get; set; }
 
-    public string? Confirmarclave { get; set; }
+    public string? ConfirmarClave { get; set; }
 
     public string? Celular { get; set; }
 
     public string? Direccion { get; set; }
 
-    public DateOnly? FechaNacimiento { get; set; }
+    public DateTime? FechaNacimiento { get; set; }
 
     public int? IdRol { get; set; }
 

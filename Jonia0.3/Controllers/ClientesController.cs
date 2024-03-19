@@ -84,7 +84,7 @@ namespace Jonia0._3.Controllers
         public ActionResult Create(Cliente cliente)
 
         {
-            if (cliente.Contrasena != cliente.Confirmarclave)
+            if (cliente.Contrasena != cliente.ConfirmarClave)
             {
                 ViewBag.Nombre = cliente.Nombre;
                 ViewBag.Correo = cliente.Correo;

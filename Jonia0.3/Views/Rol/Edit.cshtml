@@ -8,7 +8,7 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="IdRol" />
+            <input type="hidden" asp-for="IdRol"/>
             <div class="form-group">
                 <label asp-for="Nombre" class="control-label"></label>
                 <input asp-for="Nombre" class="form-control" />
@@ -18,6 +18,17 @@
                 <input type="submit" value="Guardar" class="btn btn-primary" />
             </div>
         </form>
+    </div>
+    <div class="col-md-4">
+        <label asp-for="RolPermisos" class="control-label">Permisos</label>
+        <select asp-for="RolPermisos" class="form-control">
+            <option selected disabled>-- Seleccionar --</option>
+            @foreach(var item in ViewBag.Permisos){
+
+                <option>@item.IdPermisoNavigation.Nombre</option>
+            }
+        </select>
+        <span asp-validation-for="RolPermisos" class="text-danger"></span>
     </div>
 </div>
 

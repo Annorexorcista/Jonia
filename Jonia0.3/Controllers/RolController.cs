@@ -69,20 +69,34 @@ namespace Jonia0._3.Controllers
         // GET: Rol/Create
         public IActionResult Create()
         {
+            // Obtén la lista de permisos desde la base de datos
+            var permisos = _context.Permisos.ToList();
+
+            // Pásala a la vista usando ViewBag
+            ViewBag.Permisos = permisos;
+
             return View();
         }
 
         // POST: Rol/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdRol,Nombre,Estado")] Rol rol)
+        public async Task<IActionResult> Create(Rol rol, List<int> permisosSeleccionados)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(rol);
                 await _context.SaveChangesAsync();
+
+                // Después de guardar el rol, guarda los permisos seleccionados
+                foreach (var permisoId in permisosSeleccionados)
+                {
+                    var rolPermiso = new RolPermiso { IdRol = rol.IdRol, IdPermiso = permisoId };
+                    _context.RolPermisos.Add(rolPermiso);
+                }
+
+                await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
             return View(rol);
@@ -95,6 +109,11 @@ namespace Jonia0._3.Controllers
             {
                 return NotFound();
             }
+
+            var permisos = _context.Permisos.ToList();
+
+            // Pásala a la vista usando ViewBag
+            ViewBag.Permisos = permisos; ;
 
             var rol = await _context.Rols.FindAsync(id);
             if (rol == null)

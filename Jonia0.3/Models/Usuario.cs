@@ -21,7 +21,7 @@ public partial class Usuario
 
     public string? Celular { get; set; }
 
-    public DateOnly? FechaNacimiento { get; set; }
+    public DateTime? FechaNacimiento { get; set; }
 
     public int? IdRol { get; set; }
 
