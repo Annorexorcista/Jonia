@@ -1,8 +1,5 @@
 ﻿@model Jonia0._3.Models.Usuario
 
-@{
-    ViewData["Title"] = "Create";
-}
 
 <h1>Create</h1>
 
@@ -52,6 +49,12 @@
                 <label asp-for="FechaNacimiento" class="control-label"></label>
                 <input type="date" asp-for="FechaNacimiento" class="form-control" />
                 <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdRol" class="control-label"></label>
+                <select asp-for="IdRol" class="form-control" asp-items="@(new SelectList(ViewBag.Rol, "IdRol", "Nombre"))">
+                    <option selected disabled>-- Seleccionar --</option>
+                </select>
             </div>
             <br/>
             <div class="form-group">

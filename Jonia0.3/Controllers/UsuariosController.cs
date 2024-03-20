@@ -69,6 +69,7 @@ namespace Jonia0._3.Controllers
         public IActionResult Create()
         {
             ViewBag.TipoDocumentos = _context.TipoDocumentos.ToList();
+            ViewBag.Rol = _context.Rols.ToList();
             // Otra lógica de inicialización si es necesario
             return View();
         }
@@ -84,6 +85,7 @@ namespace Jonia0._3.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewBag.TipoDocumentos = _context.TipoDocumentos.ToList(); // Actualiza la lista de tipos de documentos en caso de error
+            ViewBag.Rol = _context.Rols.ToList();
             return View(usuario);
         }
 

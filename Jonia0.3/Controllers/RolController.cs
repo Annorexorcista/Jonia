@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Jonia0._3.Models;
+using Jonia0._3.Models.PermisosSeleccionados;
 
 namespace Jonia0._3.Controllers
 {
@@ -113,7 +114,22 @@ namespace Jonia0._3.Controllers
             var permisos = _context.Permisos.ToList();
 
             // Pásala a la vista usando ViewBag
-            ViewBag.Permisos = permisos; ;
+            List<PermisosSel> listaPermisos = new List<PermisosSel>();
+
+            foreach(var permiso in permisos)
+            {
+                var asignado_ = _context.RolPermisos.Any(s => s.IdPermiso == permiso.IdPermiso && s.IdRol == id);
+
+                PermisosSel opermisosel = new PermisosSel
+                {
+                    oPermiso = _context.Permisos.Where(s => s.IdPermiso == permiso.IdPermiso).FirstOrDefault(),
+                    
+                    asignado = asignado_
+                };
+
+                listaPermisos.Add(opermisosel);
+            }
+            ViewBag.Permisos = listaPermisos;
 
             var rol = await _context.Rols.FindAsync(id);
             if (rol == null)
@@ -128,7 +144,7 @@ namespace Jonia0._3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdRol,Nombre,Estado")] Rol rol)
+        public async Task<IActionResult> Edit(int id, Rol rol, List<int> permisosSeleccionados)
         {
             if (id != rol.IdRol)
             {
@@ -137,6 +153,17 @@ namespace Jonia0._3.Controllers
 
             if (ModelState.IsValid)
             {
+                var permisosOriginales = _context.RolPermisos
+                    .Where(rp => rp.IdRol == id).ToList();
+
+                _context.RolPermisos.RemoveRange(permisosOriginales);
+
+                foreach (var permisoId in permisosSeleccionados)
+                {
+                    var rolPermiso = new RolPermiso { IdRol = rol.IdRol, IdPermiso = permisoId };
+                    _context.RolPermisos.Add(rolPermiso);
+                }
+
                 try
                 {
                     _context.Update(rol);
@@ -181,6 +208,11 @@ namespace Jonia0._3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var permisosOriginales = _context.RolPermisos
+                   .Where(rp => rp.IdRol == id).ToList();
+
+            _context.RolPermisos.RemoveRange(permisosOriginales);
+
             var rol = await _context.Rols.FindAsync(id);
             if (rol != null)
             {
