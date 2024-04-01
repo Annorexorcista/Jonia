@@ -45,6 +45,13 @@ namespace Jonia0._3.Controllers
             return NotFound(); // Abono no encontrado o ID nulo
         }
 
+        public IActionResult obtenerCostoHabitacion(int id)
+        {
+            var costoHab = _context.Habitaciones.Where(s => s.IdHabitacion== id).Select(s => s.Precio).FirstOrDefault(); 
+
+            return Json(new {costo = costoHab});
+        }
+
         // GET: Paquetes/Details/5
         public async Task<IActionResult> Details(int? id)
         {

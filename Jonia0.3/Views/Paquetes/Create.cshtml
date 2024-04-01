@@ -1,6 +1,5 @@
 ﻿@model Jonia0._3.Models.Paquete
 
-
 <h1>Crear</h1>
 
 <h4>Paquete</h4>
@@ -20,13 +19,18 @@
                 <span asp-validation-for="Descripcion" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Precio" class="control-label"></label>
+                <label asp-for="Precio" class="control-label">Costo Total</label>
                 <input disabled asp-for="Precio" class="form-control" />
                 <span asp-validation-for="Precio" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="IdHabitacion" class="control-label">Habitación</label>
-                <select asp-for="IdHabitacion" class="form-control" asp-items="@(new SelectList(ViewBag.Tipo, "IdHabitacion", "Nombre"))"></select>
+                <select id="habitacionsel" asp-for="IdHabitacion" class="form-control" asp-items="@(new SelectList(ViewBag.Tipo, "IdHabitacion", "Nombre"))"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Precio" class="control-label">Costo Habitación</label>
+                <input id="costohab" disabled asp-for="Precio" class="form-control" />
+                <span asp-validation-for="Precio" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Crear" class="btn btn-primary" />
@@ -38,6 +42,25 @@
 <div>
     <a asp-action="Index">Regresar</a>
 </div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    $('#habitacionsel').change(function () {
+        var idhabitacion = $(this).val()
+        $.ajax({
+            url: '/Paquetes/obtenerCostoHabitacion',
+            type: 'GET',
+            data: { id: idhabitacion, },
+
+            success: function (data) {
+                var costo = data.costo;
+                $('#costohab').val(costo)
+            },
+            error: function () {
+                console.error("Mala suya")
+            }
+        })
+    })</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
