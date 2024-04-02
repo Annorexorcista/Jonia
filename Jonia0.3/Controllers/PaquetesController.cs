@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Jonia0._3.Models;
+using Newtonsoft.Json;
 
 namespace Jonia0._3.Controllers
 {
@@ -78,6 +79,7 @@ namespace Jonia0._3.Controllers
         }
 
         // GET: Paquetes/Create
+        [HttpGet]
         public IActionResult Create()
         {
             ViewBag.Tipo = _context.Habitaciones;
@@ -89,18 +91,25 @@ namespace Jonia0._3.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Paquete paquete, List<int>serviciosSeleccionados)
+        public async Task<IActionResult> Create(Paquete paquete, string serviciosSeleccionados)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(paquete);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
 
-                foreach (var servicios in serviciosSeleccionados)
+                var listaServicios = JsonConvert.DeserializeObject<List<Servicio>>(serviciosSeleccionados.ToString());
+
+                foreach (var s in listaServicios)
                 {
-                    var servicio = new PaquetesServicio { IdPaquete = paquete.IdPaquete, IdServicio= servicios};
-                    _context.PaquetesServicios.Add(servicio);
+                    var paqueteservicio = new PaquetesServicio()
+                    {
+                        IdPaquete = paquete.IdPaquete,
+                        IdServicio = s.IdServicio,
+                        Precio = s.Precio
+                    };
+                    _context.PaquetesServicios.Add(paqueteservicio);
+                    _context.SaveChanges();
                 }
 
                 await _context.SaveChangesAsync();

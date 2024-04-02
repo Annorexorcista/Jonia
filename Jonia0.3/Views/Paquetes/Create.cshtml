@@ -6,7 +6,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form id="create-form" method="post">
+        <form asp-controller="Paquetes" asp-action="Create" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Paquete.Nombre" class="control-label"></label>
@@ -20,12 +20,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Paquete.Precio" class="control-label">Costo Total</label>
-                <input disabled id="total-paquete" asp-for="Paquete.Precio" class="form-control" />
+                <input readonly id="total-paquete" asp-for="Paquete.Precio" class="form-control" />
                 <span asp-validation-for="Paquete.Precio" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label class="control-label">Habitación</label>
-                <select id="habitacionsel" class="form-control" data-precio="" asp-items="@(new SelectList(ViewBag.Tipo, "IdHabitacion", "Nombre"))">
+                <select id="habitacionsel" class="form-control" asp-for="Paquete.IdHabitacion" asp-items="@(new SelectList(ViewBag.Tipo, "IdHabitacion", "Nombre"))">
                    <option selected disabled>-- Seleccionar --</option>
                 </select>
             </div>
@@ -45,8 +45,10 @@
                 <input id="costoser" disabled  class="form-control" />
                 
             </div>
-            <button id="add-service" type="button">Añadir Servicio</button>
-            <input type="hidden" name="serviciosSeleccionados" id="serviciosSeleccionados" />
+            <br />
+            <div class="mt-3 mb-3">
+            <button id="add-service" class="btn btn-success" type="button">Añadir Servicio</button>
+            <input type="hidden" name="serviciosSeleccionados" id="serviciosSeleccionados"/>
             <table id="servicios-table" class="table-bordered">
                 <thead>
                     <tr>
@@ -58,16 +60,15 @@
                     <!-- Los servicios seleccionados se agregarán aquí -->
                 </tbody>
             </table>
+            <br />
             <div class="form-group">
-                <input type="submit" value="Crear" class="btn btn-primary" />
+                <input type="submit" value="Crear" class="btn btn-primary" /> <a asp-action="Index">Regresar</a>
             </div>
         </form>
+        <br />
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Regresar</a>
-</div>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/js/costosPaquetes.js"></script>
