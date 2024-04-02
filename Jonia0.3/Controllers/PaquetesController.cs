@@ -51,6 +51,12 @@ namespace Jonia0._3.Controllers
 
             return Json(new {costo = costoHab});
         }
+        public IActionResult obtenerCostoServicio(int id)
+        {
+            var costoser = _context.Servicios.Where(s => s.IdServicio == id).Select(s => s.Precio).FirstOrDefault();
+
+            return Json(new { costo = costoser });
+        }
 
         // GET: Paquetes/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -75,7 +81,8 @@ namespace Jonia0._3.Controllers
         public IActionResult Create()
         {
             ViewBag.Tipo = _context.Habitaciones;
-            return View();
+            ViewBag.Serv = _context.Servicios.ToList();
+            return View(new PaqueteViewModel()); // Aquí pasamos un objeto PaqueteViewModel vacío
         }
 
         // POST: Paquetes/Create
@@ -83,15 +90,23 @@ namespace Jonia0._3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdPaquete,Nombre,Descripcion,Precio,IdHabitacion,Estado")] Paquete paquete)
+        public async Task<IActionResult> Create(Paquete paquete, List<int>serviciosSeleccionados)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(paquete);
                 await _context.SaveChangesAsync();
+
+                foreach (var servicios in serviciosSeleccionados)
+                {
+                    var servicio = new PaquetesServicio { IdPaquete = paquete.IdPaquete, IdServicio= servicios};
+                    _context.PaquetesServicios.Add(servicio);
+                }
+
+                await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewBag.Tipo = _context.Habitaciones;
             return View(paquete);
         }
 

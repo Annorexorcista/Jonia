@@ -1,4 +1,4 @@
-﻿@model Jonia0._3.Models.Paquete
+﻿@model Jonia0._3.Models.PaqueteViewModel
 
 <h1>Crear</h1>
 
@@ -6,32 +6,58 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form id="create-form" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
+                <label asp-for="Paquete.Nombre" class="control-label"></label>
+                <input asp-for="Paquete.Nombre" class="form-control" />
+                <span asp-validation-for="Paquete.Nombre" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Descripcion" class="control-label"></label>
-                <textarea asp-for="Descripcion" class="form-control"></textarea>
-                <span asp-validation-for="Descripcion" class="text-danger"></span>
+                <label asp-for="Paquete.Descripcion" class="control-label"></label>
+                <textarea asp-for="Paquete.Descripcion" class="form-control"></textarea>
+                <span asp-validation-for="Paquete.Descripcion" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Precio" class="control-label">Costo Total</label>
-                <input disabled asp-for="Precio" class="form-control" />
-                <span asp-validation-for="Precio" class="text-danger"></span>
+                <label asp-for="Paquete.Precio" class="control-label">Costo Total</label>
+                <input disabled id="total-paquete" asp-for="Paquete.Precio" class="form-control" />
+                <span asp-validation-for="Paquete.Precio" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IdHabitacion" class="control-label">Habitación</label>
-                <select id="habitacionsel" asp-for="IdHabitacion" class="form-control" asp-items="@(new SelectList(ViewBag.Tipo, "IdHabitacion", "Nombre"))"></select>
+                <label class="control-label">Habitación</label>
+                <select id="habitacionsel" class="form-control" data-precio="" asp-items="@(new SelectList(ViewBag.Tipo, "IdHabitacion", "Nombre"))">
+                   <option selected disabled>-- Seleccionar --</option>
+                </select>
             </div>
             <div class="form-group">
-                <label asp-for="Precio" class="control-label">Costo Habitación</label>
-                <input id="costohab" disabled asp-for="Precio" class="form-control" />
-                <span asp-validation-for="Precio" class="text-danger"></span>
+                <label class="control-label">Costo Habitación</label>
+                <input id="costohab" disabled  class="form-control" />
+                <span  class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label class="control-label">Servicios</label>
+                <select id="serviciosel" class="form-control" asp-items="@(new SelectList(ViewBag.Serv, "IdServicio", "Nombre", "Precio"))">
+                    <option selected disabled>-- Seleccionar --</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Costo Servicio</label>
+                <input id="costoser" disabled  class="form-control" />
+                
+            </div>
+            <button id="add-service" type="button">Añadir Servicio</button>
+            <input type="hidden" name="serviciosSeleccionados" id="serviciosSeleccionados" />
+            <table id="servicios-table" class="table-bordered">
+                <thead>
+                    <tr>
+                        <th>Servicio</th>
+                        <th>Costo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Los servicios seleccionados se agregarán aquí -->
+                </tbody>
+            </table>
             <div class="form-group">
                 <input type="submit" value="Crear" class="btn btn-primary" />
             </div>
@@ -44,23 +70,7 @@
 </div>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script>
-    $('#habitacionsel').change(function () {
-        var idhabitacion = $(this).val()
-        $.ajax({
-            url: '/Paquetes/obtenerCostoHabitacion',
-            type: 'GET',
-            data: { id: idhabitacion, },
-
-            success: function (data) {
-                var costo = data.costo;
-                $('#costohab').val(costo)
-            },
-            error: function () {
-                console.error("Mala suya")
-            }
-        })
-    })</script>
+<script src="~/js/costosPaquetes.js"></script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
