@@ -52,13 +52,12 @@
             <div class="row mt-5 mb-5">
                 <div class="form-group col">
                     <label asp-for="Reserva.NumeroAdultos" class="control-label">Número de Personas</label>
-                    <input disabled asp-for="Reserva.NumeroAdultos" class="form-control" />
-                    <span asp-validation-for="Reserva.NumeroAdultos" class="text-danger"></span>
+                    <input id="nroper" disabled class="form-control" />
                 </div>
 
                 <div class="form-group col">
                     <label class="control-label">Descuento</label>
-                    <input class="form-control" />
+                    <input id="des" type="number" class="form-control" />
                 </div>
 
                 <div class="form-group col">
@@ -92,7 +91,7 @@
 
                 <div class="form-group col-md-3 mb-5">
                     <label asp-for="Reserva.DetalleReservaPaquete" class="control-label">Tipo de Habitacion</label>
-                    <input id="nombretiphab" disabled class="form-control" />
+                    <input id="tipohab" disabled class="form-control" />
                 </div>
             </div>
             <hr />
@@ -117,7 +116,21 @@
                 </div>
 
                 <div class="form-group col-md-3 mt-lg-4">
-                    <input type="submit" value="Agregar Servicio" class="btn btn-primary" />
+                    <button id="add-service" type="button" class="btn btn-primary">Añadir Servicio</button>
+                    <input id="serviciosSeleccionados" type="hidden" name="serviciosSeleccionados" />
+                </div>
+                <div class="col-md-4 star-50">
+                    <table id="servicios-table" class="table table-striped position-relative bottom-50" border="1">
+                        <thead>
+                            <tr>
+                                <th>Servicio</th>
+                                <th>Costo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Los servicios seleccionados se agregarán aquí -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
@@ -126,18 +139,15 @@
             <div class="row mt-5 mb-5">
                 <div class="form-group col-md-3">
                     <label asp-for="Reserva.Iva" class="control-label"></label>
-                    <input disabled asp-for="Reserva.Iva" class="form-control" />
-                    <span asp-validation-for="Reserva.Iva" class="text-danger"></span>
+                    <input id="iva" readonly asp-for="Reserva.Iva" class="form-control" />
                 </div>
                 <div class="form-group col-md-3">
                     <label asp-for="Reserva.Subtotal" class="control-label"></label>
-                    <input disabled asp-for="Reserva.Subtotal" class="form-control" />
-                    <span asp-validation-for="Reserva.Subtotal" class="text-danger"></span>
+                    <input id="subtotal-reserva" readonly asp-for="Reserva.Subtotal" class="form-control" />
                 </div>
                 <div class="form-group col-md-3">
                     <label asp-for="Reserva.Total" class="control-label"></label>
-                    <input disabled asp-for="Reserva.Total" class="form-control" />
-                    <span asp-validation-for="Reserva.Total" class="text-danger"></span>
+                    <input id="totalreserva" readonly asp-for="Reserva.Total" class="form-control" />
                 </div>
             </div>
             <div class="row">
@@ -157,14 +167,14 @@
 
 <script>
     $('#paquetesel').change(function () {
-        var idpaquete = $(this).val()
+        var idhabitacion = $(this).val()
         $.ajax({
             url: '/Reservas/obtenerNroPersonas',
             type: 'GET',
             data: { id: idhabitacion, },
             success: function (data) {
-                var costo = data.nro;
-                $('#costoser').val(nro)
+                var nro = data.nro;
+                $('#nroper').val(nro)
             },
             error: function () {
                 console.error("Mala suya")
@@ -210,6 +220,24 @@
 </script>
 
 <script>
+    $('#paquetesel').change(function () {
+        var idhabitacion = $(this).val()
+        $.ajax({
+            url: '/Reservas/obtenerTipoHabitacion',
+            type: 'GET',
+            data: { id: idhabitacion, },
+            success: function (data) {
+                var nombre = data.nombre;
+                $('#tipohab').val(nombre)
+            },
+            error: function () {
+                console.error("Mala suya")
+            }
+        })
+    })
+</script>
+
+<script>
     $('#serviciosel').change(function () {
         var idservicio = $(this).val()
         $.ajax({
@@ -235,7 +263,7 @@
             type: 'GET',
             data: { id: idservicio, },
             success: function (data) {
-                var costo = data.nombre;
+                var nombre = data.nombre;
                 $('#tiposer').val(nombre)
             },
             error: function () {
@@ -246,21 +274,74 @@
 </script>
 
 <script>
-    $('#serviciosel').change(function () {
-        var idservicio = $(this).val()
-        $.ajax({
-            url: '/Reservas/obtenerTipoHabitacion',
-            type: 'GET',
-            data: { id: idservicio, },
-            success: function (data) {
-                var costo = data.nombre;
-                $('#tipohab').val(nombre)
-            },
-            error: function () {
-                console.error("Mala suya")
-            }
-        })
-    })
+
+    var serviciosSeleccionados = [];
+
+
+    function actualizarInputServicios() {
+        $('#serviciosSeleccionados').val(JSON.stringify(serviciosSeleccionados))
+    }
+
+    $('#add-service').click(function () {
+        var selectedService = $('#serviciosel').find(':selected');
+        var servicio = {
+            IdServicio: selectedService.val(),
+            Nombre: selectedService.text(),
+            Precio: parseFloat($('#costoser').val())
+        };
+
+        serviciosSeleccionados.push(servicio);
+        actualizarTablaServicios(serviciosSeleccionados);
+        actualizarTotalPaquete(serviciosSeleccionados);
+        actualizarInputServicios();
+    });
+
+    function eliminarServicio(btn) {
+        var rowIdx = $(btn).closest('tr').index();
+        serviciosSeleccionados.splice(rowIdx, 1);
+
+        $(btn).closest('tr').remove();
+        actualizarTablaServicios(serviciosSeleccionados);
+        actualizarTotalPaquete(serviciosSeleccionados);
+        actualizarInputServicios();
+    }
+
+    function actualizarTablaServicios(servicios) {
+        var tbody = $('#servicios-table tbody');
+        tbody.empty();
+
+        servicios.forEach(function (servicio) {
+            var row = '<tr><td>' + servicio.Nombre + '</td><td>' + servicio.Precio + '</td><td><button class="btn btn-danger btn-sm" onclick="eliminarServicio(this)" type="button">Eliminar Servicio</button></td></tr>'
+            tbody.append(row);
+        });
+    }
+
+    function actualizarTotalPaquete(servicios) {
+        var costoPaquete = parseFloat($('#costopaq').val());
+        var totalServicios = 0;
+
+        servicios.forEach(function (servicio) {
+            totalServicios += parseFloat(servicio.Precio);
+        });
+
+        var totalPaquete = costoPaquete + totalServicios;
+
+        $('#subtotal-reserva').val(Math.round(totalPaquete, 0));
+
+        const Iva = 0.19;
+
+        var total_iva = totalPaquete * Iva;
+        $('#iva').val(Math.round(total_iva, 0));
+
+        var des = $('#des').val()/100;
+        var valor_des = totalPaquete * des;
+        var total = (totalPaquete - valor_des) + total_iva;
+
+
+        $('#iva').val(Math.round(total_iva, 0));
+        $('#totalreserva').val(Math.round(total, 0));
+    }
+
 </script>
 
 @section Scripts {

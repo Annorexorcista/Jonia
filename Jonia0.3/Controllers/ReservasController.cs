@@ -35,7 +35,12 @@ namespace Jonia0._3.Controllers
             return View(await reservas.ToListAsync());
         }
 
+        public IActionResult obtenerNroPersonas(int id)
+        {
+            var nroPer = _context.Habitaciones.Include(s => s.IdTipoNavigation).Where(j => j.IdHabitacion == id).Select(p => p.IdTipoNavigation.NroPersonas).FirstOrDefault();
 
+            return Json(new { nro = nroPer });
+        }
 
         public IActionResult obtenerCostoPaquete(int id)
         {
@@ -44,20 +49,30 @@ namespace Jonia0._3.Controllers
             return Json(new { costo = costoPaq });
         }
 
-        public IActionResult obtenerCostoServicio(int id)
-        {
-            var costoSer = _context.Servicios.Where(s => s.IdServicio == id).Select(s => s.Precio).FirstOrDefault();
-
-            return Json(new { costo = costoSer });
-        }
-
         public IActionResult obtenerNombreHabitacion(int id)
         {
             var nombreHab = _context.Paquetes.Include(s => s.IdHabitacionNavigation).Where(j => j.IdPaquete == id).Select(p => p.IdHabitacionNavigation.Nombre).FirstOrDefault();
 
             return Json(new { nombre = nombreHab });
         }
+        public IActionResult obtenerTipoHabitacion(int id)
+        {
+            var tipoHab = _context.Habitaciones.Include(s => s.IdTipoNavigation).Where(j => j.IdHabitacion == id).Select(p => p.IdTipoNavigation.Nombre).FirstOrDefault();
 
+            return Json(new { nombre = tipoHab });
+        }
+        public IActionResult obtenerCostoServicio(int id)
+        {
+            var costoSer = _context.Servicios.Where(s => s.IdServicio == id).Select(s => s.Precio).FirstOrDefault();
+
+            return Json(new { costo = costoSer });
+        }
+        public IActionResult obtenerTipoServicio(int id)
+        {
+            var tipoSer = _context.Servicios.Include(s => s.TipoServicioNavigation).Where(j => j.IdServicio == id).Select(p => p.TipoServicioNavigation.Nombre).FirstOrDefault();
+
+            return Json(new { nombre = tipoSer });
+        }
 
         // GET: Reservas/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -104,7 +119,7 @@ namespace Jonia0._3.Controllers
             var paquete = _context.Paquetes.ToList();
             ViewBag.Paquetes = paquete;
 
-            var servicio = _context.Servicios.Include(s => s.TipoServicioNavigation).Where(s => s.TipoServicio == 2).ToList();
+            var servicio = _context.Servicios.Include(s => s.TipoServicioNavigation).Where(s => s.TipoServicio != 1).ToList();
             ViewBag.Servicios = servicio;
 
             ViewBag.Trabajadores = new SelectList(trabajadores, "Id", "NombreCompleto");
