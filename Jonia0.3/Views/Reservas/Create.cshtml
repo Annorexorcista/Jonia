@@ -1,111 +1,270 @@
-﻿@model Jonia0._3.Models.Reserva
-
-
-<h1>Crear</h1>
+﻿@model Jonia0._3.Models.ReservaViewModel
 
 <h4>Reserva</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="row mt-2 mb-2">
+    <div class="col">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="NroDocumentoCliente" class="control-label">Cliente</label>
-                <select asp-for="NroDocumentoCliente" class ="form-control" asp-items="ViewBag.Clientes">
-                    <option selected disabled>-- Seleccionar --</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label asp-for="NroDocumentoTrabajador" class="control-label">Encargado</label>
-                <select asp-for="NroDocumentoTrabajador" class="form-control" asp-items="ViewBag.Trabajadores">
-                    <option selected disabled>-- Seleccionar --</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label asp-for="DetalleReservaPaquete" class="control-label">Paquete</label>
-                <select asp-for="DetalleReservaPaquete" class="form-control" asp-items="@(new SelectList(ViewBag.Paquetes, "IdPaquete", "Nombre"))">
-                    <option selected disabled>-- Seleccionar --</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Informacion" class="control-label">Información</label>
-                <textarea asp-for="Informacion" class="form-control"></textarea>
-                <span asp-validation-for="Informacion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FechaRegistro" class="control-label">Fecha de Registro</label>
-                <input type="date" asp-for="FechaRegistro" class="form-control" />
-                <span asp-validation-for="FechaRegistro" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FechaEntrada" class="control-label">Fecha de Entrada</label>
-                <input type="date" asp-for="FechaEntrada" class="form-control" />
-                <span asp-validation-for="FechaEntrada" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FechaSalida" class="control-label">Fecha de Salida</label>
-                <input type="date" asp-for="FechaSalida" class="form-control" />
-                <span asp-validation-for="FechaSalida" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NumeroAdultos" class="control-label">Número de adultos</label>
-                <input asp-for="NumeroAdultos" class="form-control" />
-                <span asp-validation-for="NumeroAdultos" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NumeroNinos" class="control-label">Número de niños</label>
-                <input asp-for="NumeroNinos" class="form-control" />
-                <span asp-validation-for="NumeroNinos" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MetodoPago" class="control-label">Método de pago</label>
-                <select asp-for="MetodoPago" class="form-control" asp-items="@(new SelectList(ViewBag.Metodo, "IdMp", "Nombre"))">
-                    <option selected disabled>-- Seleccionar --</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label asp-for="HoraLlegada" class="control-label">Hora de llegada</label>
-                <input type="time" asp-for="HoraLlegada" class="form-control" />
-                <span asp-validation-for="HoraLlegada" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HoraSalida" class="control-label">Hora de Salida</label>
-                <input type="time" asp-for="HoraSalida" class="form-control" />
-                <span asp-validation-for="HoraSalida" class="text-danger"></span>
-@*             </div>
-            <div class="form-group">
-                <label asp-for="Iva" class="control-label"></label>
-                <input asp-for="Iva" class="form-control" />
-                <span asp-validation-for="Iva" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Subtotal" class="control-label"></label>
-                <input asp-for="Subtotal" class="form-control" />
-                <span asp-validation-for="Subtotal" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Total" class="control-label"></label>
-                <input asp-for="Total" class="form-control" />
-                <span asp-validation-for="Total" class="text-danger"></span>
-            </div> *@
-                <br />
-                <div class="row">
-            <div class="form-group col-3">
-                <input type="submit" value="Crear" class="btn btn-primary" />
-                    
-            </div>
-                <div class="col">
-                    <a asp-action="Index">Regresar</a>
+
+            <div class="row">
+                <div class="form-group col">
+                    <label asp-for="Reserva.NroDocumentoCliente" class="control-label">Cliente</label>
+                    <select asp-for="Reserva.NroDocumentoCliente" class="form-control" asp-items="ViewBag.Clientes">
+                        <option selected disabled>-- Seleccionar --</option>
+                    </select>
                 </div>
+                <div class="form-group col">
+                    <label asp-for="Reserva.NroDocumentoTrabajador" class="control-label">Encargado</label>
+                    <select asp-for="Reserva.NroDocumentoTrabajador" class="form-control" asp-items="ViewBag.Trabajadores">
+                        <option selected disabled>-- Seleccionar --</option>
+                    </select>
                 </div>
+
+                <div class="form-group col">
+                    <label asp-for="Reserva.Informacion" class="control-label">Información</label>
+                    <textarea asp-for="Reserva.Informacion" class="form-control"></textarea>
+                    <span asp-validation-for="Reserva.Informacion" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <hr />
+
+            <div class="row mt-5 mb-5">
+                <div class="form-group col">
+                    <label asp-for="Reserva.FechaRegistro" class="control-label">Fecha de Registro</label>
+                    <input type="date" asp-for="Reserva.FechaRegistro" class="form-control" />
+                    <span asp-validation-for="Reserva.FechaRegistro" class="text-danger"></span>
+                </div>
+                <div class="form-group col">
+                    <label asp-for="Reserva.FechaEntrada" class="control-label">Fecha de Entrada</label>
+                    <input type="date" asp-for="Reserva.FechaEntrada" class="form-control" />
+                    <span asp-validation-for="Reserva.FechaEntrada" class="text-danger"></span>
+                </div>
+                <div class="form-group col">
+                    <label asp-for="Reserva.FechaSalida" class="control-label">Fecha de Salida</label>
+                    <input type="date" asp-for="Reserva.FechaSalida" class="form-control" />
+                    <span asp-validation-for="Reserva.FechaSalida" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mt-5 mb-5">
+                <div class="form-group col">
+                    <label asp-for="Reserva.NumeroAdultos" class="control-label">Número de Personas</label>
+                    <input disabled asp-for="Reserva.NumeroAdultos" class="form-control" />
+                    <span asp-validation-for="Reserva.NumeroAdultos" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col">
+                    <label class="control-label">Descuento</label>
+                    <input class="form-control" />
+                </div>
+
+                <div class="form-group col">
+                    <label asp-for="Reserva.MetodoPago" class="control-label">Método de pago</label>
+                    <select asp-for="Reserva.MetodoPago" class="form-control" asp-items="@(new SelectList(ViewBag.Metodo, "IdMp", "Nombre"))">
+                        <option selected disabled>-- Seleccionar --</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <hr />
+            <div class="row mt-5 mb-3">
+                <div class="form-group col-md-3">
+                    <label asp-for="Reserva.DetalleReservaPaquete" class="control-label">Paquete</label>
+                    <select id="paquetesel" class="form-control" asp-items="@(new SelectList(ViewBag.Paquetes, "IdPaquete", "Nombre"))">
+                        <option selected disabled>-- Seleccionar --</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label asp-for="Reserva.DetalleReservaPaquete" class="control-label">Costo</label>
+                    <input id="costopaq" disabled class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-3 mb-5">
+                    <label asp-for="Reserva.DetalleReservaPaquete" class="control-label">Habitacion</label>
+                    <input id="nombrehab" disabled class="form-control" />
+                </div>
+
+                <div class="form-group col-md-3 mb-5">
+                    <label asp-for="Reserva.DetalleReservaPaquete" class="control-label">Tipo de Habitacion</label>
+                    <input id="nombretiphab" disabled class="form-control" />
+                </div>
+            </div>
+            <hr />
+
+            <div class="row mt-5 mb-3">
+                <div class="form-group col-md-3">
+                    <label asp-for="Reserva.DetalleReservaServicios" class="control-label">Servicios</label>
+                    <select id="serviciosel" size="1" class="form-control" asp-items="@(new SelectList(ViewBag.Servicios, "IdServicio", "Nombre"))">
+                        <option selected disabled>-- Seleccionar --</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label asp-for="Reserva.DetalleReservaServicios" class="control-label">Costo</label>
+                    <input id="costoser" disabled class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-3 mt-1 mb-5">
+                    <label asp-for="Reserva.DetalleReservaServicios" class="control-label">Tipo de Servicio</label>
+                    <input id="tiposer" disabled class="form-control" />
+                </div>
+
+                <div class="form-group col-md-3 mt-lg-4">
+                    <input type="submit" value="Agregar Servicio" class="btn btn-primary" />
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="row mt-5 mb-5">
+                <div class="form-group col-md-3">
+                    <label asp-for="Reserva.Iva" class="control-label"></label>
+                    <input disabled asp-for="Reserva.Iva" class="form-control" />
+                    <span asp-validation-for="Reserva.Iva" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="Reserva.Subtotal" class="control-label"></label>
+                    <input disabled asp-for="Reserva.Subtotal" class="form-control" />
+                    <span asp-validation-for="Reserva.Subtotal" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="Reserva.Total" class="control-label"></label>
+                    <input disabled asp-for="Reserva.Total" class="form-control" />
+                    <span asp-validation-for="Reserva.Total" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-1">
+                    <input type="submit" value="Crear" class="btn btn-primary" />
+
+                </div>
+                <div class="form-group col-md-1">
+                    <a class="btn btn-primary" asp-action="Index">Regresar</a>
+                </div>
+            </div>
         </form>
         <br />
-        
+
     </div>
 </div>
 
+<script>
+    $('#paquetesel').change(function () {
+        var idpaquete = $(this).val()
+        $.ajax({
+            url: '/Reservas/obtenerNroPersonas',
+            type: 'GET',
+            data: { id: idhabitacion, },
+            success: function (data) {
+                var costo = data.nro;
+                $('#costoser').val(nro)
+            },
+            error: function () {
+                console.error("Mala suya")
+            }
+        })
+    })
+</script>
 
+<script>
+    $('#paquetesel').change(function () {
+        var idpaquete = $(this).val()
+        $.ajax({
+            url: '/Reservas/obtenerCostoPaquete',
+            type: 'GET',
+            data: { id: idpaquete, },
+            success: function (data) {
+                var costo = data.costo;
+                $('#costopaq').val(costo)
+            },
+            error: function () {
+                console.error("Mala suya")
+            }
+        })
+    })
+</script>
+
+<script>
+    $('#paquetesel').change(function () {
+        var idhabitacion = $(this).val()
+        $.ajax({
+            url: '/Reservas/obtenerNombreHabitacion',
+            type: 'GET',
+            data: { id: idhabitacion, },
+            success: function (data) {
+                var nombre = data.nombre;
+                $('#nombrehab').val(nombre)
+            },
+            error: function () {
+                console.error("Mala suya")
+            }
+        })
+    })
+</script>
+
+<script>
+    $('#serviciosel').change(function () {
+        var idservicio = $(this).val()
+        $.ajax({
+            url: '/Reservas/obtenerCostoServicio',
+            type: 'GET',
+            data: { id: idservicio, },
+            success: function (data) {
+                var costo = data.costo;
+                $('#costoser').val(costo)
+            },
+            error: function () {
+                console.error("Mala suya")
+            }
+        })
+    })
+</script>
+
+<script>
+    $('#serviciosel').change(function () {
+        var idservicio = $(this).val()
+        $.ajax({
+            url: '/Reservas/obtenerTipoServicio',
+            type: 'GET',
+            data: { id: idservicio, },
+            success: function (data) {
+                var costo = data.nombre;
+                $('#tiposer').val(nombre)
+            },
+            error: function () {
+                console.error("Mala suya")
+            }
+        })
+    })
+</script>
+
+<script>
+    $('#serviciosel').change(function () {
+        var idservicio = $(this).val()
+        $.ajax({
+            url: '/Reservas/obtenerTipoHabitacion',
+            type: 'GET',
+            data: { id: idservicio, },
+            success: function (data) {
+                var costo = data.nombre;
+                $('#tipohab').val(nombre)
+            },
+            error: function () {
+                console.error("Mala suya")
+            }
+        })
+    })
+</script>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
