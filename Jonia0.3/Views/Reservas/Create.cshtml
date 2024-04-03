@@ -57,7 +57,7 @@
 
                 <div class="form-group col">
                     <label class="control-label">Descuento</label>
-                    <input id="des" type="number" class="form-control" />
+                    <input id="des" type="number" onkeyup="actualizarTotalPaquete();" class="form-control" />
                 </div>
 
                 <div class="form-group col">
@@ -316,12 +316,19 @@
         });
     }
 
-    function actualizarTotalPaquete(servicios) {
+    $('#paquetesel').change(function () {
+        actualizarTotalPaquete();
+    })
+
+    function actualizarTotalPaquete() {
+
         var costoPaquete = parseFloat($('#costopaq').val());
+        console.log(costoPaquete);
         var totalServicios = 0;
 
-        servicios.forEach(function (servicio) {
+        serviciosSeleccionados.forEach(function (servicio) {
             totalServicios += parseFloat(servicio.Precio);
+
         });
 
         var totalPaquete = costoPaquete + totalServicios;
@@ -333,7 +340,7 @@
         var total_iva = totalPaquete * Iva;
         $('#iva').val(Math.round(total_iva, 0));
 
-        var des = $('#des').val()/100;
+        var des = $('#des').val() / 100 || 0;
         var valor_des = totalPaquete * des;
         var total = (totalPaquete - valor_des) + total_iva;
 
@@ -341,6 +348,7 @@
         $('#iva').val(Math.round(total_iva, 0));
         $('#totalreserva').val(Math.round(total, 0));
     }
+
 
 </script>
 
