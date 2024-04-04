@@ -12,7 +12,7 @@ namespace Jonia0._3.Datos
 {
     public class DBCUsuario
     {
-        private static string CadenaSQL = "Server=MEDAPRCSGFSP667\\SQLEXPRESS; DataBase=Jonia_DB; Trusted_Connection=True; TrustServerCertificate=True";
+        private static string CadenaSQL = "Server=ALAN; DataBase=Jonia_DB; Trusted_Connection=True; TrustServerCertificate=True";
 
 		public static bool Registrar(Usuario usuario)
 

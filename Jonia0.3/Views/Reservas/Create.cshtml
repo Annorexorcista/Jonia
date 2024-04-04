@@ -34,18 +34,15 @@
             <div class="row mt-5 mb-5">
                 <div class="form-group col">
                     <label asp-for="Reserva.FechaRegistro" class="control-label">Fecha de Registro</label>
-                    <input type="date" asp-for="Reserva.FechaRegistro" class="form-control" />
-                    <span asp-validation-for="Reserva.FechaRegistro" class="text-danger"></span>
+                    <input disabled type="date" class="form-control" value="@ViewBag.CurrentDateTime" />
                 </div>
                 <div class="form-group col">
                     <label asp-for="Reserva.FechaEntrada" class="control-label">Fecha de Entrada</label>
-                    <input type="date" asp-for="Reserva.FechaEntrada" class="form-control" />
-                    <span asp-validation-for="Reserva.FechaEntrada" class="text-danger"></span>
+                    <input id="fechaini" type="date" class="form-control" />
                 </div>
                 <div class="form-group col">
                     <label asp-for="Reserva.FechaSalida" class="control-label">Fecha de Salida</label>
-                    <input type="date" asp-for="Reserva.FechaSalida" class="form-control" />
-                    <span asp-validation-for="Reserva.FechaSalida" class="text-danger"></span>
+                    <input id="fechafin" type="date" class="form-control" />
                 </div>
             </div>
 
@@ -55,9 +52,14 @@
                     <input id="nroper" disabled class="form-control" />
                 </div>
 
-                <div class="form-group col">
+                <div class="form-group col-md-2">
                     <label class="control-label">Descuento</label>
                     <input id="des" type="number" onkeyup="actualizarTotalPaquete();" class="form-control" />
+                </div>
+
+                <div class="form-group col-md-2">
+                    <label class="control-label">Días</label>
+                    <input id="dias" type="number" disabled class="form-control" />
                 </div>
 
                 <div class="form-group col">
@@ -322,6 +324,7 @@
 
     function actualizarTotalPaquete() {
 
+        calcular();
         var costoPaquete = parseFloat($('#costopaq').val());
         console.log(costoPaquete);
         var totalServicios = 0;
@@ -344,12 +347,27 @@
         var valor_des = totalPaquete * des;
         var total = (totalPaquete - valor_des) + total_iva;
 
-
         $('#iva').val(Math.round(total_iva, 0));
         $('#totalreserva').val(Math.round(total, 0));
+
     }
 
+</script>
 
+<script>
+    function calcular() {
+        var fechaini = new Date(document.getElementById('fechaini').value);
+        var fechafin = new Date(document.getElementById('fechafin').value);
+        var diasdif = fechafin.getTime() - fechaini.getTime();
+        var contdias = Math.round(diasdif / (1000 * 60 * 60 * 24));
+
+        var costoPaquete = parseFloat($('#costopaq').val());
+        var costoTotal = costoPaquete * contdias;
+
+        $('#costopaq').val(costoTotal);
+
+        document.getElementById('dias').value = contdias;
+    }
 </script>
 
 @section Scripts {

@@ -99,6 +99,9 @@ namespace Jonia0._3.Controllers
         // GET: Reservas/Create
         public IActionResult Create()
         {
+            var currentDateTime = DateTime.Now.ToString("yyyy-MM-dd");
+            ViewBag.CurrentDateTime = currentDateTime;
+
             ViewData["Estado"] = new SelectList(_context.Estados, "IdEstado", "IdEstado");
             var metodo = _context.MetodoPagos.ToList();
             ViewBag.Metodo = metodo;
