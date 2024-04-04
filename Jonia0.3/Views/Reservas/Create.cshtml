@@ -54,7 +54,7 @@
 
                 <div class="form-group col-md-2">
                     <label class="control-label">Descuento</label>
-                    <input id="des" type="number" onkeyup="actualizarTotalPaquete();" class="form-control" />
+                    <input id="des" placeholder="%" type="number" onkeyup="actualizarTotalPaquete();" class="form-control" />
                 </div>
 
                 <div class="form-group col-md-2">
@@ -82,7 +82,7 @@
 
                 <div class="form-group col-md-3">
                     <label asp-for="Reserva.DetalleReservaPaquete" class="control-label">Costo</label>
-                    <input id="costopaq" disabled class="form-control" />
+                    <input id="costopaq" placeholder="$" disabled class="form-control" />
                 </div>
             </div>
             <div class="row">
@@ -108,7 +108,7 @@
 
                 <div class="form-group col-md-3">
                     <label asp-for="Reserva.DetalleReservaServicios" class="control-label">Costo</label>
-                    <input id="costoser" disabled class="form-control" />
+                    <input id="costoser" disabled placeholder="$" onchange="" class="form-control" />
                 </div>
             </div>
             <div class="row">
@@ -141,15 +141,15 @@
             <div class="row mt-5 mb-5">
                 <div class="form-group col-md-3">
                     <label asp-for="Reserva.Iva" class="control-label"></label>
-                    <input id="iva" readonly asp-for="Reserva.Iva" class="form-control" />
+                    <input id="iva" readonly placeholder="$" asp-for="Reserva.Iva" class="form-control" />
                 </div>
                 <div class="form-group col-md-3">
                     <label asp-for="Reserva.Subtotal" class="control-label"></label>
-                    <input id="subtotal-reserva" readonly asp-for="Reserva.Subtotal" class="form-control" />
+                    <input id="subtotal-reserva" placeholder="$" readonly asp-for="Reserva.Subtotal" class="form-control" />
                 </div>
                 <div class="form-group col-md-3">
                     <label asp-for="Reserva.Total" class="control-label"></label>
-                    <input id="totalreserva" readonly asp-for="Reserva.Total" class="form-control" />
+                    <input id="totalreserva" placeholder="$" readonly asp-for="Reserva.Total" class="form-control" />
                 </div>
             </div>
             <div class="row">
@@ -167,211 +167,15 @@
     </div>
 </div>
 
-<script>
-    $('#paquetesel').change(function () {
-        var idhabitacion = $(this).val()
-        $.ajax({
-            url: '/Reservas/obtenerNroPersonas',
-            type: 'GET',
-            data: { id: idhabitacion, },
-            success: function (data) {
-                var nro = data.nro;
-                $('#nroper').val(nro)
-            },
-            error: function () {
-                console.error("Mala suya")
-            }
-        })
-    })
-</script>
-
-<script>
-    $('#paquetesel').change(function () {
-        var idpaquete = $(this).val()
-        $.ajax({
-            url: '/Reservas/obtenerCostoPaquete',
-            type: 'GET',
-            data: { id: idpaquete, },
-            success: function (data) {
-                var costo = data.costo;
-                $('#costopaq').val(costo)
-            },
-            error: function () {
-                console.error("Mala suya")
-            }
-        })
-    })
-</script>
-
-<script>
-    $('#paquetesel').change(function () {
-        var idhabitacion = $(this).val()
-        $.ajax({
-            url: '/Reservas/obtenerNombreHabitacion',
-            type: 'GET',
-            data: { id: idhabitacion, },
-            success: function (data) {
-                var nombre = data.nombre;
-                $('#nombrehab').val(nombre)
-            },
-            error: function () {
-                console.error("Mala suya")
-            }
-        })
-    })
-</script>
-
-<script>
-    $('#paquetesel').change(function () {
-        var idhabitacion = $(this).val()
-        $.ajax({
-            url: '/Reservas/obtenerTipoHabitacion',
-            type: 'GET',
-            data: { id: idhabitacion, },
-            success: function (data) {
-                var nombre = data.nombre;
-                $('#tipohab').val(nombre)
-            },
-            error: function () {
-                console.error("Mala suya")
-            }
-        })
-    })
-</script>
-
-<script>
-    $('#serviciosel').change(function () {
-        var idservicio = $(this).val()
-        $.ajax({
-            url: '/Reservas/obtenerCostoServicio',
-            type: 'GET',
-            data: { id: idservicio, },
-            success: function (data) {
-                var costo = data.costo;
-                $('#costoser').val(costo)
-            },
-            error: function () {
-                console.error("Mala suya")
-            }
-        })
-    })
-</script>
-
-<script>
-    $('#serviciosel').change(function () {
-        var idservicio = $(this).val()
-        $.ajax({
-            url: '/Reservas/obtenerTipoServicio',
-            type: 'GET',
-            data: { id: idservicio, },
-            success: function (data) {
-                var nombre = data.nombre;
-                $('#tiposer').val(nombre)
-            },
-            error: function () {
-                console.error("Mala suya")
-            }
-        })
-    })
-</script>
-
-<script>
-
-    var serviciosSeleccionados = [];
 
 
-    function actualizarInputServicios() {
-        $('#serviciosSeleccionados').val(JSON.stringify(serviciosSeleccionados))
-    }
 
-    $('#add-service').click(function () {
-        var selectedService = $('#serviciosel').find(':selected');
-        var servicio = {
-            IdServicio: selectedService.val(),
-            Nombre: selectedService.text(),
-            Precio: parseFloat($('#costoser').val())
-        };
 
-        serviciosSeleccionados.push(servicio);
-        actualizarTablaServicios(serviciosSeleccionados);
-        actualizarTotalPaquete(serviciosSeleccionados);
-        actualizarInputServicios();
-    });
 
-    function eliminarServicio(btn) {
-        var rowIdx = $(btn).closest('tr').index();
-        serviciosSeleccionados.splice(rowIdx, 1);
-
-        $(btn).closest('tr').remove();
-        actualizarTablaServicios(serviciosSeleccionados);
-        actualizarTotalPaquete(serviciosSeleccionados);
-        actualizarInputServicios();
-    }
-
-    function actualizarTablaServicios(servicios) {
-        var tbody = $('#servicios-table tbody');
-        tbody.empty();
-
-        servicios.forEach(function (servicio) {
-            var row = '<tr><td>' + servicio.Nombre + '</td><td>' + servicio.Precio + '</td><td><button class="btn btn-danger btn-sm" onclick="eliminarServicio(this)" type="button">Eliminar Servicio</button></td></tr>'
-            tbody.append(row);
-        });
-    }
-
-    $('#paquetesel').change(function () {
-        actualizarTotalPaquete();
-    })
-
-    function actualizarTotalPaquete() {
-
-        calcular();
-        var costoPaquete = parseFloat($('#costopaq').val());
-        console.log(costoPaquete);
-        var totalServicios = 0;
-
-        serviciosSeleccionados.forEach(function (servicio) {
-            totalServicios += parseFloat(servicio.Precio);
-
-        });
-
-        var totalPaquete = costoPaquete + totalServicios;
-
-        $('#subtotal-reserva').val(Math.round(totalPaquete, 0));
-
-        const Iva = 0.19;
-
-        var total_iva = totalPaquete * Iva;
-        $('#iva').val(Math.round(total_iva, 0));
-
-        var des = $('#des').val() / 100 || 0;
-        var valor_des = totalPaquete * des;
-        var total = (totalPaquete - valor_des) + total_iva;
-
-        $('#iva').val(Math.round(total_iva, 0));
-        $('#totalreserva').val(Math.round(total, 0));
-
-    }
-
-</script>
-
-<script>
-    function calcular() {
-        var fechaini = new Date(document.getElementById('fechaini').value);
-        var fechafin = new Date(document.getElementById('fechafin').value);
-        var diasdif = fechafin.getTime() - fechaini.getTime();
-        var contdias = Math.round(diasdif / (1000 * 60 * 60 * 24));
-
-        var costoPaquete = parseFloat($('#costopaq').val());
-        var costoTotal = costoPaquete * contdias;
-
-        $('#costopaq').val(costoTotal);
-
-        document.getElementById('dias').value = contdias;
-    }
-</script>
 
 @section Scripts {
     @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        <script src="~/js/calculosreservas.js"></script>
+        
     }
 }
