@@ -14,6 +14,7 @@
     })
 })
 
+
 $('#paquetesel').change(function () {
     var idpaquete = $(this).val()
     $.ajax({
@@ -96,6 +97,47 @@ $('#serviciosel').change(function () {
     })
 })
 
+var paquetesSeleccionados = [];
+
+
+function actualizarInputPaquetes() {
+    $('#paquetesSeleccionados').val(JSON.stringify(paquetesSeleccionados))
+}
+
+$('#add-packet').click(function () {
+    var selectedPacket = $('#paquetesel').find(':selected');
+    var paquete = {
+        IdPaquete: selectedPacket.val(),
+        Nombre: selectedPacket.text(),
+        Precio: parseFloat($('#costopaq').val())
+    };
+
+    paquetesSeleccionados.push(paquete);
+    actualizarTablaPaquetes(paquetesSeleccionados);
+    actualizarTotalPaquete(paquetesSeleccionados);
+    actualizarInputPaquetes();
+});
+
+function eliminarPaquete(btn) {
+    var rowIdx = $(btn).closest('tr').index();
+    paquetesSeleccionados.splice(rowIdx, 1);
+
+    $(btn).closest('tr').remove();
+    actualizarTablaPaquetes(paquetesSeleccionados);
+    actualizarTotalPaquete(paquetesSeleccionados);
+    actualizarInputPaquetes();
+}
+
+function actualizarTablaPaquetes(paquetes) {
+    var tbody = $('#paquetes-table tbody');
+    tbody.empty();
+
+    paquetes.forEach(function (paquete) {
+        var row = '<tr><td>' + paquete.Nombre + '</td><td>' + paquete.Precio + '</td><td><button class="btn btn-danger btn-sm" onclick="eliminarPaquete(this)" type="button">Eliminar Paquete</button></td></tr>'
+        tbody.append(row);
+    });
+}
+
 
 var serviciosSeleccionados = [];
 
@@ -138,45 +180,32 @@ function actualizarTablaServicios(servicios) {
     });
 }
 
-
 function actualizarTotalPaquete() {
-
-    //Calculamos fecha y el número de días
     var fechaini = new Date(document.getElementById('fechaini').value);
     var fechafin = new Date(document.getElementById('fechafin').value);
     var diasdif = fechafin.getTime() - fechaini.getTime();
     var contdias = Math.round(diasdif / (1000 * 60 * 60 * 24));
     document.getElementById('dias').value = contdias;
 
-    var costoPaquete = 0;
-    costoPaquete = $('#costopaq').val();
-    $('#costopaq').val(costoPaquete)
+    var costoPaquete = parseFloat($('#costopaq').val().replace('$', '').trim());
 
     var totalServicios = 0;
-    var subtotal = 0;
-
     serviciosSeleccionados.forEach(function (servicio) {
         totalServicios += parseFloat(servicio.Precio);
-
     });
 
-
-
-    subtotal = (costoPaquete * contdias) + totalServicios;
-
-    $('#subtotal-reserva').val('$ ' + Math.round(subtotal, 0));
+    var subtotal = (costoPaquete * contdias) + totalServicios;
+    $('#subtotal-reserva').val(Math.round(subtotal, 0));
 
     const Iva = 0.19;
-
     var total_iva = subtotal * Iva;
-    $('#iva').val('$ ' + Math.round(total_iva, 0));
+    $('#iva').val(Math.round(total_iva, 0));
 
     var des = $('#des').val() / 100 || 0;
     var valor_des = subtotal * des;
     var total = (subtotal - valor_des) + total_iva;
 
-    $('#totalreserva').val('$ ' + Math.round(total, 0));
-
+    $('#totalreserva').val(Math.round(total, 0));
 }
 
 //En caso de cambiar la fecha, se actualiza el precio sin tener que mover el paquete de nuevo

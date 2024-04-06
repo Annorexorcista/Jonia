@@ -9,6 +9,7 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div>
             <div class="form-group">
                 <label asp-for="NroDocumentoCliente" class="control-label">Cliente</label>
                 <select asp-for="NroDocumentoCliente" class="form-control" asp-items="ViewBag.Clientes">
@@ -22,8 +23,8 @@
                 </select>
             </div>
             <div class="form-group">
-                <label asp-for="DetalleReservaPaquete" class="control-label">Paquete</label>
-                <select asp-for="DetalleReservaPaquete" class="form-control" asp-items="@(new SelectList(ViewBag.Paquetes, "IdPaquete", "Nombre"))">
+                <label asp-for="DetalleReservaPaquetes" class="control-label">Paquete</label>
+                <select asp-for="DetalleReservaPaquetes" class="form-control" asp-items="@(new SelectList(ViewBag.Paquetes, "IdPaquete", "Nombre"))">
                     <option selected disabled>-- Seleccionar --</option>
                 </select>
             </div>
@@ -48,57 +49,45 @@
                 <span asp-validation-for="NumeroAdultos" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="NumeroNinos" class="control-label">Número de niños</label>
-                <input asp-for="NumeroNinos" class="form-control" />
-                <span asp-validation-for="NumeroNinos" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="MetodoPago" class="control-label">Método de pago</label>
                 <select asp-for="MetodoPago" class="form-control" asp-items="@(new SelectList(ViewBag.Metodo, "IdMp", "Nombre"))">
                     <option selected disabled>-- Seleccionar --</option>
                 </select>
             </div>
-            <div class="form-group">
-                <label asp-for="HoraLlegada" class="control-label">Hora de llegada</label>
-                <input type="time" asp-for="HoraLlegada" class="form-control" />
-                <span asp-validation-for="HoraLlegada" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HoraSalida" class="control-label">Hora de Salida</label>
-                <input type="time" asp-for="HoraSalida" class="form-control" />
-                <span asp-validation-for="HoraSalida" class="text-danger"></span>
-                @*             </div>
-                <div class="form-group">
-                <label asp-for="Iva" class="control-label"></label>
-                <input asp-for="Iva" class="form-control" />
-                <span asp-validation-for="Iva" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                <label asp-for="Subtotal" class="control-label"></label>
-                <input asp-for="Subtotal" class="form-control" />
-                <span asp-validation-for="Subtotal" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                <label asp-for="Total" class="control-label"></label>
-                <input asp-for="Total" class="form-control" />
-                <span asp-validation-for="Total" class="text-danger"></span>
-                </div> *@
-                <br />
-                <div class="row">
-                    <div class="form-group col-3">
-                        <input type="submit" value="Guardar" class="btn btn-primary" />
-
-                    </div>
-                    <div class="col">
-                        <a asp-action="Index">Regresar</a>
-                    </div>
-                </div>
-        </form>
-        <br />
-
     </div>
+    <div class="form-group">
+        <label asp-for="Iva" class="control-label"></label>
+        <input asp-for="Iva" class="form-control" />
+        <span asp-validation-for="Iva" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Subtotal" class="control-label"></label>
+        <input asp-for="Subtotal" class="form-control" />
+        <span asp-validation-for="Subtotal" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Total" class="control-label"></label>
+        <input asp-for="Total" class="form-control" />
+        <span asp-validation-for="Total" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="row">
+        <div class="form-group col-3">
+            <input type="submit" value="Guardar" class="btn btn-primary" />
+
+        </div>
+        <div class="col">
+            <a asp-action="Index">Regresar</a>
+        </div>
+    </div>
+    </form>
+    <br />
+
+</div>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

@@ -21,13 +21,7 @@ public partial class Reserva
 
     public int? NumeroAdultos { get; set; }
 
-    public int? NumeroNinos { get; set; }
-
     public int? MetodoPago { get; set; }
-
-    public TimeOnly? HoraLlegada { get; set; }
-
-    public TimeOnly? HoraSalida { get; set; }
 
     public int? Estado { get; set; }
 
@@ -39,7 +33,7 @@ public partial class Reserva
 
     public virtual ICollection<Abono> Abonos { get; set; } = new List<Abono>();
 
-    public virtual DetalleReservaPaquete? DetalleReservaPaquete { get; set; }
+    public virtual ICollection<DetalleReservaPaquete> DetalleReservaPaquetes { get; set; } = new List<DetalleReservaPaquete>();
 
     public virtual ICollection<DetalleReservaServicio> DetalleReservaServicios { get; set; } = new List<DetalleReservaServicio>();
 

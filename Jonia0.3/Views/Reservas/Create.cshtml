@@ -1,30 +1,30 @@
-﻿@model Jonia0._3.Models.ReservaViewModel
+﻿@model Jonia0._3.Models.Reserva
 
 <h4>Reserva</h4>
 <hr />
 <div class="row mt-2 mb-2">
     <div class="col">
-        <form asp-action="Create">
+        <form asp-controller="Reservas" asp-action="Create" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="row">
                 <div class="form-group col">
-                    <label asp-for="Reserva.NroDocumentoCliente" class="control-label">Cliente</label>
-                    <select asp-for="Reserva.NroDocumentoCliente" class="form-control" asp-items="ViewBag.Clientes">
+                    <label asp-for="NroDocumentoCliente" class="control-label">Cliente</label>
+                    <select asp-for="NroDocumentoCliente" class="form-control" asp-items="ViewBag.Clientes">
                         <option selected disabled>-- Seleccionar --</option>
                     </select>
                 </div>
                 <div class="form-group col">
-                    <label asp-for="Reserva.NroDocumentoTrabajador" class="control-label">Encargado</label>
-                    <select asp-for="Reserva.NroDocumentoTrabajador" class="form-control" asp-items="ViewBag.Trabajadores">
+                    <label asp-for="NroDocumentoTrabajador" class="control-label">Encargado</label>
+                    <select asp-for="NroDocumentoTrabajador" class="form-control" asp-items="ViewBag.Trabajadores">
                         <option selected disabled>-- Seleccionar --</option>
                     </select>
                 </div>
 
                 <div class="form-group col">
-                    <label asp-for="Reserva.Informacion" class="control-label">Información</label>
-                    <textarea asp-for="Reserva.Informacion" class="form-control"></textarea>
-                    <span asp-validation-for="Reserva.Informacion" class="text-danger"></span>
+                    <label asp-for="Informacion" class="control-label">Información</label>
+                    <textarea asp-for="Informacion" class="form-control"></textarea>
+                    <span asp-validation-for="Informacion" class="text-danger"></span>
                 </div>
 
             </div>
@@ -33,23 +33,23 @@
 
             <div class="row mt-5 mb-5">
                 <div class="form-group col">
-                    <label asp-for="Reserva.FechaRegistro" class="control-label">Fecha de Registro</label>
-                    <input disabled type="date" class="form-control" value="@ViewBag.CurrentDateTime" />
+                    <label asp-for="FechaRegistro" class="control-label">Fecha de Registro</label>
+                    <input asp-for="FechaRegistro" disabled type="date" class="form-control" name="FechaReg" value="@ViewBag.CurrentDateTime"/>
                 </div>
                 <div class="form-group col">
-                    <label asp-for="Reserva.FechaEntrada" class="control-label">Fecha de Entrada</label>
-                    <input id="fechaini" type="date" class="form-control" />
+                    <label asp-for="FechaEntrada" class="control-label">Fecha de Entrada</label>
+                    <input asp-for="FechaEntrada" id="fechaini" type="date" class="form-control" />
                 </div>
                 <div class="form-group col">
-                    <label asp-for="Reserva.FechaSalida" class="control-label">Fecha de Salida</label>
-                    <input id="fechafin" type="date" class="form-control" />
+                    <label asp-for="FechaSalida" class="control-label">Fecha de Salida</label>
+                    <input asp-for="FechaSalida" id="fechafin" type="date" class="form-control" />
                 </div>
             </div>
 
             <div class="row mt-5 mb-5">
                 <div class="form-group col">
-                    <label asp-for="Reserva.NumeroAdultos" class="control-label">Número de Personas</label>
-                    <input id="nroper" disabled class="form-control" />
+                    <label asp-for="NumeroAdultos" class="control-label">Número de Personas</label>
+                    <input asp-for="NumeroAdultos" id="nroper" disabled class="form-control" name="NumeroAdultos"/>
                 </div>
 
                 <div class="form-group col-md-2">
@@ -63,119 +63,136 @@
                 </div>
 
                 <div class="form-group col">
-                    <label asp-for="Reserva.MetodoPago" class="control-label">Método de pago</label>
-                    <select asp-for="Reserva.MetodoPago" class="form-control" asp-items="@(new SelectList(ViewBag.Metodo, "IdMp", "Nombre"))">
+                    <label asp-for="MetodoPago" class="control-label">Método de pago</label>
+                    <select asp-for="MetodoPago" class="form-control" asp-items="@(new SelectList(ViewBag.Metodo, "IdMp", "Nombre"))">
                         <option selected disabled>-- Seleccionar --</option>
                     </select>
                 </div>
 
             </div>
 
-            <hr />
-            <div class="row mt-5 mb-3">
-                <div class="form-group col-md-3">
-                    <label asp-for="Reserva.DetalleReservaPaquete" class="control-label">Paquete</label>
-                    <select id="paquetesel" class="form-control" asp-items="@(new SelectList(ViewBag.Paquetes, "IdPaquete", "Nombre"))">
-                        <option selected disabled>-- Seleccionar --</option>
-                    </select>
-                </div>
-
-                <div class="form-group col-md-3">
-                    <label asp-for="Reserva.DetalleReservaPaquete" class="control-label">Costo</label>
-                    <input id="costopaq" placeholder="$" disabled class="form-control" />
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-md-3 mb-5">
-                    <label asp-for="Reserva.DetalleReservaPaquete" class="control-label">Habitacion</label>
-                    <input id="nombrehab" disabled class="form-control" />
-                </div>
-
-                <div class="form-group col-md-3 mb-5">
-                    <label asp-for="Reserva.DetalleReservaPaquete" class="control-label">Tipo de Habitacion</label>
-                    <input id="tipohab" disabled class="form-control" />
-                </div>
-            </div>
             <hr />
 
             <div class="row mt-5 mb-3">
                 <div class="form-group col-md-3">
-                    <label asp-for="Reserva.DetalleReservaServicios" class="control-label">Servicios</label>
-                    <select id="serviciosel" size="1" class="form-control" asp-items="@(new SelectList(ViewBag.Servicios, "IdServicio", "Nombre"))">
+                    <label asp-for="DetalleReservaPaquetes" class="control-label">Paquete</label>
+                    <select id="paquetesel" size="1" class="form-control" asp-items="@(new SelectList(ViewBag.Paquetes, "IdPaquete", "Nombre"))">
                         <option selected disabled>-- Seleccionar --</option>
                     </select>
                 </div>
 
                 <div class="form-group col-md-3">
-                    <label asp-for="Reserva.DetalleReservaServicios" class="control-label">Costo</label>
-                    <input id="costoser" disabled placeholder="$" onchange="" class="form-control" />
+                    <label asp-for="DetalleReservaPaquetes" class="control-label">Costo</label>
+                    <input asp-for="DetalleReservaPaquetes" id="costopaq" disabled placeholder="$" onchange="" class="form-control" />
                 </div>
             </div>
             <div class="row">
-                <div class="form-group col-md-3 mt-1 mb-5">
-                    <label asp-for="Reserva.DetalleReservaServicios" class="control-label">Tipo de Servicio</label>
-                    <input id="tiposer" disabled class="form-control" />
+
+                <div class="row">
+                    <div class="form-group col-md-3 mb-5">
+                        <label asp-for="DetalleReservaPaquetes" class="control-label">Habitacion</label>
+                        <input asp-for="DetalleReservaPaquetes" id="nombrehab" disabled class="form-control" />
+                    </div>
+
+                    <div class="form-group col-md-3 mt-1 mb-5">
+                        <label asp-for="DetalleReservaPaquetes" class="control-label">Tipo de Habitacion</label>
+                        <input asp-for="DetalleReservaPaquetes" id="tipohab" disabled class="form-control" />
+                    </div>
+
+                    <div class="col-md-3">
+                        <table id="paquetes-table" class="table table-striped position-relative bottom-50" border="1">
+                            <thead>
+                                <tr>
+                                    <th>Paquetes</th>
+                                    <th>Costo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Los servicios seleccionados se agregarán aquí -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-3 mb-3">
+                        <button id="add-packet" type="button" class="btn btn-primary">Añadir Paquete</button>
+                        <input id="paquetesSeleccionados" type="hidden" name="paquetesSeleccionados" />
+                    </div>
                 </div>
 
-                <div class="form-group col-md-3 mt-lg-4">
-                    <button id="add-service" type="button" class="btn btn-primary">Añadir Servicio</button>
-                    <input id="serviciosSeleccionados" type="hidden" name="serviciosSeleccionados" />
-                </div>
-                <div class="col-md-4 star-50">
-                    <table id="servicios-table" class="table table-striped position-relative bottom-50" border="1">
-                        <thead>
-                            <tr>
-                                <th>Servicio</th>
-                                <th>Costo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Los servicios seleccionados se agregarán aquí -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                <hr />
 
-            <hr />
+                <div class="row mt-5 mb-3">
+                    <div class="form-group col-md-3">
+                        <label asp-for="DetalleReservaServicios" class="control-label">Servicios</label>
+                        <select id="serviciosel" size="1" class="form-control" asp-items="@(new SelectList(ViewBag.Servicios, "IdServicio", "Nombre"))">
+                            <option selected disabled>-- Seleccionar --</option>
+                        </select>
+                    </div>
 
-            <div class="row mt-5 mb-5">
-                <div class="form-group col-md-3">
-                    <label asp-for="Reserva.Iva" class="control-label"></label>
-                    <input id="iva" readonly placeholder="$" asp-for="Reserva.Iva" class="form-control" />
+                    <div class="form-group col-md-3">
+                        <label asp-for="DetalleReservaServicios" class="control-label">Costo</label>
+                        <input asp-for="DetalleReservaServicios" id="costoser" disabled placeholder="$" onchange="" class="form-control" />
+                    </div>
                 </div>
-                <div class="form-group col-md-3">
-                    <label asp-for="Reserva.Subtotal" class="control-label"></label>
-                    <input id="subtotal-reserva" placeholder="$" readonly asp-for="Reserva.Subtotal" class="form-control" />
-                </div>
-                <div class="form-group col-md-3">
-                    <label asp-for="Reserva.Total" class="control-label"></label>
-                    <input id="totalreserva" placeholder="$" readonly asp-for="Reserva.Total" class="form-control" />
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-md-1">
-                    <input type="submit" value="Crear" class="btn btn-primary" />
+                <div class="row">
+                    <div class="form-group col-md-3 mt-1 mb-5">
+                        <label asp-for="DetalleReservaServicios" class="control-label">Tipo de Servicio</label>
+                        <input asp-for="DetalleReservaServicios" id="tiposer" disabled class="form-control" />
+                    </div>
 
+                    <div class="form-group col-md-3 mt-lg-4">
+                        <button id="add-service" type="button" class="btn btn-primary">Añadir Servicio</button>
+                        <input id="serviciosSeleccionados" type="hidden" name="serviciosSeleccionados" />
+                    </div>
+                    <div class="col-md-4 star-50">
+                        <table id="servicios-table" class="table table-striped position-relative bottom-50" border="1">
+                            <thead>
+                                <tr>
+                                    <th>Servicio</th>
+                                    <th>Costo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Los servicios seleccionados se agregarán aquí -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <div class="form-group col-md-1">
-                    <a class="btn btn-primary" asp-action="Index">Regresar</a>
+
+                <hr />
+
+                <div class="row mt-5 mb-5">
+                    <div class="form-group col-md-3">
+                        <label asp-for="Iva" class="control-label"></label>
+                        <input id="iva" readonly placeholder="$" asp-for="Iva" class="form-control" />
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label asp-for="Subtotal" class="control-label"></label>
+                        <input id="subtotal-reserva" placeholder="$" readonly asp-for="Subtotal" class="form-control" />
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label asp-for="Total" class="control-label"></label>
+                        <input id="totalreserva" readonly asp-for="Total" class="form-control" />
+                    </div>
                 </div>
-            </div>
+                <div class="row">
+                    <div class="form-group col-md-1">
+                        <input type="submit" value="Crear" class="btn btn-primary" />
+                    </div>
+                    <div class="form-group col-md-1">
+                        <a class="btn btn-primary" asp-action="Index">Regresar</a>
+                    </div>
+                </div>
         </form>
         <br />
 
     </div>
 </div>
 
-
-
-
-
-
-
 @section Scripts {
     @{
         <script src="~/js/calculosreservas.js"></script>
-        
+
     }
 }

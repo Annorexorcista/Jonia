@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Jonia0._3.Models;
+using Newtonsoft.Json;
 
 namespace Jonia0._3.Controllers
 {
@@ -29,8 +30,8 @@ namespace Jonia0._3.Controllers
 
             var reservas = from reserva in _context.Reservas select reserva;
 
-            if(!String.IsNullOrEmpty(buscar))
-                reservas = reservas.Where(s=>s.Informacion!.Contains(buscar));
+            if (!String.IsNullOrEmpty(buscar))
+                reservas = reservas.Where(s => s.Informacion!.Contains(buscar));
 
             return View(await reservas.ToListAsync());
         }
@@ -96,6 +97,7 @@ namespace Jonia0._3.Controllers
             return View(reserva);
         }
 
+        [HttpGet]
         // GET: Reservas/Create
         public IActionResult Create()
         {
@@ -103,6 +105,7 @@ namespace Jonia0._3.Controllers
             ViewBag.CurrentDateTime = currentDateTime;
 
             ViewData["Estado"] = new SelectList(_context.Estados, "IdEstado", "IdEstado");
+
             var metodo = _context.MetodoPagos.ToList();
             ViewBag.Metodo = metodo;
 
@@ -134,36 +137,57 @@ namespace Jonia0._3.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdReserva,NroDocumentoCliente,NroDocumentoTrabajador,Informacion,FechaRegistro,FechaEntrada,FechaSalida,NumeroAdultos,NumeroNinos,MetodoPago,HoraLlegada,HoraSalida,Estado,Iva,Subtotal,Total")] Reserva reserva)
+        public async Task<IActionResult> Create(Reserva reserva, string paquetesSeleccionados, string serviciosSeleccionados)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(reserva);
+                _context.SaveChanges();
+
+                var listaPaquetes = JsonConvert.DeserializeObject<List<Paquete>>(paquetesSeleccionados);
+                var listaServicios = JsonConvert.DeserializeObject<List<Servicio>>(serviciosSeleccionados);
+
+                foreach (var s in listaPaquetes)
+                {
+                    var reservapaquete = new DetalleReservaPaquete()
+                    {
+                        IdReserva = reserva.IdReserva,
+                        IdPaquete = s.IdPaquete,
+                        Precio = s.Precio
+                    };
+                    _context.DetalleReservaPaquetes.Add(reservapaquete);
+                }
+
+                foreach (var p in listaServicios)
+                {
+                    var reservaservicio = new DetalleReservaServicio()
+                    {
+                        IdReserva = reserva.IdReserva,
+                        IdServicio = p.IdServicio,
+                        Precio = p.Precio
+                    };
+                    _context.DetalleReservaServicios.Add(reservaservicio);
+                }
+
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
+
+            foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+            {
+                ModelState.AddModelError("", error.ErrorMessage);
+            }
+
             ViewData["Estado"] = new SelectList(_context.Estados, "IdEstado", "IdEstado", reserva.Estado);
             ViewData["MetodoPago"] = new SelectList(_context.MetodoPagos, "IdMp", "IdMp", reserva.MetodoPago);
-
-            var clientes = _context.Clientes.Select(u => new
-            {
-                Id = u.NroDocumento,
-                NombreCompleto = $"{u.Nombre} {u.Apellido}"
-            }).ToList();
-            ViewBag.Clientes = new SelectList(clientes, "Id", "NombreCompleto", reserva.NroDocumentoCliente);
-
-            var trabajadores = _context.Usuarios.Select(u => new
-            {
-                Id = u.NroDocumento,
-                NombreCompleto = $"{u.Nombre} {u.Apellido}" // Concatenar nombre y apellido
-            }).ToList();
-
+            var metodo = _context.MetodoPagos.ToList();
+            ViewBag.Metodo = metodo;
+            var servicio = _context.Servicios.Include(s => s.TipoServicioNavigation).Where(s => s.TipoServicio != 1).ToList();
+            ViewBag.Servicios = servicio;
             var paquete = _context.Paquetes.ToList();
             ViewBag.Paquetes = paquete;
 
-
-            ViewBag.Trabajadores = new SelectList(trabajadores, "Id", "NombreCompleto", reserva.NroDocumentoTrabajador); // Marcar el trabajador seleccionado si hay un error
             return View(reserva);
         }
 

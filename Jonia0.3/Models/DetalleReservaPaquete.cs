@@ -5,7 +5,9 @@ namespace Jonia0._3.Models;
 
 public partial class DetalleReservaPaquete
 {
-    public int IdDetalle { get; set; }
+    public int IdRp { get; set; }
+
+    public int? IdReserva { get; set; }
 
     public int? IdPaquete { get; set; }
 
@@ -13,7 +15,7 @@ public partial class DetalleReservaPaquete
 
     public decimal? Precio { get; set; }
 
-    public virtual Reserva IdDetalleNavigation { get; set; } = null!;
-
     public virtual Paquete? IdPaqueteNavigation { get; set; }
+
+    public virtual Reserva? IdReservaNavigation { get; set; }
 }

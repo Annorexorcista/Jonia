@@ -17,7 +17,7 @@ public partial class Cliente
 
     public string? Contrasena { get; set; }
 
-    public string? ConfirmarClave { get; set; }
+    public string? Confirmarclave { get; set; }
 
     public string? Celular { get; set; }
 
