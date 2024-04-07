@@ -3,7 +3,7 @@
 <h1>Reservas</h1>
 
 <p>
-    <a asp-action="Create">Crear</a>
+    <a class="btn btn-dark" asp-action="Create">Crear</a>
 </p>
 <table class="table">
     <thead>
@@ -40,41 +40,43 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NroDocumentoCliente)
-            </td>
-            <td>
-                @Html.DisplayFor(modeItem => item.NroDocumentoTrabajador)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaRegistro)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaEntrada)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaSalida)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumeroAdultos)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Total)
-            </td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NroDocumentoCliente)
+                </td>
+                <td>
+                    @Html.DisplayFor(modeItem => item.NroDocumentoTrabajador)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaRegistro)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaEntrada)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaSalida)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumeroAdultos)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Total)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.MetodoPagoNavigation.Nombre)
                 </td>
-            <td>
+                <td>
                     @Html.DisplayFor(modelItem => item.EstadoNavigation.Nombre)
-            </td>
+                </td>
 
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdReserva">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.IdReserva">Detalles</a> |
-            </td>
-        </tr>
-}
+                <td>
+                    <a class="btn btn-dark btn-sm" asp-action="Edit" asp-route-id="@item.IdReserva">Editar</a> |
+                    <a class="btn btn-dark btn-sm" asp-action="Details" asp-route-id="@item.IdReserva">Detalles</a> |
+                    <a class="btn btn-dark btn-sm" asp-controller="Abonos" asp-action="Index">Abonos</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

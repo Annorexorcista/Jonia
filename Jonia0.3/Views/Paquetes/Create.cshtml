@@ -5,68 +5,76 @@
 <h4>Paquete</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-controller="Paquetes" asp-action="Create" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+    <form asp-controller="Paquetes" asp-action="Create" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col form-group">
                 <label asp-for="Paquete.Nombre" class="control-label"></label>
                 <input asp-for="Paquete.Nombre" class="form-control" />
                 <span asp-validation-for="Paquete.Nombre" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="col form-group">
                 <label asp-for="Paquete.Descripcion" class="control-label"></label>
                 <textarea asp-for="Paquete.Descripcion" class="form-control"></textarea>
                 <span asp-validation-for="Paquete.Descripcion" class="text-danger"></span>
             </div>
-            <div class="form-group">
+        </div>
+        <div class="row">
+            <div class="col form-group">
                 <label asp-for="Paquete.Precio" class="control-label">Costo Total</label>
                 <input readonly id="total-paquete" asp-for="Paquete.Precio" class="form-control" />
                 <span asp-validation-for="Paquete.Precio" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="col form-group">
                 <label class="control-label">Habitación</label>
                 <select id="habitacionsel" class="form-control" asp-for="Paquete.IdHabitacion" asp-items="@(new SelectList(ViewBag.Tipo, "IdHabitacion", "Nombre"))">
-                   <option selected disabled>-- Seleccionar --</option>
+                    <option selected disabled>-- Seleccionar --</option>
                 </select>
             </div>
-            <div class="form-group">
+        </div>
+        <div class="row">
+            <div class="col form-group">
                 <label class="control-label">Costo Habitación</label>
-                <input id="costohab" disabled  class="form-control" />
-                <span  class="text-danger"></span>
+                <input id="costohab" disabled class="form-control" />
+                <span class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="col form-group">
                 <label class="control-label">Servicios</label>
                 <select id="serviciosel" class="form-control" asp-items="@(new SelectList(ViewBag.Serv, "IdServicio", "Nombre", "Precio"))">
                     <option selected disabled>-- Seleccionar --</option>
                 </select>
             </div>
-            <div class="form-group">
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
                 <label class="control-label">Costo Servicio</label>
-                <input id="costoser" disabled  class="form-control" />
-                
+                <input id="costoser" disabled class="form-control" />
+
             </div>
-            <br />
-            <div class="mt-3 mb-3">
-            <button id="add-service" class="btn btn-success" type="button">Añadir Servicio</button>
-            <input type="hidden" name="serviciosSeleccionados" id="serviciosSeleccionados"/>
-            <table id="servicios-table" class="table-bordered">
-                <thead>
-                    <tr>
-                        <th>Servicio</th>
-                        <th>Costo</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Los servicios seleccionados se agregarán aquí -->
-                </tbody>
-            </table>
-            <br />
-            <div class="form-group">
-                <input type="submit" value="Crear" class="btn btn-primary" /> <a asp-action="Index">Regresar</a>
+            <div class="col mt-3 mb-3">
+                <button id="add-service" class="btn btn-dark" type="button">Añadir Servicio</button>
+                <input type="hidden" name="serviciosSeleccionados" id="serviciosSeleccionados" />
             </div>
-        </form>
-        <br />
-    </div>
+            <div class="col mt-3">
+                <table id="servicios-table" class="table">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Servicio</th>
+                            <th>Costo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Los servicios seleccionados se agregarán aquí -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Crear" class="btn btn-dark" /> 
+            <a class="btn btn-secondary" asp-action="Index">Regresar</a>
+        </div>
+    </form>
+    <br />
 </div>
 
 
@@ -74,5 +82,7 @@
 <script src="~/js/costosPaquetes.js"></script>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

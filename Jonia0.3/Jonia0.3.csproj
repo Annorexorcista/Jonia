@@ -8,6 +8,28 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\img\Green_Leaf_Nature_Logo_Design-removebg-preview.ico" />
+    <None Include="wwwroot\img\Green_Leaf_Nature_Logo_Design-removebg-preview.png" />
+    <None Include="wwwroot\img\ig_logo.png" />
+    <None Include="wwwroot\img\logo_fc.png" />
+    <None Include="wwwroot\img\logo_x.png" />
+    <None Include="wwwroot\img\paquete_1.jpg" />
+    <None Include="wwwroot\img\paquete_2.jpg" />
+    <None Include="wwwroot\img\photo-profile_2.jpg" />
+    <None Include="wwwroot\img\quienes_1.jpg" />
+    <None Include="wwwroot\img\quienes_2.jpg" />
+    <None Include="wwwroot\img\quienes_3.jpg" />
+    <None Include="wwwroot\img\quienes_4.jpg" />
+    <None Include="wwwroot\img\quienes_5.jpg" />
+    <None Include="wwwroot\img\servicios_1.jpg" />
+    <None Include="wwwroot\img\servicios_2.jpg" />
+    <None Include="wwwroot\img\servicios_3.jpg" />
+    <None Include="wwwroot\img\servicios_4.jpg" />
+    <None Include="wwwroot\img\servicios_5.png" />
+    <None Include="wwwroot\img\servicios_6.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MailKit" Version="4.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.3" />

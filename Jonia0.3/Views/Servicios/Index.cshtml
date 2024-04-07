@@ -8,7 +8,7 @@
 <h1>Servicios</h1>
 
 <p>
-    <a asp-action="Create">Crear</a>
+    <a class="btn btn-dark" asp-action="Create">Crear</a>
 </p>
 <table class="table">
     <thead>
@@ -52,9 +52,8 @@
                 @Html.DisplayFor(modelItem => item.TipoServicioNavigation.Nombre)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.IdServicio">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.IdServicio">Detalles</a> |
-                @* <a asp-action="Delete" asp-route-id="@item.IdServicio">Eliminar</a> *@
+                <a class="btn btn-dark" asp-action="Edit" asp-route-id="@item.IdServicio">Editar</a> |
+                <a class="btn btn-dark" asp-action="Details" asp-route-id="@item.IdServicio">Detalles</a> |
             </td>
         </tr>
 }

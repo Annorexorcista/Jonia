@@ -7,7 +7,7 @@
 <h1>Roles</h1>
 
 <p>
-    <a asp-action="Create">Crear</a>
+    <a class="btn btn-dark mt-3"  asp-action="Create">Crear</a>
 </p>
 <table class="table">   
     <thead>
@@ -35,13 +35,13 @@
             <td>
                     @if (item.IdRol != 1)
                     {
-                        <a asp-action="Edit" asp-route-id="@item.IdRol">Editar</a>
+                        <a class="btn btn-dark" asp-action="Edit" asp-route-id="@item.IdRol">Editar</a>
                     }
                     |
                    
-                <a asp-action="Details" asp-route-id="@item.IdRol">Detalles</a> |
+                <a class="btn btn-dark" asp-action="Details" asp-route-id="@item.IdRol">Detalles</a> |
                 @if (item.IdRol != 1){
-                <a asp-action="Delete" asp-route-id="@item.IdRol">Eliminar</a>
+                        <a class="btn btn-dark" asp-action="Delete" asp-route-id="@item.IdRol">Eliminar</a>
                     }
             </td>
         </tr>

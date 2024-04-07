@@ -9,7 +9,7 @@
 <h1>Usuarios</h1>
 
 <p>
-    <a asp-action="Create">Crear</a>
+    <a class="btn btn-dark" asp-action="Create">Crear</a>
 </p>
 <table class="table">
     <thead>
@@ -71,8 +71,8 @@
                 @Html.DisplayFor(modelItem => item.IdRolNavigation.Nombre)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.NroDocumento">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.NroDocumento">Detalles</a>
+                <a class="btn btn-dark" asp-action="Edit" asp-route-id="@item.NroDocumento">Editar</a> |
+                <a class="btn btn-dark" asp-action="Details" asp-route-id="@item.NroDocumento">Detalles</a>
             </td>
         </tr>
 }

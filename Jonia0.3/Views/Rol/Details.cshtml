@@ -13,8 +13,8 @@
             @Html.DisplayFor(model => model.Nombre)
         </dd>
     </dl>
-    <table class="table-sm border">
-        <thead>
+    <table class="table">
+        <thead class="table-light">
             <tr>
                 <th>PERMISOS</th>
             </tr>
@@ -33,6 +33,5 @@
 </div>
 <br />
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.IdRol">Editar</a> |
-    <a asp-action="Index">Regresar</a>
+    <a class="btn btn-secondary mb-3" asp-action="Index">Regresar</a>
 </div>
