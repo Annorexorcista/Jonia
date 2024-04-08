@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Jonia0._3.Models.Abono>
+
+
+@section Scripts {
+    <script src="~/js/CambioEstado.js"></script>
+}
+<h1>Abonos</h1>
+
+<p>
+    <a class="btn btn-dark" asp-action="Create">Crear</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Cliente
+            </th>
+            <th>
+                Fecha de Registro
+            </th>
+            <th>
+                Deuda
+            </th>
+            <th>
+                Total Abonado
+            </th>
+            <th>
+                Total Pendiente
+            </th>
+            <th>
+                Porcentaje
+            </th>
+            <th>
+                Estado
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdReservaNavigation.NroDocumentoCliente)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaRegistro)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ValorDeuda)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalAbonado)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalPendiente)
+                </td>
+
+                <td>
+                    @(item.Porcentaje) %
+                </td>
+                <td>
+
+                    <div class="form-check form-switch fs-4" data-url="@Url.Action("ActualizarEstado", "Abonos")" data-abonoid="@item.IdAbono">
+                        <input @(item.Estado == true ? "checked" : "") type="checkbox" class="form-check-input" id="estado" data-abonoid="@item.IdAbono" />
+                    </div>
+
+                <td>
+                    <a class="btn btn-dark" asp-action="Details" asp-route-id="@item.IdAbono">Detalles</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

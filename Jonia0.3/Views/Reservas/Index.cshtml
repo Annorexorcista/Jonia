@@ -38,7 +38,9 @@
 
             <th></th>
         </tr>
+
     </thead>
+    
     <tbody>
         @foreach (var item in Model)
         {
@@ -70,11 +72,12 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.EstadoNavigation.Nombre)
                 </td>
+                
 
                 <td>
                     <a class="btn btn-dark btn-sm" asp-action="Edit" asp-route-id="@item.IdReserva">Editar</a> |
                     <a class="btn btn-dark btn-sm" asp-action="Details" asp-route-id="@item.IdReserva">Detalles</a> |
-                    <a class="btn btn-dark btn-sm" asp-controller="Abonos" asp-action="Index">Abonos</a>
+                    <a class="btn btn-dark btn-sm" href="@Url.Action("IndividualIndex", "Abonos", new { idReserva = item.IdReserva })">Abonos</a>
                 </td>
             </tr>
         }

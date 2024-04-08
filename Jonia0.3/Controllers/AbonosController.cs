@@ -24,6 +24,30 @@ namespace Jonia0._3.Controllers
             var joniaDbContext = _context.Abonos.Include(a => a.IdReservaNavigation);
             return View(await joniaDbContext.ToListAsync());
         }
+        [HttpGet]
+        public IActionResult IndividualIndex(int idReserva)
+        {
+
+            var abonosReserva = _context.Abonos
+         .Where(a => a.IdReserva == idReserva)
+         .Include(a => a.IdReservaNavigation)
+         .ToList();
+            foreach (var abono in abonosReserva)
+            {
+                abono.Porcentaje = Math.Round((double)abono.Porcentaje * 100, 2);
+            }
+
+            return View(abonosReserva);
+
+        }
+
+        public IActionResult obtenerDeuda(int idReserva)
+        {
+            var deuda = _context.Reservas.Where(s => s.IdReserva == idReserva).Select(s => s.Total).FirstOrDefault();
+            ViewBag.IdReserva = idReserva;
+
+            return Json(new { costo = deuda });
+        }
 
         [HttpPost]
         public IActionResult ActualizarEstado(int? id, bool estado)
@@ -56,6 +80,8 @@ namespace Jonia0._3.Controllers
             var abono = await _context.Abonos
                 .Include(a => a.IdReservaNavigation)
                 .FirstOrDefaultAsync(m => m.IdAbono == id);
+                abono.Porcentaje = Math.Round((double)abono.Porcentaje * 100, 2);
+            
             if (abono == null)
             {
                 return NotFound();
@@ -65,10 +91,19 @@ namespace Jonia0._3.Controllers
         }
 
         // GET: Abonos/Create
-        public IActionResult Create()
+        public IActionResult Create(int idReserva)
         {
-            ViewData["IdReserva"] = new SelectList(_context.Reservas, "IdReserva", "IdReserva");
-            return View();
+            var currentDateTime = DateTime.Now.ToString("yyyy-MM-dd");
+            ViewBag.CurrentDateTime = currentDateTime;
+
+            var abono = new Abono
+            {
+                // Asigna el ID de la reserva al nuevo abono
+                IdReserva = idReserva,
+                // Otros campos del abono que puedas inicializar aquí
+            };
+
+            return View(abono);
         }
 
         // POST: Abonos/Create
@@ -80,6 +115,7 @@ namespace Jonia0._3.Controllers
         {
             if (ModelState.IsValid)
             {
+                abono.FechaRegistro = DateOnly.FromDateTime(DateTime.Now);
                 _context.Add(abono);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
