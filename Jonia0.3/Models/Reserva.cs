@@ -19,7 +19,7 @@ public partial class Reserva
 
     public DateOnly? FechaSalida { get; set; }
 
-    public int? NumeroAdultos { get; set; }
+    public int? NumeroPersonas { get; set; }
 
     public int? MetodoPago { get; set; }
 

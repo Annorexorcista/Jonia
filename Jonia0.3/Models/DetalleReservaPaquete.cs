@@ -11,8 +11,6 @@ public partial class DetalleReservaPaquete
 
     public int? IdPaquete { get; set; }
 
-    public int? Cantidad { get; set; }
-
     public decimal? Precio { get; set; }
 
     public virtual Paquete? IdPaqueteNavigation { get; set; }
