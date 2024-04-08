@@ -49,11 +49,13 @@ namespace Jonia0._3.Datos
 			
 
                 return respuesta;
+
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+
         }
 
         public static Usuario Validar(string correo, string contrasena)

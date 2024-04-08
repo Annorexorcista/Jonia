@@ -111,8 +111,8 @@ namespace Jonia0._3.Controllers
                 EnviarCorreoConfirmacion(usuario.Correo, usuario.Nombre, usuario.Token);
                 return View();
             }
-
-            return View();
+            return RedirectToAction(nameof(Index));
+            
         }
 
         private void EnviarCorreoConfirmacion(string correo, string nombre, string token)
