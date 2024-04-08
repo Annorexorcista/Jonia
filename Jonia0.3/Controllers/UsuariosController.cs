@@ -73,7 +73,7 @@ namespace Jonia0._3.Controllers
         public IActionResult Create()
         {
             ViewBag.TipoDocumentos = _context.TipoDocumentos.ToList();
-            ViewBag.Rol = _context.Rols.ToList();
+            
             // Otra lógica de inicialización si es necesario
             return View();
         }
@@ -82,6 +82,9 @@ namespace Jonia0._3.Controllers
         public ActionResult Create(Usuario usuario)
 
         {
+            var roles = _context.Rols; 
+            ViewBag.Roles = roles;
+
             if (usuario.Contrasena != usuario.Confirmarclave)
             {
                 ViewBag.Nombre = usuario.Nombre;

@@ -23,7 +23,7 @@ public partial class Cliente
 
     public string? Direccion { get; set; }
 
-    public DateTime? FechaNacimiento { get; set; }
+    public DateOnly? FechaNacimiento { get; set; }
 
     public int? IdRol { get; set; }
 

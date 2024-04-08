@@ -68,6 +68,15 @@
                     <label class="control-label">Fecha de nacimiento</label>
                     <input class="form-control" type="date" placeholder="Fehca de nacimiento" name="FechaNacimiento" value="@(ViewBag.FechaNacimiento != null ? ViewBag.FechaNacimiento: "")" required>
                 </div>
+                <div class="col-md-6 form-group">
+                    <label class="control-label">Rol</label>
+                    <select class="form-control" name="IdRol" required>
+                        <option disabled selected>Seleccione el Rol</option>
+                        <option value="1">Administrador</option>
+                        <option value="3">Trabajador</option>
+                    </select>
+                </div>
+                
 
                 @if (ViewBag.Mensaje != null)
                 {

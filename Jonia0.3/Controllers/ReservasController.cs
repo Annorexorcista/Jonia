@@ -141,6 +141,7 @@ namespace Jonia0._3.Controllers
         {
             if (ModelState.IsValid)
             {
+                reserva.FechaRegistro = DateOnly.FromDateTime(DateTime.Now);
                 _context.Add(reserva);
                 _context.SaveChanges();
 

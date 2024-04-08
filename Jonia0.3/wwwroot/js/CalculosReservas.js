@@ -103,37 +103,32 @@ var paquetesSeleccionados = [];
 function actualizarInputPaquetes() {
     $('#paquetesSeleccionados').val(JSON.stringify(paquetesSeleccionados))
 }
+var botonDesactivado = false;
 
 $('#add-packet').click(function () {
-    var selectedPacket = $('#paquetesel').find(':selected');
-    var paquete = {
-        IdPaquete: selectedPacket.val(),
-        Nombre: selectedPacket.text(),
-        Precio: parseFloat($('#costopaq').val())
-    };
-
-    paquetesSeleccionados.push(paquete);
-    actualizarTablaPaquetes(paquetesSeleccionados);
-    actualizarTotalPaquete(paquetesSeleccionados);
-    actualizarInputPaquetes();
+    if (!botonDesactivado) {
+        var selectedPacket = $('#paquetesel').find(':selected');
+        var paquete = {
+            IdPaquete: selectedPacket.val(),
+            Nombre: selectedPacket.text(),
+            Precio: parseFloat($('#costopaq').val())
+        };
+        paquetesSeleccionados.push(paquete);
+        actualizarTablaPaquetes(paquetesSeleccionados);
+        actualizarTotalPaquete(paquetesSeleccionados);
+        actualizarInputPaquetes();
+        botonDesactivado = true; // Marcar el botón como desactivado después de hacer clic
+        $('#add-packet').prop('disabled', true); // Desactivar el botón
+    }
 });
-
-function eliminarPaquete(btn) {
-    var rowIdx = $(btn).closest('tr').index();
-    paquetesSeleccionados.splice(rowIdx, 1);
-
-    $(btn).closest('tr').remove();
-    actualizarTablaPaquetes(paquetesSeleccionados);
-    actualizarTotalPaquete(paquetesSeleccionados);
-    actualizarInputPaquetes();
-}
 
 function actualizarTablaPaquetes(paquetes) {
     var tbody = $('#paquetes-table tbody');
     tbody.empty();
 
     paquetes.forEach(function (paquete) {
-        var row = '<tr><td>' + paquete.Nombre + '</td><td>' + paquete.Precio + '</td><td><button class="btn btn-danger btn-sm" onclick="eliminarPaquete(this)" type="button">Eliminar Paquete</button></td></tr>'
+        var solounpaquete = 1;
+        var row = '<tr><td>' + paquete.Nombre + '</td><td>' + paquete.Precio + '</td></tr>'
         tbody.append(row);
     });
 }

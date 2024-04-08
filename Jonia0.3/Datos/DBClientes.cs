@@ -15,7 +15,7 @@ namespace Jonia0._3.Datos
 {
     public class DBClientes
     {
-        private static string CadenaSQL = "Server=ALAN; DataBase=Jonia_DB; Trusted_Connection=True; TrustServerCertificate=True";
+        private static string CadenaSQL = "Server=DESKTOP-T60HGRI; DataBase=Jonia_DB; Trusted_Connection=True; TrustServerCertificate=True";
 
         public static bool Registrar(Cliente cliente)
 
@@ -28,8 +28,8 @@ namespace Jonia0._3.Datos
 
                 {
 
-                    string query = "insert into clientes (Nro_Documento,Tipo_Documento,Nombre,Apellido,Correo,Contrasena,Celular,Direccion,Fecha_Nacimiento,Restablecer,Confirmado,Token)";
-                    query += "values(@nro_Documento,@tipo_Documento,@nombre,@apellido,@correo,@contrasena,@celular,@direccion,@fecha_Nacimiento,@restablecer,@confirmado,@token)";
+                    string query = "insert into clientes (Nro_Documento,Tipo_Documento,Nombre,Apellido,Correo,Contrasena,Celular,Direccion,fecha_nacimiento,Restablecer,Confirmado,Token)";
+                    query += "values(@nro_Documento,@tipo_Documento,@nombre,@apellido,@correo,@contrasena,@celular,@direccion,@fecha_nacimiento,@restablecer,@confirmado,@token)";
 
                     SqlCommand cmd = new SqlCommand(query, oconexion);
                     cmd.Parameters.AddWithValue("@nro_Documento", cliente.NroDocumento);
@@ -40,7 +40,7 @@ namespace Jonia0._3.Datos
                     cmd.Parameters.AddWithValue("@contrasena", cliente.Contrasena);
                     cmd.Parameters.AddWithValue("@celular", cliente.Celular);
                     cmd.Parameters.AddWithValue("@direccion", cliente.Direccion);
-                    cmd.Parameters.AddWithValue("@fecha_Nacimiento", cliente.FechaNacimiento);
+                    cmd.Parameters.AddWithValue("@fecha_nacimiento", cliente.FechaNacimiento.ToString());
                     cmd.Parameters.AddWithValue("@restablecer", cliente.Restablecer);
                     cmd.Parameters.AddWithValue("@confirmado", cliente.Confirmado);
                     cmd.Parameters.AddWithValue("@token", cliente.Token);

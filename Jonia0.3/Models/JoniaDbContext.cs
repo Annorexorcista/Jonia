@@ -51,15 +51,15 @@ public partial class JoniaDbContext : DbContext
 
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=ALAN; Initial Catalog=Jonia_DB; integrated security=True; TrustServerCertificate=True;");
+//    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+//        => optionsBuilder.UseSqlServer("Server=localhost;Initial Catalog=Jonia_DB;integrated security=True; TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Abono>(entity =>
         {
-            entity.HasKey(e => e.IdAbono).HasName("PK__abonos__1E6B95835C97448C");
+            entity.HasKey(e => e.IdAbono).HasName("PK__abonos__1E6B958321ADFF2A");
 
             entity.ToTable("abonos");
 
@@ -84,12 +84,12 @@ public partial class JoniaDbContext : DbContext
 
             entity.HasOne(d => d.IdReservaNavigation).WithMany(p => p.Abonos)
                 .HasForeignKey(d => d.IdReserva)
-                .HasConstraintName("FK__abonos__id_reser__6B24EA82");
+                .HasConstraintName("FK__abonos__id_reser__6C190EBB");
         });
 
         modelBuilder.Entity<Cliente>(entity =>
         {
-            entity.HasKey(e => e.NroDocumento).HasName("PK__clientes__761A4C470AF811C9");
+            entity.HasKey(e => e.NroDocumento).HasName("PK__clientes__761A4C47A35E1C1F");
 
             entity.ToTable("clientes");
 
@@ -140,16 +140,16 @@ public partial class JoniaDbContext : DbContext
 
             entity.HasOne(d => d.IdRolNavigation).WithMany(p => p.Clientes)
                 .HasForeignKey(d => d.IdRol)
-                .HasConstraintName("FK__clientes__id_rol__45F365D3");
+                .HasConstraintName("FK__clientes__id_rol__46E78A0C");
 
             entity.HasOne(d => d.TipoDocumentoNavigation).WithMany(p => p.Clientes)
                 .HasForeignKey(d => d.TipoDocumento)
-                .HasConstraintName("FK__clientes__tipo_d__44FF419A");
+                .HasConstraintName("FK__clientes__tipo_d__45F365D3");
         });
 
         modelBuilder.Entity<DetalleReservaPaquete>(entity =>
         {
-            entity.HasKey(e => e.IdRp).HasName("PK__detalle___0148530E399AD7E4");
+            entity.HasKey(e => e.IdRp).HasName("PK__detalle___0148530E2EF43E79");
 
             entity.ToTable("detalle_reserva_paquete");
 
@@ -163,16 +163,16 @@ public partial class JoniaDbContext : DbContext
 
             entity.HasOne(d => d.IdPaqueteNavigation).WithMany(p => p.DetalleReservaPaquetes)
                 .HasForeignKey(d => d.IdPaquete)
-                .HasConstraintName("FK__detalle_r__id_pa__68487DD7");
+                .HasConstraintName("FK__detalle_r__id_pa__693CA210");
 
             entity.HasOne(d => d.IdReservaNavigation).WithMany(p => p.DetalleReservaPaquetes)
                 .HasForeignKey(d => d.IdReserva)
-                .HasConstraintName("FK__detalle_r__id_re__6754599E");
+                .HasConstraintName("FK__detalle_r__id_re__68487DD7");
         });
 
         modelBuilder.Entity<DetalleReservaServicio>(entity =>
         {
-            entity.HasKey(e => e.IdRs).HasName("PK__detalle___0148530B04BEB43B");
+            entity.HasKey(e => e.IdRs).HasName("PK__detalle___0148530B8E5C4B46");
 
             entity.ToTable("detalle_reserva_servicio");
 
@@ -186,16 +186,16 @@ public partial class JoniaDbContext : DbContext
 
             entity.HasOne(d => d.IdReservaNavigation).WithMany(p => p.DetalleReservaServicios)
                 .HasForeignKey(d => d.IdReserva)
-                .HasConstraintName("FK__detalle_r__id_re__5FB337D6");
+                .HasConstraintName("FK__detalle_r__id_re__60A75C0F");
 
             entity.HasOne(d => d.IdServicioNavigation).WithMany(p => p.DetalleReservaServicios)
                 .HasForeignKey(d => d.IdServicio)
-                .HasConstraintName("FK__detalle_r__id_se__60A75C0F");
+                .HasConstraintName("FK__detalle_r__id_se__619B8048");
         });
 
         modelBuilder.Entity<Estado>(entity =>
         {
-            entity.HasKey(e => e.IdEstado).HasName("PK__estados__86989FB21EC883EA");
+            entity.HasKey(e => e.IdEstado).HasName("PK__estados__86989FB2CC8A55FF");
 
             entity.ToTable("estados");
 
@@ -208,7 +208,7 @@ public partial class JoniaDbContext : DbContext
 
         modelBuilder.Entity<Habitacione>(entity =>
         {
-            entity.HasKey(e => e.IdHabitacion).HasName("PK__habitaci__773F28F3B75A1670");
+            entity.HasKey(e => e.IdHabitacion).HasName("PK__habitaci__773F28F3F6E3B2A0");
 
             entity.ToTable("habitaciones");
 
@@ -229,12 +229,12 @@ public partial class JoniaDbContext : DbContext
 
             entity.HasOne(d => d.IdTipoNavigation).WithMany(p => p.Habitaciones)
                 .HasForeignKey(d => d.IdTipo)
-                .HasConstraintName("FK__habitacio__id_ti__4BAC3F29");
+                .HasConstraintName("FK__habitacio__id_ti__4CA06362");
         });
 
         modelBuilder.Entity<MetodoPago>(entity =>
         {
-            entity.HasKey(e => e.IdMp).HasName("PK__metodo_p__014987E04139CDA5");
+            entity.HasKey(e => e.IdMp).HasName("PK__metodo_p__014987E0C9C559D9");
 
             entity.ToTable("metodo_pago");
 
@@ -247,7 +247,7 @@ public partial class JoniaDbContext : DbContext
 
         modelBuilder.Entity<Paquete>(entity =>
         {
-            entity.HasKey(e => e.IdPaquete).HasName("PK__paquetes__609C3BCBA3F674A3");
+            entity.HasKey(e => e.IdPaquete).HasName("PK__paquetes__609C3BCB705B5A4E");
 
             entity.ToTable("paquetes");
 
@@ -268,12 +268,12 @@ public partial class JoniaDbContext : DbContext
 
             entity.HasOne(d => d.IdHabitacionNavigation).WithMany(p => p.Paquetes)
                 .HasForeignKey(d => d.IdHabitacion)
-                .HasConstraintName("FK__paquetes__id_hab__4E88ABD4");
+                .HasConstraintName("FK__paquetes__id_hab__4F7CD00D");
         });
 
         modelBuilder.Entity<PaquetesServicio>(entity =>
         {
-            entity.HasKey(e => e.IdPs).HasName("PK__paquetes__0148A349A9DD4689");
+            entity.HasKey(e => e.IdPs).HasName("PK__paquetes__0148A3498367C835");
 
             entity.ToTable("paquetes_servicios");
 
@@ -286,16 +286,16 @@ public partial class JoniaDbContext : DbContext
 
             entity.HasOne(d => d.IdPaqueteNavigation).WithMany(p => p.PaquetesServicios)
                 .HasForeignKey(d => d.IdPaquete)
-                .HasConstraintName("FK__paquetes___id_pa__6383C8BA");
+                .HasConstraintName("FK__paquetes___id_pa__6477ECF3");
 
             entity.HasOne(d => d.IdServicioNavigation).WithMany(p => p.PaquetesServicios)
                 .HasForeignKey(d => d.IdServicio)
-                .HasConstraintName("FK__paquetes___id_se__6477ECF3");
+                .HasConstraintName("FK__paquetes___id_se__656C112C");
         });
 
         modelBuilder.Entity<Permiso>(entity =>
         {
-            entity.HasKey(e => e.IdPermiso).HasName("PK__permisos__228F224FE3D9ECD5");
+            entity.HasKey(e => e.IdPermiso).HasName("PK__permisos__228F224FE8E90858");
 
             entity.ToTable("permisos");
 
@@ -308,7 +308,7 @@ public partial class JoniaDbContext : DbContext
 
         modelBuilder.Entity<Reserva>(entity =>
         {
-            entity.HasKey(e => e.IdReserva).HasName("PK__reserva__423CBE5D4F169D84");
+            entity.HasKey(e => e.IdReserva).HasName("PK__reserva__423CBE5DD7F16DD0");
 
             entity.ToTable("reserva");
 
@@ -335,24 +335,24 @@ public partial class JoniaDbContext : DbContext
 
             entity.HasOne(d => d.EstadoNavigation).WithMany(p => p.Reservas)
                 .HasForeignKey(d => d.Estado)
-                .HasConstraintName("FK__reserva__estado__5812160E");
+                .HasConstraintName("FK__reserva__estado__59063A47");
 
             entity.HasOne(d => d.MetodoPagoNavigation).WithMany(p => p.Reservas)
                 .HasForeignKey(d => d.MetodoPago)
-                .HasConstraintName("FK__reserva__metodo___571DF1D5");
+                .HasConstraintName("FK__reserva__metodo___5812160E");
 
             entity.HasOne(d => d.NroDocumentoClienteNavigation).WithMany(p => p.Reservas)
                 .HasForeignKey(d => d.NroDocumentoCliente)
-                .HasConstraintName("FK__reserva__nro_doc__5535A963");
+                .HasConstraintName("FK__reserva__nro_doc__5629CD9C");
 
             entity.HasOne(d => d.NroDocumentoTrabajadorNavigation).WithMany(p => p.Reservas)
                 .HasForeignKey(d => d.NroDocumentoTrabajador)
-                .HasConstraintName("FK__reserva__nro_doc__5629CD9C");
+                .HasConstraintName("FK__reserva__nro_doc__571DF1D5");
         });
 
         modelBuilder.Entity<Rol>(entity =>
         {
-            entity.HasKey(e => e.IdRol).HasName("PK__rol__6ABCB5E009393A3A");
+            entity.HasKey(e => e.IdRol).HasName("PK__rol__6ABCB5E0C7DFA83F");
 
             entity.ToTable("rol");
 
@@ -365,7 +365,7 @@ public partial class JoniaDbContext : DbContext
 
         modelBuilder.Entity<RolPermiso>(entity =>
         {
-            entity.HasKey(e => e.IdRd).HasName("PK__rol_perm__0148533A94186E78");
+            entity.HasKey(e => e.IdRd).HasName("PK__rol_perm__0148533AEA7ACBA0");
 
             entity.ToTable("rol_permisos");
 
@@ -384,7 +384,7 @@ public partial class JoniaDbContext : DbContext
 
         modelBuilder.Entity<Servicio>(entity =>
         {
-            entity.HasKey(e => e.IdServicio).HasName("PK__servicio__6FD07FDCD7467473");
+            entity.HasKey(e => e.IdServicio).HasName("PK__servicio__6FD07FDC8B19AB81");
 
             entity.ToTable("servicios");
 
@@ -405,12 +405,12 @@ public partial class JoniaDbContext : DbContext
 
             entity.HasOne(d => d.TipoServicioNavigation).WithMany(p => p.Servicios)
                 .HasForeignKey(d => d.TipoServicio)
-                .HasConstraintName("FK__servicios__tipo___5CD6CB2B");
+                .HasConstraintName("FK__servicios__tipo___5DCAEF64");
         });
 
         modelBuilder.Entity<TipoDocumento>(entity =>
         {
-            entity.HasKey(e => e.IdTd).HasName("PK__tipo_doc__01495F3F1E5F94BA");
+            entity.HasKey(e => e.IdTd).HasName("PK__tipo_doc__01495F3FCFE178F2");
 
             entity.ToTable("tipo_documento");
 
@@ -423,7 +423,7 @@ public partial class JoniaDbContext : DbContext
 
         modelBuilder.Entity<TipoHabitacion>(entity =>
         {
-            entity.HasKey(e => e.IdTipo).HasName("PK__tipo_hab__CF9010890694CACE");
+            entity.HasKey(e => e.IdTipo).HasName("PK__tipo_hab__CF9010894D8B150B");
 
             entity.ToTable("tipo_habitacion");
 
@@ -438,7 +438,7 @@ public partial class JoniaDbContext : DbContext
 
         modelBuilder.Entity<TipoServicio>(entity =>
         {
-            entity.HasKey(e => e.IdTs).HasName("PK__tipo_ser__01495CCCEA49044D");
+            entity.HasKey(e => e.IdTs).HasName("PK__tipo_ser__01495CCC931F58C0");
 
             entity.ToTable("tipo_servicio");
 
@@ -451,7 +451,7 @@ public partial class JoniaDbContext : DbContext
 
         modelBuilder.Entity<Usuario>(entity =>
         {
-            entity.HasKey(e => e.NroDocumento).HasName("PK__usuarios__761A4C47402CF66F");
+            entity.HasKey(e => e.NroDocumento).HasName("PK__usuarios__761A4C477A86B2C1");
 
             entity.ToTable("usuarios");
 
@@ -482,7 +482,9 @@ public partial class JoniaDbContext : DbContext
                 .HasColumnName("correo");
             entity.Property(e => e.Estado).HasColumnName("estado");
             entity.Property(e => e.FechaNacimiento).HasColumnName("fecha_nacimiento");
-            entity.Property(e => e.IdRol).HasColumnName("id_rol");
+            entity.Property(e => e.IdRol)
+                .HasDefaultValue(1)
+                .HasColumnName("id_rol");
             entity.Property(e => e.Nombre)
                 .HasMaxLength(40)
                 .IsUnicode(false)

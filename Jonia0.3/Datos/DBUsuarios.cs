@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
-
+using Microsoft.EntityFrameworkCore;
+using Jonia0._3.Datos;
 using Jonia0._3.Models;
 using System.Data;
 using System.Data.SqlClient;
@@ -12,53 +12,51 @@ namespace Jonia0._3.Datos
 {
     public class DBCUsuario
     {
-        private static string CadenaSQL = "Server=ALAN; DataBase=Jonia_DB; Trusted_Connection=True; TrustServerCertificate=True";
+		
+        private static string CadenaSQL = "Server=DESKTOP-T60HGRI; DataBase=Jonia_DB; Trusted_Connection=True; TrustServerCertificate=True";
 
-		public static bool Registrar(Usuario usuario)
+        public static bool Registrar(Usuario usuario)
+        {
+            bool respuesta = false;
+            try
+            {
+                using (SqlConnection oconexion = new SqlConnection(CadenaSQL))
+                {
+                    string query = "INSERT INTO usuarios (Nro_Documento, Tipo_Documento, Nombre, Apellido, Correo, Contrasena, Celular, fecha_nacimiento,id_rol ,Restablecer, Confirmado, Token)";
+                    query += "VALUES(@nro_Documento, @tipo_Documento, @nombre, @apellido, @correo, @contrasena, @celular, @fecha_nacimiento, @id_rol ,@restablecer, @confirmado, @token)";
 
+                    SqlCommand cmd = new SqlCommand(query, oconexion);
+                    cmd.Parameters.AddWithValue("@nro_Documento", usuario.NroDocumento);
+                    cmd.Parameters.AddWithValue("@tipo_Documento", usuario.TipoDocumento);
+                    cmd.Parameters.AddWithValue("@nombre", usuario.Nombre);
+                    cmd.Parameters.AddWithValue("@apellido", usuario.Apellido);
+                    cmd.Parameters.AddWithValue("@correo", usuario.Correo);
+                    cmd.Parameters.AddWithValue("@contrasena", usuario.Contrasena);
+                    cmd.Parameters.AddWithValue("@celular", usuario.Celular);
+                    cmd.Parameters.AddWithValue("@fecha_nacimiento", usuario.FechaNacimiento.ToString());
+                    cmd.Parameters.AddWithValue("@id_rol", usuario.IdRol);
+                    cmd.Parameters.AddWithValue("@restablecer", usuario.Restablecer);
+                    cmd.Parameters.AddWithValue("@confirmado", usuario.Confirmado);
+                    cmd.Parameters.AddWithValue("@token", usuario.Token);
+					
+                    cmd.CommandType = CommandType.Text;
 
-		{
-			bool respuesta = false;
-			try
-			{
-				using (SqlConnection oconexion = new SqlConnection(CadenaSQL))
+                    oconexion.Open();
 
-				{
+                    int filasAfectadas = cmd.ExecuteNonQuery();
+                    if (filasAfectadas > 0) respuesta = true;
+                }
+			
 
-					string query = "insert into usuarios (Nro_Documento,Tipo_Documento,Nombre,Apellido,Correo,Contrasena,Celular,Fecha_Nacimiento,Restablecer,Confirmado,Token)";
-					query += "values(@nro_Documento,@tipo_Documento,@nombre,@apellido,@correo,@contrasena,@celular,@fecha_Nacimiento,@restablecer,@confirmado,@token)";
+                return respuesta;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
-					SqlCommand cmd = new SqlCommand(query, oconexion);
-					cmd.Parameters.AddWithValue("@nro_Documento", usuario.NroDocumento);
-					cmd.Parameters.AddWithValue("@tipo_Documento", usuario.TipoDocumento);
-					cmd.Parameters.AddWithValue("@nombre", usuario.Nombre);
-					cmd.Parameters.AddWithValue("@apellido", usuario.Apellido);
-					cmd.Parameters.AddWithValue("@correo", usuario.Correo);
-					cmd.Parameters.AddWithValue("@contrasena", usuario.Contrasena);
-					cmd.Parameters.AddWithValue("@celular", usuario.Celular);
-					cmd.Parameters.AddWithValue("@fecha_Nacimiento", usuario.FechaNacimiento);
-					cmd.Parameters.AddWithValue("@restablecer", usuario.Restablecer);
-					cmd.Parameters.AddWithValue("@confirmado", usuario.Confirmado);
-					cmd.Parameters.AddWithValue("@token", usuario.Token);
-					cmd.CommandType = CommandType.Text;
-
-					oconexion.Open();
-
-					int filasAfectadas = cmd.ExecuteNonQuery();
-					if (filasAfectadas > 0) respuesta = true;
-				}
-
-				return respuesta;
-
-			}
-			catch (Exception ex)
-			{
-
-				throw ex;
-			}
-		}
-
-		public static Usuario Validar(string correo, string contrasena)
+        public static Usuario Validar(string correo, string contrasena)
 		{
 			Usuario usuario = null;
 			try
