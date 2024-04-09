@@ -8,67 +8,63 @@
 <hr />
 <div class="row row mt-2 mb-2">
     <div class="p-2 col-md-6">
-        <form asp-action="Create">
+        <form asp-action="Create" asp-controller="Abonos" method="post">
+            <input type="hidden" name="idReserva" value="@ViewBag.IdReserva" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="row mb-2">
                 <div class="form-group col">
                     <label asp-for="FechaRegistro" class="control-label">Fecha de Registro</label>
                     <input asp-for="FechaRegistro" readonly type="date" class="form-control" name="FechaReg" value="@ViewBag.CurrentDateTime" />
-                    
+
                 </div>
-                
+
                 <div class="form-group col">
-                    <label asp-for="TotalAbonado" class="control-label">Valor del abono</label>
-                    <input asp-for="TotalAbonado" class="form-control" />
+                    <label asp-for="TotalAbonado" class="control-label">Total del abono</label>
+                    <input asp-for="TotalAbonado" id="abono"  class="form-control" />
                     <span asp-validation-for="TotalAbonado" class="text-danger"></span>
                 </div>
             </div>
             <div class="row mb-2">
                 <div class="form-group col">
                     <label asp-for="SubtotalAbonado" class="control-label">Subtotal</label>
-                    <input disabled asp-for="SubtotalAbonado" class="form-control" />
+                    <input readonly asp-for="SubtotalAbonado" id="subtotal" class="form-control" />
                     <span asp-validation-for="SubtotalAbonado" class="text-danger"></span>
                 </div>
                 <div class="form-group col">
                     <label asp-for="TotalPendiente" class="control-label">Total Pendiente</label>
-                    <input disabled asp-for="TotalPendiente" class="form-control" />
+                    <input readonly asp-for="TotalPendiente" id="totalPendiente" class="form-control" />
                     <span asp-validation-for="TotalPendiente" class="text-danger"></span>
                 </div>
             </div>
             <div class="row mb-2">
                 <div class="form-group col">
                     <label asp-for="Iva" class="control-label"></label>
-                    <input disabled asp-for="Iva" class="form-control" />
+                    <input readonly asp-for="Iva" id="iva" class="form-control" />
                     <span asp-validation-for="Iva" class="text-danger"></span>
                 </div>
                 <div class="form-group col">
                     <label asp-for="ValorDeuda" class="control-label">Deuda</label>
-                    <input disabled asp-for="ValorDeuda" class="form-control" />
-                    <span asp-validation-for="ValorDeuda" class="text-danger"></span>
+                    <input readonly asp-for="ValorDeuda" id="deuda" value="@ViewBag.costo"  class="form-control" />
                 </div>
                 <div class="form-group col">
                     <label asp-for="Porcentaje" class="control-label"></label>
-                    <input disabled asp-for="Porcentaje" class="form-control" />
+                    <input readonly asp-for="Porcentaje" placeholder="%" id="porcentaje" class="form-control" />
                     <span asp-validation-for="Porcentaje" class="text-danger"></span>
                 </div>
             </div>
-    
-    <br />
-    <div class="form-group">
-        <input type="submit" value="Crear" class="btn btn-primary" />
-    </div>
-    </form>
-    <br />
-    <div>
+
+
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Crear" id="btnCrear" class="btn btn-primary" />
+            </div>
+        </form>
+        <br />
+        <div>
             <a class="btn btn-dark btn-sm" href="@Url.Action("IndividualIndex", "Abonos", new { idReserva = Model.IdReserva })">Regresar</a>
+        </div>
     </div>
 </div>
-</div>
 
-@section Scripts {
-    @{
-        <script src="~/js/CalculosAbonos.js"></script>
 
-    }
-}
-
+<script src="~/js/CalculosAbonos.js"> </script>

@@ -1,13 +1,17 @@
 ﻿@model IEnumerable<Jonia0._3.Models.Abono>
 
-
-@section Scripts{
+@section Scripts {
     <script src="~/js/CambioEstado.js"></script>
+    <script src="~/js/buscadores.js"></script>
 }
+
 <h1>Abonos</h1>
 
+<div class="input-group mb-3">
+    <input type="text" class="form-control" id="searchInput" placeholder="Buscar...">
+</div>
 
-<table class="table">
+<table id="abonosTable" class="table">
     <thead>
         <tr>
             <th>
@@ -45,17 +49,17 @@
                     @Html.DisplayFor(modelItem => item.FechaRegistro)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ValorDeuda)
+                    $ @Html.DisplayFor(modelItem => item.ValorDeuda)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TotalAbonado)
+                    $ @Html.DisplayFor(modelItem => item.TotalAbonado)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TotalPendiente)
+                    $ @Html.DisplayFor(modelItem => item.TotalPendiente)
                 </td>
 
                 <td>
-                    @(item.Porcentaje * 100) %
+                    @(item.Porcentaje) %
                 </td>
                 <td>
 
@@ -64,7 +68,7 @@
                     </div>
 
                 <td>
-                    <a class="btn btn-dark" asp-action="Details" asp-route-id="@item.IdAbono">Detalles</a> 
+                    <a class="btn btn-dark" asp-action="Details" asp-route-id="@item.IdAbono">Detalles</a>
                 </td>
             </tr>
         }

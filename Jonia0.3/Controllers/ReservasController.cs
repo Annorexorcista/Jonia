@@ -20,22 +20,48 @@ namespace Jonia0._3.Controllers
         }
 
         // GET: Reservas
-        public async Task<IActionResult> Index(string buscar)
+        public async Task<IActionResult> Index(string search)
         {
+
+            IQueryable<Reserva> reservasQuery = _context.Reservas;
+
+            if (!String.IsNullOrEmpty(search))
+            {
+                reservasQuery = reservasQuery.Where(a => a.NroDocumentoCliente.ToString().Contains(search));
+            }
+
+            var reservas = await reservasQuery.ToListAsync();
             var metodo = _context.MetodoPagos.ToList();
             ViewBag.Metodo = metodo;
 
             var estado = _context.Estados.ToList();
             ViewBag.Estado = estado;
 
-            var reservas = from reserva in _context.Reservas select reserva;
 
-            if (!String.IsNullOrEmpty(buscar))
-                reservas = reservas.Where(s => s.Informacion!.Contains(buscar));
 
-            return View(await reservas.ToListAsync());
+
+
+            return View(reservas);
         }
 
+        [HttpPost]
+        public IActionResult ActualizarEstado(int? id, int estado)
+        {
+            if (id.HasValue)
+            {
+                var reserva = _context.Reservas.Find(id.Value);
+
+                if (reserva != null)
+                {
+                    // Asignar el estado de la reserva según el valor del parámetro "estado"
+                    reserva.Estado = estado;
+                    _context.SaveChanges(); // Guardar cambios de forma sincrónica
+                    return Ok(); // Estado actualizado correctamente
+                }
+            }
+
+            return NotFound(); // Reserva no encontrada o ID nulo
+        }
         public IActionResult obtenerNroPersonas(int id)
         {
             var nroPer = _context.Habitaciones.Include(s => s.IdTipoNavigation).Where(j => j.IdHabitacion == id).Select(p => p.IdTipoNavigation.NroPersonas).FirstOrDefault();

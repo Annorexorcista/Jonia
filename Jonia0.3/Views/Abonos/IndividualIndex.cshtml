@@ -6,9 +6,20 @@
 }
 <h1>Abonos</h1>
 
+@{
+    var totalPendiente = ViewBag.TotalPendiente as decimal?;
+}
+
+
 <p>
-    <a class="btn btn-dark" asp-action="Create">Crear</a>
-</p>
+    @if (totalPendiente != null && totalPendiente == 0)
+    {
+        <span class="btn btn-dark btn-sm disabled">Crear Abono</span>
+    }
+    else
+    {
+        <a class="btn btn-dark btn-sm" href="@Url.Action("Create", "Abonos", new { idReserva = ViewBag.IdReserva })">Crear Abono</a>
+    }
 <table class="table">
     <thead>
         <tr>
@@ -47,13 +58,13 @@
                     @Html.DisplayFor(modelItem => item.FechaRegistro)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ValorDeuda)
+                   $ @Html.DisplayFor(modelItem => item.ValorDeuda)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TotalAbonado)
+                   $ @Html.DisplayFor(modelItem => item.TotalAbonado)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TotalPendiente)
+                   $ @Html.DisplayFor(modelItem => item.TotalPendiente)
                 </td>
 
                 <td>
@@ -68,7 +79,15 @@
                 <td>
                     <a class="btn btn-dark" asp-action="Details" asp-route-id="@item.IdAbono">Detalles</a>
                 </td>
+                
+                    
+                
             </tr>
         }
     </tbody>
+    
 </table>
+<p >
+    <a class="btn btn-dark btn-sm" asp-controller="Reservas" asp-action="Index">Regresar</a>
+</p>
+

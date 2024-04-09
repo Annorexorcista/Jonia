@@ -23,37 +23,37 @@
             Deuda
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ValorDeuda)
+            $ @Html.DisplayFor(model => model.ValorDeuda)
         </dd>
         <dt class = "col-sm-2">
             Subtotal Abonado
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SubtotalAbonado)
+            $ @Html.DisplayFor(model => model.SubtotalAbonado)
         </dd>
         <dt class = "col-sm-2">
             Total Pendiente
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TotalPendiente)
+            $ @Html.DisplayFor(model => model.TotalPendiente)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Iva)
         </dt>
         <dd class = "col-sm-10">
-            @(Model.Iva * 100) %
+            $ @(Model.Iva)
         </dd>
         <dt class = "col-sm-2">
             Total Abonado
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TotalAbonado)
+            $ @Html.DisplayFor(model => model.TotalAbonado)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Porcentaje)
+            @Html.DisplayNameFor(model => model.Porcentaje )
         </dt>
         <dd class = "col-sm-10">
-            @(Model.Porcentaje) %
+            @(Model.Porcentaje/100) %
         </dd>
 
     </dl>

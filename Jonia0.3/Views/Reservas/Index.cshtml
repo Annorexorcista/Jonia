@@ -1,11 +1,23 @@
 ﻿@model IEnumerable<Jonia0._3.Models.Reserva>
 
+    @{
+    var estadoReserva = ViewBag.Estado as int?;
+}
+@section Scripts {
+    <script src="~/js/estadoReserva.js"></script>
+    <script src="~/js/buscadores.js"></script>
+}
+
 <h1>Reservas</h1>
+
 
 <p>
     <a class="btn btn-dark" asp-action="Create">Crear</a>
 </p>
-<table class="table">
+<div class="input-group mb-3">
+    <input type="text" class="form-control" onkeyup="cambio()" id="searchInput" placeholder="Buscar...">
+</div>
+<table id="reservasTable" class="table">
     <thead>
         <tr>
             <th>
@@ -40,7 +52,7 @@
         </tr>
 
     </thead>
-    
+
     <tbody>
         @foreach (var item in Model)
         {
@@ -70,16 +82,38 @@
                     @Html.DisplayFor(modelItem => item.MetodoPagoNavigation.Nombre)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.EstadoNavigation.Nombre)
+                    <select id="estadoSelect_@item.IdReserva" asp-for="@item.Estado" class="form-control-sm" data-reservaid="@item.IdReserva">
+                        @foreach (var estado in ViewBag.Estado)
+                        {
+                            <option class="estadoOption" data-nuevoestado="@estado.IdEstado" value="@estado.IdEstado">@estado.Nombre</option>
+                        }
+                    </select>
                 </td>
-                
-
                 <td>
-                    <a class="btn btn-dark btn-sm" asp-action="Edit" asp-route-id="@item.IdReserva">Editar</a> |
-                    <a class="btn btn-dark btn-sm" asp-action="Details" asp-route-id="@item.IdReserva">Detalles</a> |
-                    <a class="btn btn-dark btn-sm" href="@Url.Action("IndividualIndex", "Abonos", new { idReserva = item.IdReserva })">Abonos</a>
-                </td>
+                    @if (item.Estado == 5 || item.Estado == 6)
+                    {
+                        <span class="btn btn-dark btn-sm disabled">Editar</span>
+                        
+                    }
+                    else
+                    {
+                        <a class="btn btn-dark btn-sm editar-btn"  asp-action="Edit" asp-route-id="@item.IdReserva">Editar</a>
+                    }
+                    |
+
+                    <a class="btn btn-dark btn-sm abonos-btn" asp-action="Details" asp-route-id="@item.IdReserva">Detalles</a> |
+
+                    @if (item.Estado == 5 || item.Estado == 6){
+                        <span class="btn btn-dark btn-sm disabled">Abonos</span>
+                        
+                    }
+                    else
+                    {
+                        <a class="btn btn-dark btn-sm abonos-btn" href="@Url.Action("IndividualIndex", "Abonos", new { idReserva = item.IdReserva })">Abonos</a>
+                    }
+                </td
             </tr>
         }
     </tbody>
 </table>
+
