@@ -109,7 +109,7 @@ namespace Jonia0._3.Controllers
             if (respuesta)
             {
                 EnviarCorreoConfirmacion(usuario.Correo, usuario.Nombre, usuario.Token);
-                return View();
+                return RedirectToAction(nameof(Index));
             }
             return RedirectToAction(nameof(Index));
             

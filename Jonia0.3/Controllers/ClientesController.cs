@@ -108,10 +108,10 @@ namespace Jonia0._3.Controllers
             if (respuesta)
             {
                 EnviarCorreoConfirmacion(cliente.Correo, cliente.Nombre, cliente.Token);
-                return View();
+                return RedirectToAction(nameof(Index));
             }
 
-            return View();
+            return RedirectToAction(nameof(Index));
         }
 
         private void EnviarCorreoConfirmacion(string correo, string nombre, string token)
