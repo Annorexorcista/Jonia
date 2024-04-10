@@ -13,7 +13,7 @@ namespace Jonia0._3.Datos
     public class DBCUsuario
     {
 		
-        private static string CadenaSQL = "Server=Jonia_DB.mssql.somee.com; DataBase=Jonia_DB;user id=hakka_SQLLogin_1;pwd=l4xwc1cib8;TrustServerCertificate=True";
+        private static string CadenaSQL = "Server=ALAN; DataBase=Jonia_DB; Trusted_Connection=True; TrustServerCertificate=True";
 
         public static bool Registrar(Usuario usuario)
         {

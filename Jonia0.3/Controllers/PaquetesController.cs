@@ -79,6 +79,10 @@ namespace Jonia0._3.Controllers
                 return NotFound();
             }
 
+            var servicios = _context.PaquetesServicios.Include(s => s.IdServicioNavigation).Where(s => s.IdPaquete== id).ToList();
+
+            ViewBag.Servicios = servicios;
+
             var paquete = await _context.Paquetes
                 .Include(p => p.IdHabitacionNavigation)
                 .FirstOrDefaultAsync(m => m.IdPaquete == id);

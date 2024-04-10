@@ -15,7 +15,7 @@ namespace Jonia0._3.Datos
 {
     public class DBClientes
     {
-        private static string CadenaSQL = "Server=Jonia_DB.mssql.somee.com; DataBase=Jonia_DB; user id=hakka_SQLLogin_1;TrustServerCertificate=True";
+        private static string CadenaSQL = "Server=ALAN; DataBase=Jonia_DB; Trusted_Connection=True; TrustServerCertificate=True";
 
         public static bool Registrar(Cliente cliente)
 

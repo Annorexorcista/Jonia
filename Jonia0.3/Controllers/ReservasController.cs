@@ -105,6 +105,14 @@ namespace Jonia0._3.Controllers
                 return NotFound();
             }
 
+             var servicios = _context.DetalleReservaServicios.Include(s => s.IdServicioNavigation).Where(s => s.IdReserva== id).ToList();
+
+            ViewBag.Servicios = servicios;
+
+            var paquete = _context.DetalleReservaPaquetes.Include(s => s.IdPaqueteNavigation).Where(s => s.IdReserva == id).ToList();
+
+            ViewBag.Paquete = paquete;
+
             var reserva = await _context.Reservas
                 .Include(r => r.EstadoNavigation)
                 .Include(r => r.MetodoPagoNavigation)
@@ -245,8 +253,8 @@ namespace Jonia0._3.Controllers
                 NombreCompleto = $"{u.Nombre} {u.Apellido}" // Concatenar nombre y apellido
             }).ToList();
 
-            var paquete = _context.Paquetes.ToList();
-            ViewBag.Paquetes = paquete;
+            var servicio = _context.Servicios.ToList();
+            ViewBag.Servicios = servicio;
 
             ViewBag.Trabajadores = new SelectList(trabajadores, "Id", "NombreCompleto");
             return View(reserva);
@@ -257,7 +265,8 @@ namespace Jonia0._3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdReserva,NroDocumentoCliente,NroDocumentoTrabajador,Informacion,FechaRegistro,FechaEntrada,FechaSalida,NumeroAdultos,NumeroNinos,MetodoPago,HoraLlegada,HoraSalida,Estado,Iva,Subtotal,Total")] Reserva reserva)
+        public async Task<IActionResult> Edit(int id, [Bind("IdReserva,NroDocumentoCliente,NroDocumentoTrabajador,Informacion,FechaRegistro,FechaEntrada," +
+            "FechaSalida,NumeroAdultos,NumeroNinos,MetodoPago,HoraLlegada,HoraSalida,Estado,Iva,Subtotal,Total")] Reserva reserva, string serviciosSeleccionados)
         {
             if (id != reserva.IdReserva)
             {
@@ -270,6 +279,22 @@ namespace Jonia0._3.Controllers
                 {
                     _context.Update(reserva);
                     await _context.SaveChangesAsync();
+
+                    var listaServicios = JsonConvert.DeserializeObject<List<Servicio>>(serviciosSeleccionados);
+
+                    foreach (var p in listaServicios)
+                {
+                    var reservaservicio = new DetalleReservaServicio()
+                    {
+                        IdReserva = reserva.IdReserva,
+                        IdServicio = p.IdServicio,
+                        Precio = p.Precio
+                    };
+                    _context.DetalleReservaServicios.Update(reservaservicio);
+                }
+
+                await _context.SaveChangesAsync();
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {

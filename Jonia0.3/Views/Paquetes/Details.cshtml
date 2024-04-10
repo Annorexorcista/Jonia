@@ -32,6 +32,23 @@
             @Html.DisplayFor(model => model.IdHabitacionNavigation.Nombre)
         </dd>
     </dl>
+    <table class="table">
+        <thead class="table-light">
+            <tr>
+                <th>Servicios</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.Servicios)
+            {
+                <tr>
+                    <td>
+                        @item.IdServicioNavigation.Nombre
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 <div>
     <a class="btn btn-secondary" asp-action="Index">Regresar</a>
