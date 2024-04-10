@@ -2,6 +2,7 @@
 
 @section Scripts {
     <script src="~/js/CambioEstado.js"></script>
+    <script src="~/js/buscadores.js"></script>
 }
 
 <h1>Habitaciones</h1>
@@ -9,7 +10,10 @@
 <p>
     <a class="btn btn-dark" asp-action="Create">Crear</a>
 </p>
-<table class="table">
+<div class="input-group mb-3">
+    <input type="text" class="form-control" onkeyup="cambio()" id="searchInput" placeholder="Buscar...">
+</div>
+<table id="habitacionesTable" class="table">
     <thead>
         <tr>
             <th>

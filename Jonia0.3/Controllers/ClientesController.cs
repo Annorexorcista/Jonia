@@ -23,10 +23,23 @@ namespace Jonia0._3.Controllers
         }
 
         // GET: Clientes
-        public async Task<IActionResult> Index()
+
+        [HttpGet]
+        public async Task<IActionResult> Index(string search)
         {
+            IQueryable<Cliente> clienteQuery = _context.Clientes;
+
+            if (!String.IsNullOrEmpty(search))
+            {
+                clienteQuery = clienteQuery.Where(a => a.NroDocumento.ToString().Contains(search));
+            }
+
+            var cliente = await clienteQuery.ToListAsync();
             var joniaDbContext = _context.Clientes.Include(c => c.IdRolNavigation).Include(c => c.TipoDocumentoNavigation);
-            return View(await joniaDbContext.ToListAsync());
+
+            await joniaDbContext.ToListAsync();
+
+            return View(cliente);
         }
 
         [HttpPost]

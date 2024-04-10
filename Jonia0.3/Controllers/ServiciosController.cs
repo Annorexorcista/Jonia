@@ -19,10 +19,22 @@ namespace Jonia0._3.Controllers
         }
 
         // GET: Servicios
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public async Task<IActionResult> Index(string search)
         {
+            IQueryable<Servicio> servicioQuery = _context.Servicios;
+
+            if (!String.IsNullOrEmpty(search))
+            {
+                servicioQuery = servicioQuery.Where(a => a.Nombre.ToString().Contains(search));
+            }
+
+            var servicio = await servicioQuery.ToListAsync();
             var joniaDbContext = _context.Servicios.Include(s => s.TipoServicioNavigation);
-            return View(await joniaDbContext.ToListAsync());
+
+            await joniaDbContext.ToListAsync();
+
+            return View(servicio);
         }
 
         [HttpPost]

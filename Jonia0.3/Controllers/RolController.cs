@@ -20,9 +20,19 @@ namespace Jonia0._3.Controllers
         }
 
         // GET: Rol
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public async Task<IActionResult> Index(string search)
         {
-            return View(await _context.Rols.ToListAsync());
+            IQueryable<Rol> rolQuery = _context.Rols;
+
+            if (!String.IsNullOrEmpty(search))
+            {
+                rolQuery = rolQuery.Where(a => a.Nombre.ToString().Contains(search));
+            }
+
+            var rol = await rolQuery.ToListAsync();
+
+            return View(rol);
         }
 
         [HttpPost]

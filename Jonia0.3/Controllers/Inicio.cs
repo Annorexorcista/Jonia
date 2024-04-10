@@ -12,6 +12,7 @@ using System.Net.Mail;
 using System.Net;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace Jonia0._3.Controllers
 {
@@ -84,7 +85,10 @@ namespace Jonia0._3.Controllers
 
 			if (respuesta)
 			{
-				EnviarCorreoConfirmacion(cliente.Correo, cliente.Nombre, cliente.Token);
+                EnviarCorreoConfirmacion(cliente.Correo, cliente.Nombre, cliente.Token);
+				TempData["Creado"] = true;
+				TempData["Mensaje"] = $"Su cuenta ha sido creada correctamente. Confirmar correo en {cliente.Correo}";
+
 				return View();
 			}
 
@@ -156,7 +160,7 @@ namespace Jonia0._3.Controllers
 
 				if (respuesta)
 				{
-					EnviarCorreoRestablecimiento(cliente.Correo, cliente.Token);
+                    EnviarCorreoRestablecimiento(cliente.Correo, cliente.Token);
 					ViewBag.Mensaje = $"Se ha enviado un correo a {cliente.Correo} para restablecer la contraseña.";
 					return View();
 				}

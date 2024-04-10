@@ -1,16 +1,26 @@
 ﻿@model IEnumerable<Jonia0._3.Models.TipoServicio>
 
+@section Scripts {
+    <script src="~/js/CambioEstado.js"></script>
+    <script src="~/js/buscadores.js"></script>
+}
 
 <h1>Tipo de Servicio</h1>
 
 <p>
     <a class="btn btn-dark" asp-action="Create">Crear</a>
 </p>
-<table class="table">
+<div class="input-group mb-3">
+    <input type="text" class="form-control" onkeyup="cambio()" id="searchInput" placeholder="Buscar...">
+</div>
+<table id="tipoSTable" class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
             </th>
             <th></th>
         </tr>
@@ -21,6 +31,11 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    <div class="form-check form-switch fs-4" data-url="@Url.Action("ActualizarEstado", "TipoServicio")" data-idtipo="@item.IdTs">
+                        <input @(item.Estado == true ? "checked" : "") type="checkbox" class="form-check-input" id="estado" data-idtipo="@item.IdTs" />
+                    </div>
                 </td>
                 <td>
                     <a class="btn btn-dark" asp-action="Edit" asp-route-id="@item.IdTs">Editar</a>

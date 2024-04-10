@@ -37,10 +37,6 @@ namespace Jonia0._3.Controllers
             var estado = _context.Estados.ToList();
             ViewBag.Estado = estado;
 
-
-
-
-
             return View(reservas);
         }
 

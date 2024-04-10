@@ -19,9 +19,39 @@ namespace Jonia0._3.Controllers
         }
 
         // GET: TipoServicio
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public async Task<IActionResult> Index(string search)
         {
-            return View(await _context.TipoServicios.ToListAsync());
+            IQueryable<TipoServicio> tipoQuery = _context.TipoServicios;
+
+            if (!String.IsNullOrEmpty(search))
+            {
+                tipoQuery = tipoQuery.Where(a => a.Nombre.ToString().Contains(search));
+            }
+
+            var tipo = await tipoQuery.ToListAsync();
+
+            return View(tipo);
+        }
+
+        [HttpPost]
+        public IActionResult ActualizarEstado(int? id, bool estado)
+        {
+
+            if (id.HasValue)
+            {
+                var tipo = _context.TipoServicios.Find(id.Value);
+
+                if (tipo != null)
+                {
+                    // Asignar el estado del abono según el valor del parámetro "estado"
+                    tipo.Estado = estado;
+                    _context.SaveChangesAsync();
+                    return View(tipo);
+                }
+            }
+
+            return NotFound(); // Abono no encontrado o ID nulo
         }
 
         // GET: TipoServicio/Details/5
