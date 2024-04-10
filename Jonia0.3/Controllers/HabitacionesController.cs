@@ -20,11 +20,23 @@ namespace Jonia0._3.Controllers
             _context = context;
         }
 
-        // GET: Habitaciones
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public async Task<IActionResult> Index(string search)
         {
+            IQueryable<Habitacione> habitacionQuery = _context.Habitaciones;
+
+            if (!String.IsNullOrEmpty(search))
+            {
+                habitacionQuery = habitacionQuery.Where(a => a.Nombre.ToString().Contains(search));
+            }
+
+            var habitacion = await habitacionQuery.ToListAsync();
+
             var joniaDbContext = _context.Habitaciones.Include(h => h.IdTipoNavigation);
-            return View(await joniaDbContext.ToListAsync());
+
+            await joniaDbContext.ToListAsync();
+
+            return View(habitacion);
         }
 
         [HttpPost]

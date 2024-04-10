@@ -21,9 +21,19 @@ namespace Jonia0._3.Controllers
         }
 
         // GET: TipoHabitacion
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public async Task<IActionResult> Index(string search)
         {
-            return View(await _context.TipoHabitacions.ToListAsync());
+            IQueryable<TipoHabitacion> tipoQuery = _context.TipoHabitacions;
+
+            if (!String.IsNullOrEmpty(search))
+            {
+                tipoQuery = tipoQuery.Where(a => a.Nombre.ToString().Contains(search));
+            }
+
+            var tipo = await tipoQuery.ToListAsync();
+
+            return View(tipo);
         }
 
         [HttpPost]

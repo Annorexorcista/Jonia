@@ -25,31 +25,24 @@ namespace Jonia0._3.Controllers
         }
 
         // GET: Clientes
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public async Task<IActionResult> Index(string search)
         {
-            var joniaDbContext = _context.Clientes.Include(c => c.IdRolNavigation).Include(c => c.TipoDocumentoNavigation);
-            return View(await joniaDbContext.ToListAsync());
-        }
+            IQueryable<Cliente> clienteQuery = _context.Clientes;
 
-        [HttpPost]
-        public IActionResult ActualizarEstado(int? id, bool estado)
-        {
-
-            if (id.HasValue)
+            if (!String.IsNullOrEmpty(search))
             {
-                var rol = _context.Clientes.Find(id.Value);
-
-                if (rol != null)
-                {
-                    // Asignar el estado del abono según el valor del parámetro "estado"
-                    rol.Estado = estado;
-                    _context.SaveChangesAsync();
-                    return View(rol);
-                }
+                clienteQuery = clienteQuery.Where(a => a.NroDocumento.ToString().Contains(search));
             }
 
-            return NotFound(); // Abono no encontrado o ID nulo
+            var cliente = await clienteQuery.ToListAsync();
+            var joniaDbContext = _context.Clientes.Include(c => c.IdRolNavigation).Include(c => c.TipoDocumentoNavigation);
+
+            await joniaDbContext.ToListAsync();
+
+            return View(cliente);
         }
+
 
         // GET: Clientes/Details/5
         public async Task<IActionResult> Details(int? id)

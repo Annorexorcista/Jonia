@@ -159,11 +159,24 @@ namespace Jonia0._3.Controllers
                     TempData["error"] = "El monto abonado es mayor que el saldo pendiente.";
                     return RedirectToAction("Create", "Abonos", new { idReserva });
                 }
+
+                double? sumaPorcentajes = _context.Abonos.Sum(abono => abono.Porcentaje);
                 abono.TotalPendiente -= abono.TotalAbonado;
                 //abono.Porcentaje = abono.Porcentaje / 100;
                 abono.IdReserva = idReserva;
                 abono.FechaRegistro = DateOnly.FromDateTime(DateTime.Now);
                 _context.Add(abono);
+                if (abono.TotalPendiente == 0)
+                {
+                    var reservasel = _context.Reservas.Where(s => s.IdReserva == abono.IdReserva).FirstOrDefault();
+                    reservasel.Estado = 5;
+                }
+                
+                else if (sumaPorcentajes >= 50)
+                {
+                    var reservasel = _context.Reservas.Where(s => s.IdReserva == abono.IdReserva).FirstOrDefault();
+                    reservasel.Estado = 2;
+                }
                 await _context.SaveChangesAsync();
                 return RedirectToAction("IndividualIndex", "Abonos", new { idReserva });
             }

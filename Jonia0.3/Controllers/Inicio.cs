@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web;
-
-
 using Jonia0._3.Models;
 using Jonia0._3.Datos;
 using Jonia0._3.Servicios;
@@ -12,6 +10,7 @@ using System.Net.Mail;
 using System.Net;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace Jonia0._3.Controllers
 {
@@ -22,14 +21,14 @@ namespace Jonia0._3.Controllers
             return View();
         }
 
-		public ActionResult ErrorPage() { return View(); }
+        public ActionResult ErrorPage() { return View(); }
 
         [HttpPost]
         public ActionResult Login(string correo, string contrasena)
         {
             Cliente cliente = DBClientes.Validar(correo, UtilidadServicios.ConvertirSHA256(contrasena));
 
-            if (cliente != null )
+            if (cliente != null)
             {
                 if (cliente.Confirmado == false)
                 {
@@ -41,7 +40,7 @@ namespace Jonia0._3.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Index","Home");
+                    return RedirectToAction("Index", "Home");
                 }
 
             }
@@ -54,46 +53,47 @@ namespace Jonia0._3.Controllers
             return View();
         }
 
-		public ActionResult Registrar()
-		{
-			return View();
-		}
+        public ActionResult Registrar()
+        {
+            return View();
+        }
 
-		[HttpPost]
-		public ActionResult Registrar(Cliente cliente)
+        [HttpPost]
+        public ActionResult Registrar(Cliente cliente)
 
-		{
+        {
             if (cliente.Contrasena != cliente.Confirmarclave)
-			{
-				ViewBag.Nombre = cliente.Nombre;
-				ViewBag.Correo = cliente.Correo;
-				ViewBag.Mensaje = "Las contraseñas no coinciden";
-				return View();
-			}
+            {
+                ViewBag.Nombre = cliente.Nombre;
+                ViewBag.Correo = cliente.Correo;
+                ViewBag.Mensaje = "Las contraseñas no coinciden";
+                return View();
+            }
 
-			Cliente clienteExistente = DBClientes.Obtener(cliente.Correo);
-			if (clienteExistente != null)
-			{
-				ViewBag.Mensaje = "El correo ya se encuentra registrado";
-				return View();
-			}
+            Cliente clienteExistente = DBClientes.Obtener(cliente.Correo);
+            if (clienteExistente != null)
+            {
+                ViewBag.Mensaje = "El correo ya se encuentra registrado";
+                return View();
+            }
 
-			cliente.Contrasena = UtilidadServicios.ConvertirSHA256(cliente.Contrasena);
-			cliente.Token = UtilidadServicios.GenerarToken();
-			cliente.Restablecer = false;
-			cliente.Confirmado = false;
-			bool respuesta = DBClientes.Registrar(cliente);
+            cliente.Contrasena = UtilidadServicios.ConvertirSHA256(cliente.Contrasena);
+            cliente.Token = UtilidadServicios.GenerarToken();
+            cliente.Restablecer = false;
+            cliente.Confirmado = false;
+            bool respuesta = DBClientes.Registrar(cliente);
 
-			if (respuesta)
-			{
-				EnviarCorreoConfirmacion(cliente.Correo, cliente.Nombre, cliente.Token);
-				return View();
-			}
+            if (respuesta)
+            {
+                EnviarCorreoConfirmacion(cliente.Correo, cliente.Nombre, cliente.Token);
+                TempData["Creado"] = true;
+                TempData["Mensaje"] = $"Su cuenta ha sido creada correctamente. Confirmar correo en {cliente.Correo}";
+            }
 
             return View();
-		}
+        }
 
-        private void EnviarCorreoConfirmacion(string correo,string nombre, string token)
+        private void EnviarCorreoConfirmacion(string correo, string nombre, string token)
         {
             var fromAddress = new MailAddress("pedazoehtiesto@gmail.com", "Jonia");
             var toAddress = new MailAddress(correo);
@@ -130,62 +130,62 @@ namespace Jonia0._3.Controllers
             {
                 Subject = subject,
                 Body = body,
-                IsBodyHtml = true 
+                IsBodyHtml = true
             })
             {
                 smtp.Send(message);
             }
         }
         public ActionResult Confirmar(string token)
-		{
-			ViewBag.Respuesta = DBClientes.Confirmar(token);
-			return View();
-		}
+        {
+            ViewBag.Respuesta = DBClientes.Confirmar(token);
+            return View();
+        }
 
-		public ActionResult Restablecer()
-		{
-			return View();
-		}
+        public ActionResult Restablecer()
+        {
+            return View();
+        }
 
-		[HttpPost]
-		public ActionResult Restablecer(string correo)
-		{
-			Cliente cliente = DBClientes.Obtener(correo);
-			ViewBag.Correo = correo;
-			if (cliente != null)
-			{
-				bool respuesta = DBClientes.RestablecerActualizar(1, cliente.Contrasena, cliente.Token, cliente.Correo);
+        [HttpPost]
+        public ActionResult Restablecer(string correo)
+        {
+            Cliente cliente = DBClientes.Obtener(correo);
+            ViewBag.Correo = correo;
+            if (cliente != null)
+            {
+                bool respuesta = DBClientes.RestablecerActualizar(1, cliente.Contrasena, cliente.Token, cliente.Correo);
 
-				if (respuesta)
-				{
-					EnviarCorreoRestablecimiento(cliente.Correo, cliente.Token);
-					ViewBag.Mensaje = $"Se ha enviado un correo a {cliente.Correo} para restablecer la contraseña.";
-					return View();
-				}
-				else
-				{
-					ViewBag.Mensaje = "No se pudo restablecer la cuenta";
-				}
+                if (respuesta)
+                {
+                    EnviarCorreoRestablecimiento(cliente.Correo, cliente.Token);
+                    ViewBag.Mensaje = $"Se ha enviado un correo a {cliente.Correo} para restablecer la contraseña.";
+                    return View();
+                }
+                else
+                {
+                    ViewBag.Mensaje = "No se pudo restablecer la cuenta";
+                }
 
-			}
-			else
-			{
-				ViewBag.Mensaje = "No se encontraron coincidencias";
-			}
+            }
+            else
+            {
+                ViewBag.Mensaje = "No se encontraron coincidencias";
+            }
 
-			return View();
-		}
+            return View();
+        }
 
-		private void EnviarCorreoRestablecimiento(string correo, string token)
-		{
-			var fromAddress = new MailAddress("pedazoehtiesto@gmail.com");
-			var toAddress = new MailAddress(correo);
-			const string fromPassword = "gmnupflehdxrqqmt";
-			const string subject = "Restablecimiento de contraseña";
+        private void EnviarCorreoRestablecimiento(string correo, string token)
+        {
+            var fromAddress = new MailAddress("pedazoehtiesto@gmail.com");
+            var toAddress = new MailAddress(correo);
+            const string fromPassword = "gmnupflehdxrqqmt";
+            const string subject = "Restablecimiento de contraseña";
 
-			string urlRestablecimiento = Url.Action("Actualizar", "Inicio", new { token }, Request.Scheme);
+            string urlRestablecimiento = Url.Action("Actualizar", "Inicio", new { token }, Request.Scheme);
 
-			string body = string.Format(@"
+            string body = string.Format(@"
 			<!DOCTYPE html>
 			<html lang='es'>
 			<body>
@@ -199,51 +199,51 @@ namespace Jonia0._3.Controllers
 			</body>
 			</html>", correo, urlRestablecimiento);
 
-			var smtp = new SmtpClient
-			{
-				Host = "smtp.gmail.com",
-				Port = 587,
-				EnableSsl = true,
-				DeliveryMethod = SmtpDeliveryMethod.Network,
-				UseDefaultCredentials = false,
-				Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
-			};
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+            };
 
-			using (var message = new MailMessage(fromAddress, toAddress)
-			{
-				Subject = subject,
-				Body = body,
-				IsBodyHtml = true
-			})
-			{
-				smtp.Send(message);
-			}
-		}
+            using (var message = new MailMessage(fromAddress, toAddress)
+            {
+                Subject = subject,
+                Body = body,
+                IsBodyHtml = true
+            })
+            {
+                smtp.Send(message);
+            }
+        }
 
-		public ActionResult Actualizar(string token)
-		{
-			ViewBag.Token = token;
-			return View();
-		}
+        public ActionResult Actualizar(string token)
+        {
+            ViewBag.Token = token;
+            return View();
+        }
 
-		[HttpPost]
-		public ActionResult Actualizar(string token, string clave, string confirmarClave,string correo)
-		{
-			ViewBag.Token = token;
-			if (clave != confirmarClave)
-			{
-				ViewBag.Mensaje = "Las contraseñas no coinciden";
-				return View();
-			}
+        [HttpPost]
+        public ActionResult Actualizar(string token, string clave, string confirmarClave, string correo)
+        {
+            ViewBag.Token = token;
+            if (clave != confirmarClave)
+            {
+                ViewBag.Mensaje = "Las contraseñas no coinciden";
+                return View();
+            }
 
-			bool respuesta = DBClientes.RestablecerActualizar(0, UtilidadServicios.ConvertirSHA256(clave), token,correo);
+            bool respuesta = DBClientes.RestablecerActualizar(0, UtilidadServicios.ConvertirSHA256(clave), token, correo);
 
-			if (respuesta)
-				ViewBag.Restablecido = true;
-			else
-				ViewBag.Mensaje = "No se pudo actualizar";
+            if (respuesta)
+                ViewBag.Restablecido = true;
+            else
+                ViewBag.Mensaje = "No se pudo actualizar";
 
-			return View();
-		}
-	}
+            return View();
+        }
+    }
 }

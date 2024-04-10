@@ -22,10 +22,22 @@ namespace Jonia0._3.Controllers
         }
 
         // GET: Paquetes
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public async Task<IActionResult> Index(string search)
         {
+            IQueryable<Paquete> paqueteQuery = _context.Paquetes;
+
+            if (!String.IsNullOrEmpty(search))
+            {
+                paqueteQuery = paqueteQuery.Where(a => a.Nombre.ToString().Contains(search));
+            }
+
+            var paquete = await paqueteQuery.ToListAsync();
             var joniaDbContext = _context.Paquetes.Include(p => p.IdHabitacionNavigation);
-            return View(await joniaDbContext.ToListAsync());
+
+            await joniaDbContext.ToListAsync();
+
+            return View(paquete);
         }
 
         [HttpPost]

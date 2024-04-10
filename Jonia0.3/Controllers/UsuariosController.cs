@@ -26,10 +26,23 @@ namespace Jonia0._3.Controllers
         }
 
         // GET: Usuarios
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public async Task<IActionResult> Index(string search)
         {
+            IQueryable<Usuario> usuarioQuery = _context.Usuarios;
+
+            if (!String.IsNullOrEmpty(search))
+            {
+                usuarioQuery = usuarioQuery.Where(a => a.NroDocumento.ToString().Contains(search));
+            }
+
+            var usuario = await usuarioQuery.ToListAsync();
+
             var joniaDbContext = _context.Usuarios.Include(u => u.IdRolNavigation).Include(u => u.TipoDocumentoNavigation);
-            return View(await joniaDbContext.ToListAsync());
+
+            await joniaDbContext.ToListAsync();
+
+            return View(usuario);
         }
 
         [HttpPost]

@@ -4,6 +4,24 @@
 
 @section Scripts {
     <script src="~/js/CambioEstado.js"></script>
+    <script>
+        $('#searchInput').on('keyup', function () {
+            var searchValue = $(this).val();
+            $.ajax({
+                url: '/Usuarios/Index',
+                type: 'GET',
+                data: { search: searchValue },
+                success: function (data) {
+                    // Busca la tabla por su ID y actualiza solo el cuerpo (tbody)
+                    $('#usuariosTable tbody').html($(data).find('#usuariosTable tbody').html());
+
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error al realizar la búsqueda: ' + error);
+                }
+            });
+        });
+    </script>
 }
 
 <h1>Usuarios</h1>
@@ -11,7 +29,10 @@
 <p>
     <a class="btn btn-dark" asp-action="Create">Crear</a>
 </p>
-<table class="table">
+<div class="input-group mb-3">
+    <input type="text" class="form-control" id="searchInput" placeholder="Buscar...">
+</div>
+<table id="usuariosTable" class="table">
     <thead>
         <tr>
             <th>

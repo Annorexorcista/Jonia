@@ -64,7 +64,7 @@ namespace Jonia0._3.Controllers
 
 					await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
 
-					return RedirectToAction("Index", "Dashboard");
+					return RedirectToAction("Index", "Welcome");
 				}
 
 			}

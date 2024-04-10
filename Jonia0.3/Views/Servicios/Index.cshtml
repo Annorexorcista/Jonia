@@ -3,6 +3,26 @@
 
 @section Scripts {
     <script src="~/js/CambioEstado.js"></script>
+    <script src="~/js/buscadores.js"></script>
+
+    <script>
+        $('#searchInput').on('keyup', function () {
+            var searchValue = $(this).val();
+            $.ajax({
+                url: '/Servicios/Index',
+                type: 'GET',
+                data: { search: searchValue },
+                success: function (data) {
+                    // Busca la tabla por su ID y actualiza solo el cuerpo (tbody)
+                    $('#servicioTable tbody').html($(data).find('#servicioTable tbody').html());
+
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error al realizar la búsqueda: ' + error);
+                }
+            });
+        });
+    </script>
 }
 
 <h1>Servicios</h1>
@@ -10,7 +30,10 @@
 <p>
     <a class="btn btn-dark" asp-action="Create">Crear</a>
 </p>
-<table class="table">
+<div class="input-group mb-3">
+    <input type="text" class="form-control"  id="searchInput" placeholder="Buscar...">
+</div>
+<table id="servicioTable" class="table">
     <thead>
         <tr>
             <th>
