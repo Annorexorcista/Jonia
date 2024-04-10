@@ -22,11 +22,32 @@
                         <option selected disabled>-- Seleccionar --</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label asp-for="DetalleReservaPaquetes" class="control-label">Paquete</label>
-                    <select asp-for="DetalleReservaPaquetes" class="form-control" asp-items="@(new SelectList(ViewBag.Paquetes, "IdPaquete", "Nombre"))">
+                <div class="form-group col">
+                    <label asp-for="DetalleReservaServicios" class="control-label">Servicios</label>
+                    <select id="serviciosel" size="1" class="form-control" onchange="actualizarTotalPaquete()" asp-items="@(new SelectList(ViewBag.Servicios, "IdServicio", "Nombre"))">
                         <option selected disabled>-- Seleccionar --</option>
                     </select>
+                </div>
+                <div class="form-group col">
+                    <label asp-for="DetalleReservaServicios" class="control-label">Costo</label>
+                    <input asp-for="DetalleReservaServicios" id="costoser" disabled placeholder="$" onchange="" class="form-control" />
+                </div>
+                <div class="form-group col">
+                    <button id="add-service" type="button" class="btn btn-dark mt-4 mb-4">Añadir Servicio</button>
+                    <input id="serviciosSeleccionados" type="hidden" name="serviciosSeleccionados" />
+                </div>
+                <div class="col">
+                    <table id="servicios-table" class="table table-striped position-relative bottom-50" border="1">
+                        <thead>
+                            <tr>
+                                <th>Servicio</th>
+                                <th>Costo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Los servicios seleccionados se agregarán aquí -->
+                        </tbody>
+                    </table>
                 </div>
                 <div class="form-group">
                     <label asp-for="Informacion" class="control-label">Información</label>
@@ -55,19 +76,19 @@
                     </select>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group col">
                 <label asp-for="Iva" class="control-label"></label>
-                <input asp-for="Iva" class="form-control" />
+                <input id="iva" readonly placeholder="$" asp-for="Iva" class="form-control" />
                 <span asp-validation-for="Iva" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col">
                 <label asp-for="Subtotal" class="control-label"></label>
-                <input asp-for="Subtotal" class="form-control" />
+                <input id="subtotal-reserva" placeholder="$" readonly asp-for="Subtotal" class="form-control" />
                 <span asp-validation-for="Subtotal" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col">
                 <label asp-for="Total" class="control-label"></label>
-                <input asp-for="Total" class="form-control" />
+                <input id="totalreserva" readonly asp-for="Total" class="form-control" />
                 <span asp-validation-for="Total" class="text-danger"></span>
             </div>
             <br />
@@ -83,6 +104,8 @@
 
 @section Scripts {
     @{
+        <script src="~/js/calculosreservas.js"></script>
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        
     }
 }

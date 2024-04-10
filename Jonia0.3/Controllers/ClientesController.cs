@@ -10,9 +10,11 @@ using Jonia0._3.Datos;
 using Jonia0._3.Servicios;
 using System.Net.Mail;
 using System.Net;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Jonia0._3.Controllers
 {
+    [Authorize(Policy = "Clientes")]
     public class ClientesController : Controller
     {
         private readonly JoniaDbContext _context;
@@ -84,6 +86,12 @@ namespace Jonia0._3.Controllers
         public ActionResult Create(Cliente cliente)
 
         {
+            if (cliente.TipoDocumento == null || cliente.Direccion == null)
+            {
+                TempData["error"] = "Se deben llenar todos los campos.";
+                return RedirectToAction();
+            }
+
             if (cliente.Contrasena != cliente.Confirmarclave)
             {
                 ViewBag.Nombre = cliente.Nombre;

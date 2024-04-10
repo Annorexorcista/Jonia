@@ -8,7 +8,7 @@
 <hr />
 <div class="row row mt-2 mb-2">
     <div class="p-2 col-md-6">
-        <form asp-action="Create" asp-controller="Abonos" method="post">
+        <form asp-action="Create" id="formabono" asp-controller="Abonos" method="post">
             <input type="hidden" name="idReserva" value="@ViewBag.IdReserva" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="row mb-2">
@@ -20,8 +20,14 @@
 
                 <div class="form-group col">
                     <label asp-for="TotalAbonado" class="control-label">Total del abono</label>
-                    <input asp-for="TotalAbonado" id="abono"  class="form-control" />
+                    <input asp-for="TotalAbonado" required id="abono"   class="form-control" />
                     <span asp-validation-for="TotalAbonado" class="text-danger"></span>
+                    @if (TempData.ContainsKey("error") )
+                    {
+                        <div class="text-danger">
+                            @TempData["error"]
+                        </div>
+                    }
                 </div>
             </div>
             <div class="row mb-2">
@@ -48,7 +54,7 @@
                 </div>
                 <div class="form-group col">
                     <label asp-for="Porcentaje" class="control-label"></label>
-                    <input readonly asp-for="Porcentaje" placeholder="%" id="porcentaje" class="form-control" />
+                    <input readonly asp-for="Porcentaje" placeholder="%" id="porcentaje" onchange="porcentajevali()" class="form-control" />
                     <span asp-validation-for="Porcentaje" class="text-danger"></span>
                 </div>
             </div>

@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Jonia0._3.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Jonia0._3.Controllers
 {
+    [Authorize(Policy = "TipoServicio")]
     public class TipoServicioController : Controller
     {
         private readonly JoniaDbContext _context;
@@ -57,6 +59,12 @@ namespace Jonia0._3.Controllers
         {
             if (ModelState.IsValid)
             {
+                if(tipoServicio.Nombre == null)
+                {
+                    TempData["error"] = "Se deben llenar todos los campos.";
+                    return RedirectToAction();
+                }
+
                 _context.Add(tipoServicio);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

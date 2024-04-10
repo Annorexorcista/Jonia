@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Jonia0._3.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Jonia0._3.Controllers
 {
+    [Authorize(Policy = "Servicios")]
     public class ServiciosController : Controller
     {
         private readonly JoniaDbContext _context;

@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Jonia0._3.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Jonia0._3.Controllers
 {
+    [Authorize(Policy = "Tipo de habitación")]
     public class TipoHabitacionController : Controller
     {
         private readonly JoniaDbContext _context;
@@ -77,6 +79,11 @@ namespace Jonia0._3.Controllers
         {
             if (ModelState.IsValid)
             {
+                if(tipoHabitacion.Nombre == null || tipoHabitacion.NroPersonas == null)
+                {
+                    TempData["error"] = "Se deben llenar todos los campos.";
+                    return RedirectToAction();
+                }
                 _context.Add(tipoHabitacion);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

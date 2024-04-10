@@ -77,7 +77,43 @@
             @Html.DisplayFor(model => model.NroDocumentoTrabajadorNavigation.NroDocumento)
         </dd>
     </dl>
+    <table class="table">
+        <thead class="table-light">
+            <tr>
+                <th>Paquete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.Paquete)
+            {
+                <tr>
+                    <td>
+                        @item.IdPaqueteNavigation.Nombre
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    <table class="table">
+        <thead class="table-light">
+            <tr>
+                <th>Servicios</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.Servicios)
+            {
+                <tr>
+                    <td>
+                        @item.IdServicioNavigation.Nombre
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
+<br />
 <div>
-    <a class="btn btn-secondary" asp-action="Index">Regresar</a>
+    <a class="btn btn-secondary mb-4" asp-action="Index">Regresar</a>
 </div>

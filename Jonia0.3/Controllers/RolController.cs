@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Jonia0._3.Models;
 using Jonia0._3.Models.PermisosSeleccionados;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Jonia0._3.Controllers
 {
+    [Authorize(Policy = "Roles")]
     public class RolController : Controller
     {
         private readonly JoniaDbContext _context;
@@ -86,6 +88,12 @@ namespace Jonia0._3.Controllers
         {
             if (ModelState.IsValid)
             {
+                if(rol.Nombre == null)
+                {
+                    TempData["error"] = "Se deben llenar todos los campos.";
+                    return RedirectToAction();
+                }
+
                 _context.Add(rol);
                 await _context.SaveChangesAsync();
 

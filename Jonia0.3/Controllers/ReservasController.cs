@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Jonia0._3.Models;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Jonia0._3.Controllers
 {
+    [Authorize(Policy= "Reservas")]
     public class ReservasController : Controller
     {
         private readonly JoniaDbContext _context;
@@ -64,7 +66,7 @@ namespace Jonia0._3.Controllers
         }
         public IActionResult obtenerNroPersonas(int id)
         {
-            var nroPer = _context.Habitaciones.Include(s => s.IdTipoNavigation).Where(j => j.IdHabitacion == id).Select(p => p.IdTipoNavigation.NroPersonas).FirstOrDefault();
+            var nroPer = _context.Paquetes.Where(s => s.IdPaquete == id).Select(s => s.IdHabitacionNavigation.IdTipoNavigation.NroPersonas).FirstOrDefault();
 
             return Json(new { nro = nroPer });
         }
@@ -84,7 +86,7 @@ namespace Jonia0._3.Controllers
         }
         public IActionResult obtenerTipoHabitacion(int id)
         {
-            var tipoHab = _context.Habitaciones.Include(s => s.IdTipoNavigation).Where(j => j.IdHabitacion == id).Select(p => p.IdTipoNavigation.Nombre).FirstOrDefault();
+            var tipoHab = _context.Paquetes.Where(s => s.IdPaquete == id).Select(s => s.IdHabitacionNavigation.IdTipoNavigation.Nombre).FirstOrDefault();
 
             return Json(new { nombre = tipoHab });
         }
@@ -108,6 +110,14 @@ namespace Jonia0._3.Controllers
             {
                 return NotFound();
             }
+
+            var servicios = _context.DetalleReservaServicios.Include(s => s.IdServicioNavigation).Where(s => s.IdReserva == id).ToList();
+
+            ViewBag.Servicios = servicios;
+
+            var paquete = _context.DetalleReservaPaquetes.Include(s => s.IdPaqueteNavigation).Where(s => s.IdReserva == id).ToList();
+
+            ViewBag.Paquete = paquete;
 
             var reserva = await _context.Reservas
                 .Include(r => r.EstadoNavigation)
@@ -165,9 +175,35 @@ namespace Jonia0._3.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Reserva reserva, string paquetesSeleccionados, string serviciosSeleccionados)
         {
+            if(paquetesSeleccionados == null || serviciosSeleccionados == null)
+            {
+                TempData["error"] = "Se deben llenar todos los campos.";
+                return RedirectToAction();
+            }
+
+            
+
+            
+
             if (ModelState.IsValid)
             {
-                reserva.FechaRegistro = DateOnly.FromDateTime(DateTime.Now);
+                if (reserva.NroDocumentoCliente == null || reserva.NroDocumentoTrabajador == null || reserva.Informacion == null || reserva.FechaEntrada == null || reserva.FechaSalida== null || reserva.MetodoPago == null)
+                {
+                    TempData["error"] = "Se deben llenar todos los campos.";
+                    return RedirectToAction();
+                }
+                var fechaRegistro = DateOnly.FromDateTime(DateTime.Now);
+                if (reserva.FechaEntrada < fechaRegistro)
+                {
+                    TempData["error"] = "La fecha de entrada debe ser mayor a la fecha de registro.";
+                    return RedirectToAction();
+                }
+                if (reserva.FechaSalida < fechaRegistro || reserva.FechaSalida < reserva.FechaEntrada)
+                {
+                    TempData["error"] = "La fecha de salida debe ser mayor a la fecha de registro y entrada.";
+                    return RedirectToAction();
+                }
+                reserva.FechaRegistro= DateOnly.FromDateTime(DateTime.Now);
                 _context.Add(reserva);
                 _context.SaveChanges();
 
@@ -249,6 +285,11 @@ namespace Jonia0._3.Controllers
                 NombreCompleto = $"{u.Nombre} {u.Apellido}" // Concatenar nombre y apellido
             }).ToList();
 
+            var servicio = _context.Servicios.ToList();
+            ViewBag.Servicios = servicio;
+
+
+
             var paquete = _context.Paquetes.ToList();
             ViewBag.Paquetes = paquete;
 
@@ -261,7 +302,8 @@ namespace Jonia0._3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdReserva,NroDocumentoCliente,NroDocumentoTrabajador,Informacion,FechaRegistro,FechaEntrada,FechaSalida,NumeroAdultos,NumeroNinos,MetodoPago,HoraLlegada,HoraSalida,Estado,Iva,Subtotal,Total")] Reserva reserva)
+        public async Task<IActionResult> Edit(int id, [Bind("IdReserva,NroDocumentoCliente,NroDocumentoTrabajador,Informacion,FechaRegistro,FechaEntrada," +
+            "FechaSalida,NumeroAdultos,NumeroNinos,MetodoPago,HoraLlegada,HoraSalida,Estado,Iva,Subtotal,Total")] Reserva reserva, string serviciosSeleccionados)
         {
             if (id != reserva.IdReserva)
             {
@@ -273,6 +315,20 @@ namespace Jonia0._3.Controllers
                 try
                 {
                     _context.Update(reserva);
+                    await _context.SaveChangesAsync();
+                    var listaServicios = JsonConvert.DeserializeObject<List<Servicio>>(serviciosSeleccionados);
+
+                    foreach (var p in listaServicios)
+                    {
+                        var reservaservicio = new DetalleReservaServicio()
+                        {
+                            IdReserva = reserva.IdReserva,
+                            IdServicio = p.IdServicio,
+                            Precio = p.Precio
+                        };
+                        _context.DetalleReservaServicios.Update(reservaservicio);
+                    }
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

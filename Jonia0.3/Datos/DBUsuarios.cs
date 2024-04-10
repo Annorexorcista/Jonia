@@ -65,7 +65,7 @@ namespace Jonia0._3.Datos
 			{
 				using (SqlConnection oconexion = new SqlConnection(CadenaSQL))
 				{
-					string query = "select Nro_Documento,Nombre,Apellido,Celular,Fecha_Nacimiento,Restablecer,Confirmado from usuarios";
+					string query = "select Nro_Documento,Nombre,Apellido,Celular,Fecha_Nacimiento,Restablecer,Confirmado,id_rol,Estado from usuarios";
 					query += " where Correo=@correo and Contrasena=@contrasena";
 
 					SqlCommand cmd = new SqlCommand(query, oconexion);
@@ -84,7 +84,10 @@ namespace Jonia0._3.Datos
 							{
 								Nombre = dr["Nombre"].ToString(),
 								Restablecer = (bool)dr["Restablecer"],
-								Confirmado = (bool)dr["Confirmado"]
+								Confirmado = (bool)dr["Confirmado"],
+								IdRol = (int)dr["id_rol"],
+								Estado = (bool)dr["Estado"]
+
 							};
 						}
 					}

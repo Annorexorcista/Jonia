@@ -22,6 +22,12 @@
                 <a class="btn btn-secondary mt-3" asp-action="Index">Back to List</a>
             </div>
         </form>
+        @if (TempData.ContainsKey("error"))
+        {
+            <div class="mt-3 w-50 h-25 alert alert-danger">
+                @TempData["error"]
+            </div>
+        }
     </div>
 </div>
 

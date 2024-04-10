@@ -31,11 +31,18 @@
                 <span asp-validation-for="Precio" class="text-danger"></span>
             </div>
             <br />
+            @if (TempData.ContainsKey("error"))
+            {
+                <div class="alert alert-danger">
+                    @TempData["error"]
+                </div>
+            }
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-dark" />
                 <a class="btn btn-secondary" asp-action="Index">Regresar</a>
             </div>
         </form>
+        
     </div>
 </div>
 

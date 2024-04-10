@@ -6,9 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Jonia0._3.Models;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Org.BouncyCastle.Asn1.Cmp;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Jonia0._3.Controllers
 {
+    [Authorize(Policy = "Abonos")]
     public class AbonosController : Controller
     {
         private readonly JoniaDbContext _context;
@@ -54,38 +58,39 @@ namespace Jonia0._3.Controllers
             return View(abonosReserva);
 
         }
-        
+
         public IActionResult obtenerDeuda(int idReserva)
         {
             var deuda = _context.Reservas.Where(s => s.IdReserva == idReserva).Select(s => s.Total).FirstOrDefault();
-            
-            
+
+
             if (deuda != null)
             {
-                ViewBag.costo = Math.Round((decimal)deuda,2);
+                ViewBag.costo = Math.Round((decimal)deuda, 2);
                 return Json(deuda);
-                
+
             }
 
             return NotFound();
         }
 
-        
+
 
         [HttpPost]
-        public IActionResult ActualizarEstado(int? id, bool estado)
+        public async Task<IActionResult> ActualizarEstado(int? id, bool estado)
         {
-
             if (id.HasValue)
             {
-                var abono = _context.Abonos.Find(id.Value);
+                var abono = await _context.Abonos.FindAsync(id.Value);
 
                 if (abono != null)
                 {
-                    // Asignar el estado del abono según el valor del parámetro "estado"
-                    abono.Estado = estado;
-                    _context.SaveChangesAsync();
-                    return View(abono);
+                    // Asigna el estado según el valor recibido en el parámetro "estado"
+                    abono.Estado = estado; // Si estado es 1, se asigna true; de lo contrario, false
+                    await _context.SaveChangesAsync();
+
+                    // Redirige o devuelve una vista según sea necesario
+                    return RedirectToAction("Index"); // Por ejemplo, redirige a la página de listado de abonos
                 }
             }
 
@@ -103,8 +108,8 @@ namespace Jonia0._3.Controllers
             var abono = await _context.Abonos
                 .Include(a => a.IdReservaNavigation)
                 .FirstOrDefaultAsync(m => m.IdAbono == id);
-                abono.Porcentaje = Math.Round((double)abono.Porcentaje * 100, 2);
-            
+            abono.Porcentaje = Math.Round((double)abono.Porcentaje * 100, 2);
+
             if (abono == null)
             {
                 return NotFound();
@@ -129,7 +134,7 @@ namespace Jonia0._3.Controllers
 
             var abono = new Abono
             {
-               
+
                 IdReserva = idReserva,
                 TotalPendiente = totalPendiente,
             };
@@ -148,6 +153,14 @@ namespace Jonia0._3.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (abono.TotalAbonado > abono.TotalPendiente)
+                {
+                    abono.TotalPendiente += abono.TotalAbonado;
+                    TempData["error"] = "El monto abonado es mayor que el saldo pendiente.";
+                    return RedirectToAction("Create", "Abonos", new { idReserva });
+                }
+                abono.TotalPendiente -= abono.TotalAbonado;
+                //abono.Porcentaje = abono.Porcentaje / 100;
                 abono.IdReserva = idReserva;
                 abono.FechaRegistro = DateOnly.FromDateTime(DateTime.Now);
                 _context.Add(abono);

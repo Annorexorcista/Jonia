@@ -22,6 +22,8 @@ namespace Jonia0._3.Controllers
             return View();
         }
 
+		public ActionResult ErrorPage() { return View(); }
+
         [HttpPost]
         public ActionResult Login(string correo, string contrasena)
         {

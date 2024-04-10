@@ -1,21 +1,6 @@
 // Manejar el evento de cambio
-$('.form-check-input').change(function () {
-    var abonoId = $(this).data('abonoid');
-    var nuevoEstado = $(this).prop('checked'); // true si está marcado, false si no lo está
 
-    $.ajax({
-        url: '/Abonos/ActualizarEstado',
-        type: 'POST',
-        data: { id: abonoId, estado: nuevoEstado },
-        success: function (data) {
-            console.log('Estado actualizado en la base de datos');
-        },
-        error: function (xhr, status, error) {
-            console.error('Error al actualizar el estado en la base de datos: ' + error);
-        }
-    });
     
-});
 
 $('.form-check-input').change(function () {
     var rolId = $(this).data('rolid');

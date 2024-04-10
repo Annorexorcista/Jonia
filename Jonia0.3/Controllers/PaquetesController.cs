@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Jonia0._3.Models;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Jonia0._3.Controllers
 {
+    [Authorize(Policy = "Paquetes")]
     public class PaquetesController : Controller
     {
         private readonly JoniaDbContext _context;
@@ -67,6 +69,10 @@ namespace Jonia0._3.Controllers
                 return NotFound();
             }
 
+            var servicios = _context.PaquetesServicios.Include(s => s.IdServicioNavigation).Where(s => s.IdPaquete == id).ToList();
+
+            ViewBag.Servicios = servicios;
+
             var paquete = await _context.Paquetes
                 .Include(p => p.IdHabitacionNavigation)
                 .FirstOrDefaultAsync(m => m.IdPaquete == id);
@@ -93,8 +99,19 @@ namespace Jonia0._3.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Paquete paquete, string serviciosSeleccionados)
         {
+            if(serviciosSeleccionados == null)
+            {
+                TempData["error"] = "Se deben llenar todos los campos.";
+                return RedirectToAction();
+            }
             if (ModelState.IsValid)
             {
+                if (paquete.Nombre == null || paquete.Descripcion == null || paquete.IdHabitacion == null)
+                {
+                    TempData["error"] = "Se deben llenar todos los campos.";
+                    return RedirectToAction();
+                }
+
                 _context.Add(paquete);
                 _context.SaveChanges();
 
@@ -108,6 +125,11 @@ namespace Jonia0._3.Controllers
                         IdServicio = s.IdServicio,
                         Precio = s.Precio
                     };
+                    if (paqueteservicio.IdPaquete == null || paqueteservicio.IdServicio == null || paqueteservicio.Precio == null)
+                    {
+                        TempData["error"] = "Se deben llenar todos los campos.";
+                        return RedirectToAction();
+                    }
                     _context.PaquetesServicios.Add(paqueteservicio);
                     _context.SaveChanges();
                 }

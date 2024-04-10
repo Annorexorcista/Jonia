@@ -1,5 +1,103 @@
-﻿
+﻿<h1>Dashboard</h1>
 
 
-<h1>Dashboard</h1>
+<div class="row">
+    <div class="col-md-5">
+        <canvas id="ventasChart" width="200" height="200"></canvas>
+    </div>
+    <div class="ms-5 col-md-5">
+        <canvas id="reservasChart" width="200" height="200"></canvas>
+    </div>
+</div>
+<input type="hidden" id="btnActualizarVentas"></input>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#btnActualizarVentas').click(function () {
+            // Hacer la solicitud AJAX para obtener las ventas totales
+            $.ajax({
+                url: '/Dashboard/ObtenerVentasTotales',
+                method: 'GET',
+                success: function (data) {
+                    // Obtener el contexto del canvas
+                    var ctx = document.getElementById('ventasChart').getContext('2d');
+
+                    // Crear el gráfico
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: ["Ventas Totales"],
+                            datasets: [{
+                                label: 'Ventas Totales',
+                                data: [data.ventasTotales],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error al obtener las ventas totales:', error);
+                }
+            });
+        });
+        $('#btnActualizarVentas').click(function () {
+            // Hacer la solicitud AJAX para obtener las ventas totales
+            $.ajax({
+                url: '/Dashboard/ObtenerNumeroReservas',
+                method: 'GET',
+                success: function (data) {
+                    // Obtener el contexto del canvas
+                    var ctx = document.getElementById('reservasChart').getContext('2d');
+
+                    // Crear el gráfico
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: ["Reservas Totales"],
+                            datasets: [{
+                                label: 'Reservas Totales',
+                                data: [data.reservasTotales],
+                                backgroundColor: [
+                                    'rgba(105, 122, 253, 0.8)'
+                                ],
+                                borderColor: [
+                                    'rgba(0, 25, 218, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error al obtener las ventas totales:', error);
+                }
+            });
+        });
+
+        // Llamar a la función al cargar la página para obtener las ventas totales inicialmente
+        $('#btnActualizarVentas').click();
+    });
+
+</script>

@@ -11,9 +11,11 @@ using Jonia0._3.Datos;
 using Jonia0._3.Servicios;
 using System.Net.Mail;
 using System.Net;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Jonia0._3.Controllers
 {
+    [Authorize(Policy = "Usuarios")]
     public class UsuariosController : Controller
     {
         private readonly JoniaDbContext _context;
@@ -70,6 +72,8 @@ namespace Jonia0._3.Controllers
             return View(usuario);
         }
 
+        
+
         public IActionResult Create()
         {
             ViewBag.TipoDocumentos = _context.TipoDocumentos.ToList();
@@ -82,6 +86,17 @@ namespace Jonia0._3.Controllers
         public ActionResult Create(Usuario usuario)
 
         {
+            if(usuario.TipoDocumento == null || usuario.IdRol == null)
+            {
+                TempData["error"] = "Se deben llenar todos los campos.";
+                return RedirectToAction();
+            }
+
+            var fechaActual= DateOnly.FromDateTime(DateTime.Now);
+
+            var fechaNac = usuario.FechaNacimiento;
+
+
             var roles = _context.Rols; 
             ViewBag.Roles = roles;
 

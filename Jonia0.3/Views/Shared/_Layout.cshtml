@@ -9,78 +9,104 @@
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="icon" href="../img/Green_Leaf_Nature_Logo_Design-removebg-preview.ico" />
+    <link rel="icon" href="~/img/Green_Leaf_Nature_Logo_Design-removebg-preview.ico" />
 </head>
 <body>
     <div class="wrapper">
         <aside id="sidebar">
             <div class="h-100">
                 <div class="sidebar-logo mb-2">
-                    <img src="/img/Green_Leaf_Nature_Logo_Design-removebg-preview.png" width="80" height="80" style="float:inline-start"/>
+                    <img src="/img/Green_Leaf_Nature_Logo_Design-removebg-preview.png" width="80" height="80" style="float:inline-start" />
                     <a style="" asp-controller="Home" asp-action="Index">JONIA</a>
                 </div>
                 <ul class="sidebar-nav">
                     <li class="sidebar-header">
                         <hr />
                     </li>
-                    <li class="sidebar-item">
-                        <a asp-action="Index" asp-controller="Dashboard" class="sidebar-link">
-                            <span class="material-symbols-outlined"> empty_dashboard </span>
-                            Dashboard
-                        </a>
+                    @if (User.HasClaim("Permiso", "Dashboard"))
+                    {
+                        <li class="sidebar-item">
+                            <a asp-action="Index" asp-controller="Dashboard" class="sidebar-link">
+                                <span class="material-symbols-outlined"> empty_dashboard </span>
+                                Dashboard
+                            </a>
+                        </li>
+                    }
+                    @if (User.HasClaim("Permiso", "Roles"))
+                    {
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" asp-controller="Rol" asp-action="Index">
+                                <span class="material-symbols-outlined"> badge </span> Roles
+                            </a>
+                        </li>
+                    }
+                    @if (User.HasClaim("Permiso", "Usuarios"))
+                    {
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" asp-controller="Usuarios" asp-action="Index">
+                                <span class="material-symbols-outlined"> groups </span> Usuarios
+                            </a>
+                        </li>
+                    }
+                    @if (User.HasClaim("Permiso", "Habitaciones"))
+                    {
+                        <li class="sidebar-item dropdown">
+                            <a asp-controller="Habitaciones" asp-action="Index" class="sidebar-link">
+                                <span class="material-symbols-outlined"> bedroom_parent </span> Habitaciones
+                            </a>
+                            <div class="dropdown-content">
+                                <a asp-controller="TipoHabitacion" asp-action="Index">Tipo Habitaciones</a>
+                            </div>
+                        </li>
+                    }
                     </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" asp-controller="Rol" asp-action="Index">
-                            <span class="material-symbols-outlined"> badge </span> Roles
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" asp-controller="Usuarios" asp-action="Index">
-                            <span class="material-symbols-outlined"> groups </span> Usuarios
-                        </a>
-                    </li>
-                    <li class="sidebar-item dropdown">
-                        <a asp-controller="Habitaciones" asp-action="Index" class="sidebar-link">
-                            <span class="material-symbols-outlined"> bedroom_parent </span> Habitaciones
-                        </a>
-                        <div class="dropdown-content">
-                            <a asp-controller="TipoHabitacion" asp-action="Index">Tipo Habitaciones</a>
-                        </div>
-                    </li>
-                </ul>
-                </li>
-                <li class="sidebar-item dropdown">
-                    <a asp-controller="Servicios" asp-action="Index" class="sidebar-link">
-                        <span class="material-symbols-outlined"> bedroom_parent </span> Servicios
-                    </a>
-                    <div class="dropdown-content">
-                        <a asp-controller="TipoServicio" asp-action="Index">Tipo Servicios</a>
-                    </div>
-                </li>
-                    <li class="sidebar-item">
-                        <a asp-controller="Paquetes" asp-action="Index" class="sidebar-link">
-                            <span class="material-symbols-outlined"> package_2 </span>
-                            Paquetes
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a asp-controller="Clientes" asp-action="Index" class="sidebar-link">
-                            <span class="material-symbols-outlined"> face </span>
-                            Clientes
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" asp-controller="Reservas" asp-action="Index">
-                            <span class="material-symbols-outlined"> calendar_month </span>
-                            Reservas
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" asp-controller="Abonos" asp-action="Index">
-                            <span class="material-symbols-outlined"> paid </span>
-                            Abonos
-                        </a>
-                    </li>
+                    @if (User.HasClaim("Permiso", "Servicios"))
+                    {
+                        <li class="sidebar-item dropdown">
+                            <a asp-controller="Servicios" asp-action="Index" class="sidebar-link">
+                                <span class="material-symbols-outlined"> bedroom_parent </span> Servicios
+                            </a>
+                            <div class="dropdown-content">
+                                <a asp-controller="TipoServicio" asp-action="Index">Tipo Servicios</a>
+                            </div>
+                        </li>
+                    }
+                    @if (User.HasClaim("Permiso", "Paquetes"))
+                    {
+                        <li class="sidebar-item">
+                            <a asp-controller="Paquetes" asp-action="Index" class="sidebar-link">
+                                <span class="material-symbols-outlined"> package_2 </span>
+                                Paquetes
+                            </a>
+                        </li>
+                    }
+                    @if (User.HasClaim("Permiso", "Clientes"))
+                    {
+                        <li class="sidebar-item">
+                            <a asp-controller="Clientes" asp-action="Index" class="sidebar-link">
+                                <span class="material-symbols-outlined"> face </span>
+                                Clientes
+                            </a>
+                        </li>
+                    }
+                    @if (User.HasClaim("Permiso", "Reservas"))
+                    {
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" asp-controller="Reservas" asp-action="Index">
+                                <span class="material-symbols-outlined"> calendar_month </span>
+                                Reservas
+                            </a>
+                        </li>
+                    }
+                    @if (User.HasClaim("Permiso", "Abonos"))
+                    {
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" asp-controller="Abonos" asp-action="Index">
+                                <span class="material-symbols-outlined"> paid </span>
+                                Abonos
+                            </a>
+                        </li>
+                    }
                 </ul>
             </div>
         </aside>
@@ -92,19 +118,27 @@
                 <div class="navbar-collapse navbar">
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
-                            <a href="#"
-                               data-bs-toggle="dropdown"
-                               class="nav-icon pe-md-0 me-3"
-                               style="color: var(--bs-body-color)">
-                                <img src="../img/photo-profile_2.jpg"
-                                     alt=""
-                                     class="avatar img-fluid rounded" />
-                                Administrador
+                            <a  data-bs-toggle="dropdown" class="nav-icon pe-md-0 me-3" style="color: var(--bs-body-color)">
+                                @if (User.HasClaim("Permiso","Dashboard"))
+                                {
+                                    <div>
+                                    <img src="~/img/photo-profile1.jpg" alt="" class="avatar img-fluid rounded" /> Administrador
+                                    </div>
+                                    
+                                }
+                                else
+                                {
+                                    <div>
+                                    <img src="~/img/photo-profile_2.jpg" alt="" class="avatar img-fluid rounded" /> Trabajador
+                                    </div>
+                                }
+                                
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a href="#" class="dropdown-item">Perfil</a>
-                                <a href="#" class="dropdown-item">Ajustes</a>
-                                <a href="#" class="dropdown-item">Cerrar sesión</a>
+
+                                <a class="dropdown-item">Perfil</a>
+                                <a class="dropdown-item">Ajustes</a>
+                                <a asp-controller="Admin" asp-action="Salir" class="dropdown-item">Cerrar sesión</a>
                             </div>
                         </li>
                     </ul>
@@ -148,7 +182,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/layout.js" asp-append-version="true"></script>
-   
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

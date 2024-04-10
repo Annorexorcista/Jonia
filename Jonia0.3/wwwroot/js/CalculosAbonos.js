@@ -1,4 +1,5 @@
-$('#abono').keyup(function() {
+const formabono = document.getElementById('formabono')
+$('#abono').keyup(function () {
     var valorAbono = $('#abono').val()
     var iva = valorAbono * 0.19
     var subtotal = valorAbono-(iva)
@@ -10,10 +11,11 @@ $('#abono').keyup(function() {
     
 
 })
+function porcentajevali() {
+    if (valorAbono > deuda) {
+        porcentaje = 100.00
+        $('#porcentaje').val(porcentaje)
+    }
+}
 
-$('#btnCrear').click(function () {
-   $('#totalPendiente').val($('#totalPendiente').val() - $('#abono').val())
-    var idReserva = $('#IdReserva').val(); // Obtener el IdReserva del campo oculto
-    window.location.href = '/Abonos/IndividualIndex?idReserva=' + idReserva; // Redirigir al IndividualIndex con el IdReserva
-});
 

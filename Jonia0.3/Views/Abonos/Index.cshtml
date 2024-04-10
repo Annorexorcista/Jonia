@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Jonia0._3.Models.Abono>
 
 @section Scripts {
-    <script src="~/js/CambioEstado.js"></script>
+    <script src="~/js/anularAbono.js"></script>
     <script src="~/js/buscadores.js"></script>
 }
 
@@ -63,9 +63,10 @@
                 </td>
                 <td>
 
-                    <div class="form-check form-switch fs-4" data-url="@Url.Action("ActualizarEstado", "Abonos")" data-abonoid="@item.IdAbono">
-                        <input @(item.Estado == true ? "checked" : "") type="checkbox" class="form-check-input" id="estado" data-abonoid="@item.IdAbono" />
-                    </div>
+                    <button @(item.Estado == false ? "disabled" : "") class="btn btn-danger fs-6 boton-estado" data-abonoid="@item.IdAbono">
+                        Anular
+                        <input type="hidden" value="@item.IdAbono" />
+                    </button>
 
                 <td>
                     <a class="btn btn-dark" asp-action="Details" asp-route-id="@item.IdAbono">Detalles</a>
@@ -74,3 +75,4 @@
         }
     </tbody>
 </table>
+

@@ -4,18 +4,26 @@ using Jonia0._3.Servicios;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mail;
 using System.Net;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Jonia0._3.Controllers
 {
 	public class Admin : Controller
 	{
+		private readonly JoniaDbContext _Context;
+		public Admin(JoniaDbContext context) 
+		{
+			_Context = context;
+		}
 		public ActionResult Login()
 		{
 			return View();
 		}
 
 		[HttpPost]
-		public ActionResult Login(string correo, string contrasena)
+		public async Task<ActionResult> Login(string correo, string contrasena)
 		{
 			Usuario usuario = DBCUsuario.Validar(correo, UtilidadServicios.ConvertirSHA256(contrasena));
 
@@ -29,8 +37,33 @@ namespace Jonia0._3.Controllers
 				{
 					ViewBag.Mensaje = $"Se solicito un restablecimiento de cuenta en {correo}";
 				}
+				else if (usuario.Estado == false)
+				{
+					ViewBag.Mensaje = "Su usuario está inhabilitado";
+				}
 				else
 				{
+					var claims = new List<Claim>();
+					var claimsNombreRol = new List<Claim>();
+
+					var permisosAsociados = _Context.RolPermisos.Where(s => s.IdRol == usuario.IdRol).Select(s => s.IdPermisoNavigation.Nombre).ToList();
+					foreach(var permiso in permisosAsociados)
+					{
+						claims.Add(new Claim("Permiso", permiso));
+					}
+
+                    var nombresRol = _Context.Rols.Where(s => s.IdRol == usuario.IdRol).Select(s => s.Nombre).ToList();
+                    foreach (var nombre in nombresRol)
+                    {
+                        claimsNombreRol.Add(new Claim("NombreRol", nombre));
+                    }
+
+                    
+
+					var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+					await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
+
 					return RedirectToAction("Index", "Dashboard");
 				}
 
@@ -60,6 +93,8 @@ namespace Jonia0._3.Controllers
 				ViewBag.Mensaje = "Las contraseñas no coinciden";
 				return View();
 			}
+
+			
 
 			Usuario usuarioExistente = DBCUsuario.Obtener(usuario.Correo);
 			if (usuarioExistente != null)
@@ -235,5 +270,11 @@ namespace Jonia0._3.Controllers
 
 			return View();
 		}
+
+		public async Task<IActionResult> Salir()
+		{
+			await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+			return RedirectToAction("Login");
+		} 
 	}
 }
